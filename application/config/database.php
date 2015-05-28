@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'mysql5.000webhost.com';
 $db['default']['username'] = 'a5223087_topsite';
-$db['default']['password'] = '';
+$db['default']['password'] = 'test';
 $db['default']['database'] = 'a5223087_topsite';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
