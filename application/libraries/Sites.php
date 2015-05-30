@@ -67,14 +67,18 @@ class Sites
 		return true;
 	}
 	
-	public function pull_data($id)
+	public function getDataForId($id)
 	{
-		$data = $this->_ci->db
-					->get_where('sites', array('id' => $id))
+		return $this->_ci->db
+				->get_where('sites', array('id' => $id))
 				->result_array();
-		
-		// Return the data
-		return $data;
+	}
+	
+	public function getData()
+	{
+		return $this->_ci->db
+				->get('sites')
+				->result_array();
 	}
 }
 
