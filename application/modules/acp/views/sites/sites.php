@@ -1,6 +1,4 @@
-<?php
-/* template head */
-/* end template head */ ob_start(); /* template body */ ?><!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -47,7 +45,7 @@
 			<ul id="nav" class="fl">
 	
 				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
-				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong><?php echo $this->scope["username"];?></strong></a></li>
+				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
@@ -74,7 +72,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/users" class="active-tab dashboard-tab">Users</a></li>
+				<li><a href="/acp/dashboard/sites" class="active-tab dashboard-tab">Sites</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -90,7 +88,7 @@
 			
 				<div class="content-module-heading cf">
 				
-					<h3 class="fl">User Managment</h3>
+					<h3 class="fl">Sites Managment</h3>
 					<span class="fr expand-collapse-text">Click to collapse</span>
 					<span class="fr expand-collapse-text initial-expand">Click to expand</span>
 				
@@ -99,8 +97,7 @@
 				
 				<div class="content-module-main">
 				
-					<p>User management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
-					<a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddUser()">Add User</a>
+					<p>Sites management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
 					
 					<table>
 					
@@ -108,40 +105,39 @@
 					
 							<tr>
 								<th style="position: relative;">Id</th>
-								<th>Name</th>
 								<th>Username</th>
-								<th>Rank</th>
-								<th>Email</th>
+								<th>Title</th>
+								<th>Category</th>
+								<th>In Votes</th>
+								<th>Out Votes</th>
+								<th>Premium</th>
 								<th>Actions</th>
 							</tr>
 						
 						</thead>
 						
 						<tbody id="users">
-							<?php 
-$_fh0_data = (isset($this->scope["users"]) ? $this->scope["users"] : null);
-if ($this->isArray($_fh0_data) === true)
-{
-	foreach ($_fh0_data as $this->scope['val'])
-	{
-/* -- foreach start output */
-?>
-							<tr id="<?php echo $this->scope["val"]["username"];?>">
-								<td><?php echo $this->scope["val"]["id"];?></td>
-								<td><?php echo $this->scope["val"]["name"];?> <?php echo $this->scope["val"]["l_name"];?></td>
-								<td><?php echo $this->scope["val"]["username"];?></td>
-								<td><?php echo $this->scope["val"]["rank"];?></td>
-								<td><a href="#"><?php echo $this->scope["val"]["email"];?></a></td>
+							{foreach $sites val}
+							<tr>
+								<td>{$val.id}</td>
+								<td>{$val.username}</td>
+								<td>{$val.title}</td>
+								<td>{$val.category_id}</td>
+								<td>{$val.in_votes}</td>
+								<td>{$val.out_votes}</td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditUser('<?php echo $this->scope["val"]["username"];?>')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeUser('<?php echo $this->scope["val"]["username"];?>')"></a>
+									{if $val.premium == 1}
+										True
+									{else}
+										False
+									{/if}
+								</td>
+								<td>
+									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditSite('{$val.id}')"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removeSite('{$val.id}')"></a>
 								</td>
 							</tr>
-							<?php 
-/* -- foreach end output */
-	}
-}?>
-
+							{/foreach}
 						</tbody>
 						
 					</table>
@@ -167,6 +163,4 @@ if ($this->isArray($_fh0_data) === true)
 	</div> <!-- end footer -->
 
 </body>
-</html><?php  /* end template body */
-return $this->buffer . ob_get_clean();
-?>
+</html>

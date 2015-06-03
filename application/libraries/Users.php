@@ -162,17 +162,17 @@ class Users
 	
 	/**
 	 *
-	 * Returns user's rank
+	 * Returns user's username
 	 *
 	 * @access public
-	 * @param string
+	 * @param int
 	 * @return row
 	 *
 	 */
 	
-	public function get_user_rank($username)
+	public function getUsername($id)
 	{
-		return $this->_ci->db->select('rank')->from('top_users')->where('username', $username)->get()->row()->rank;
+		return $this->_ci->db->select('username')->from('top_users')->where('id', $id)->get()->row()->username;
 	}
 	
 	/**
@@ -185,9 +185,9 @@ class Users
 	 *
 	 */
 	
-	public function getUserRankById($id)
+	public function get_user_rank($username)
 	{
-		return $this->_ci->db->select('rank')->from('top_users')->where('rank', $rank)->get()->row()->rank;
+		return $rank = $this->_ci->db->select('rank')->from('top_users')->where('username', $username)->get()->row()->rank;
 	}
 	
 	/**

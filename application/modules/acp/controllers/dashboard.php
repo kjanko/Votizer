@@ -56,6 +56,20 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users', $data);
 	}
+	public function sites()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'sites' => $this->sites->getData()
+		);
+		
+		$this->parser->parse('sites/sites', $data);
+	}
 	
 	public function users_edit($username)
 	{

@@ -26,6 +26,13 @@ class Sites
 	|-------------------------------------|
 										 */
 	
+	public function isPremium($id)
+	{
+		if($this->_ci->$query = $this->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
+			return false;
+		else 
+			return true;
+	}
 	public function create($title, $content, $userid, $banner, $url)
 	{
 		// Set the data
@@ -62,23 +69,28 @@ class Sites
 		
 		$this->_ci->db
 			->where('id', $id)
-			->update('sites', $data);
+			->update('top_sites', $data);
 		
 		return true;
 	}
 	
-	public function getDataForId($id)
+	public function getDataById($id)
 	{
 		return $this->_ci->db
-				->get_where('sites', array('id' => $id))
-				->result_array();
+					->get_where('top_sites', array('id' => $id))
+					->result_array();
 	}
 	
 	public function getData()
 	{
-		return $this->_ci->db
-				->get('sites')
-				->result_array();
+		$data = $this->_ci->db->get('top_sites')->result_array();
+		foreach($data as $k => $v)
+		{
+			$username = $this->_ci->users->getUsername($data[$k]['user_id']);
+			$data[$k]['username'] = $username;
+		}
+		
+		return $data;
 	}
 }
 

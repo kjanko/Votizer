@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://cms.kjanko.com/';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
