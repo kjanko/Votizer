@@ -81,10 +81,9 @@
 				
 				<h3>Navigation</h3>
 				<ul>
-					<li><a href="/acp/dashboard">Home</a></li>
-					<li><a href="/acp/dashboard/users">Users</a></li>
-					<li><a href="#">Servers</a></li>
-					<li><a href="#">Settings</a></li>
+				{foreach $navigation val}
+					<li><a href="{$val.link_url}">{$val.link_name}</a></li>
+				{/foreach}
 				</ul>
 				
 			</div> <!-- end side-menu -->

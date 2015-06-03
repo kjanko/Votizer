@@ -35,6 +35,7 @@ class Dashboard extends MX_Controller {
 		
 		$data = array(
 			'username' => $this->session->userdata('username'),
+			'navigation' => $this->general->getNavigationData(),
 			'feeds' => $arrFeeds
 		);
 		
