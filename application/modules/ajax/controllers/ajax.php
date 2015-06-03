@@ -227,6 +227,7 @@ class Ajax extends MX_Controller
 		else
 		{
 			$ip = $this->input->post('ip');
+			
 			switch($method)
 			{
 				case 'insert':
