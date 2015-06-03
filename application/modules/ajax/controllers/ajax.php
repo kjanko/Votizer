@@ -217,6 +217,84 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+	
+	function blacklistIP($method)
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$ip = $this->input->post('ip');
+			switch($method)
+			{
+				case 'insert':
+					if($this->general->insertBlacklistIP($ip))
+					{
+						$data = array(
+							'success' => '1',
+							'msg' => 'Success! The IP has been blacklisted.'
+						);
+					
+						echo json_encode($data);
+					}
+					else
+					{
+						$data = array(
+								'success' => '2',
+								'msg' => 'Error! Something went wrong while blacklisting this IP.'
+							);
+					
+						echo json_encode($data);
+					}
+				break;
+				
+				case 'remove':
+					if($this->general->removeBlacklistIP($ip))
+					{
+						$data = array(
+							'success' => '1',
+							'msg' => 'Success! The IP has been removed from the blacklist.'
+						);
+					
+						echo json_encode($data);
+					}
+					else
+					{
+						$data = array(
+								'success' => '2',
+								'msg' => 'Error! Something went wrong while whitelisting the IP.'
+							);
+					
+						echo json_encode($data);
+					}
+				break;
+				
+				case 'update':
+					$new = $this->input->post('ip_new');
+					if($this->general->updateBlacklistIP($ip, $new))
+					{
+						$data = array(
+							'success' => '1',
+							'msg' => 'Success! The IP has been successfully updated.'
+						);
+					
+						echo json_encode($data);
+					}
+					else
+					{
+						$data = array(
+								'success' => '2',
+								'msg' => 'Error! Something went wrong while updating the IP.'
+							);
+					
+						echo json_encode($data);
+					}
+				break;
+			}
+		}
+	}
 }
 
 /* End of file ajax.php */
