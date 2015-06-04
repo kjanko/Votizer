@@ -143,6 +143,7 @@ function editSite()
 		inVotes : $("input[name='inVotes']").val(),
 		outVotes : $("input[name='outVotes']").val(),
 		bannerUrl : $("input[name='bannerUrl']").val(),
+		premium : $("input[name='premium']").val(),
 		url : $("input[name='url']").val()
 	};
 	

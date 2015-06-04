@@ -164,9 +164,10 @@ class Ajax extends MX_Controller
 				$in = $this->input->post('inVotes');
 				$out = $this->input->post('outVotes');
 				$bannerUrl = $this->input->post('bannerUrl');
-				$url = $this->input->post('$url');
+				$url = $this->input->post('url');
+				$premium = $this->input->post('premium');
 				
-				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
+				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url, $premium))
 				{
 					$data = array(
 						'success' => '1',
@@ -315,7 +316,6 @@ class Ajax extends MX_Controller
 		else
 		{
 			$ip = $this->input->post('ip');
-			
 			switch($method)
 			{
 				case 'insert':

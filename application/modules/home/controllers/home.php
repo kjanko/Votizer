@@ -7,7 +7,6 @@ class Home extends MX_Controller {
     public function __construct()
     {
         parent::__construct();
-		$this->general->insertUserActivity($_SERVER['REMOTE_ADDR']);
     }
 	
 	public function index()
