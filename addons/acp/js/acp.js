@@ -68,9 +68,16 @@ function displayChart()
 	});
 }
 
-function showEditUser(username)
+function showEditUser(username, backUrl)
 {
-	$.get('/acp/dashboard/users_edit/' + username, function(data) 
+	$.get('/acp/dashboard/users_edit/' + username + '/' + backUrl , function(data) 
+	{
+		$('.content-module-main').html(data).show('scale');
+	});
+}
+function showEditSite(id)
+{
+	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -115,6 +122,49 @@ function editUser()
 				{
 					alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
+				}
+				else if(json.success === '3')
+				{
+					$('.information-box').remove();
+					$('#error-placeholder').html(json.msg).show('scale');
+				}
+			}
+	});	
+	return false;
+}
+function editSite()
+{
+	var form_data = 
+	{
+		id : $("input[name='id']").val(),
+		categoryId : $("input[name='categoryId']").val(),
+		title : $("input[name='title']").val(),
+		description : $("input[name='description']").val(),
+		inVotes : $("input[name='inVotes']").val(),
+		outVotes : $("input[name='outVotes']").val(),
+		bannerUrl : $("input[name='bannerUrl']").val(),
+		url : $("input[name='url']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/edit_site',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alert(json.msg);
+					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '3')
 				{
@@ -187,6 +237,35 @@ function removeUser(username)
 				if(json.success === '1')
 				{
 					$('#' + username).hide('slow', function(){ $(this).remove(); });
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+				}
+			}
+	});	
+	return false;
+}
+function removeSite(siteId)
+{
+	var form_data = 
+	{
+		id : siteId
+	}
+	
+	$.ajax(
+	{
+		url: '/ajax/remove_site',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					$('#' + siteId).hide('slow', function(){ $(this).remove(); });
 				}
 				else if(json.success === '2')
 				{

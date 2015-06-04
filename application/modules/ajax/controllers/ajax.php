@@ -129,7 +129,64 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
-	
+	function edit_site()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+			$this->form_validation->set_rules('categoryId', 'Username', 'required|is_natural');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('description', 'Descripton', 'required');
+			$this->form_validation->set_rules('inVotes', 'In Votes', 'required|is_natural');
+			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
+			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required');
+			$this->form_validation->set_rules('url', 'URL', 'required');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$data = array(
+					'success' => '3', 
+					'msg' => validation_errors()
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$id = $this->input->post('id');
+				$category_id = $this->input->post('categoryId');
+				$title = $this->input->post('title');
+				$description = $this->input->post('description');
+				$in = $this->input->post('inVotes');
+				$out = $this->input->post('outVotes');
+				$bannerUrl = $this->input->post('bannerUrl');
+				$url = $this->input->post('$url');
+				
+				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Please wait while you are being redirected.'
+					);
+					
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Error! Something went wrong while editing this user!'
+					);
+					
+					echo json_encode($data);
+				}
+			}
+		}
+	}
 	function add_user()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -198,6 +255,37 @@ class Ajax extends MX_Controller
 			$uname = $this->input->post('uname');
 			
 			if($this->users->remove($uname))
+			{
+				$data = array(
+					'success' => '1',
+					'msg' => 'Success! The user has been deleted.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Error! Something went wrong while deleting this user!'
+				);
+				
+				echo json_encode($data);
+			}
+		}
+	}
+	
+	function remove_site()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$id = $this->input->post('id');
+			
+			if($this->sites->remove($id))
 			{
 				$data = array(
 					'success' => '1',

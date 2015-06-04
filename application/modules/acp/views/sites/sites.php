@@ -118,9 +118,9 @@
 						
 						<tbody id="users">
 							{foreach $sites val}
-							<tr>
+							<tr id="{$val.id}">
 								<td>{$val.id}</td>
-								<td>{$val.username}</td>
+								<td><a href="#" onclick="showEditUser('{$val.username}','sites')">{$val.username}</td>
 								<td>{$val.title}</td>
 								<td>{$val.category_id}</td>
 								<td>{$val.in_votes}</td>
@@ -133,8 +133,8 @@
 									{/if}
 								</td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditSite('{$val.id}')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeSite('{$val.id}')"></a>
+									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditSite({$val.id})"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removeSite({$val.id})"></a>
 								</td>
 							</tr>
 							{/foreach}

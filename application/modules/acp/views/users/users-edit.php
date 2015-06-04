@@ -1,6 +1,6 @@
 			<div class="content-module-main">
 				<form id="users-mod" method="POST" onsubmit="return editUser();">
-					<p><a href="/acp/dashboard/users" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+					<p><a href="/acp/dashboard/{$backUrl}" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
 					{foreach $user val}
 					<p>
 						<label for="full-width-input">ID</label>

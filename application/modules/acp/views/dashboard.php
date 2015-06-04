@@ -63,7 +63,6 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard" class="active-tab dashboard-tab">Dashboard</a></li>
-				<li><a href="/acp/dashboard/users">Users</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	

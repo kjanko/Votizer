@@ -44,7 +44,7 @@ class Sites
 			'url' => $url
 		);
 		// Insert the data
-		$this->_ci->db->insert('sites', $data);
+		$this->_ci->db->insert('top_sites', $data);
 		
 		return true;
 	}
@@ -52,18 +52,20 @@ class Sites
 	public function remove($id)
 	{
 		// Remove the site
-		$this->_ci->db->delete('sites', array('id' => $id));
+		$this->_ci->db->delete('top_sites', array('id' => $id));
 		
 		return true;
 	}
 	
-	public function update($id, $title, $content, $banner, $url)
+	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url)
 	{
 		$data = array(
 			'title' => $title,
-			'content' => $content,
-			'user_id' => $userid,
-			'banner' => $banner,
+			'description' => $description,
+			'category_id' => $categoryId,
+			'in_votes' => $in,
+			'out_votes' => $out,
+			'banner_url' => $bannerUrl,
 			'url' => $url
 		);
 		
@@ -76,9 +78,13 @@ class Sites
 	
 	public function getDataById($id)
 	{
-		return $this->_ci->db
+		$data = $this->_ci->db
 					->get_where('top_sites', array('id' => $id))
 					->result_array();
+					
+		$data[0]['username'] = $this->_ci->users->getUsername($data[0]['user_id']);
+		
+		return $data;
 	}
 	
 	public function getData()

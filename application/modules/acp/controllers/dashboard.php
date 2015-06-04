@@ -71,13 +71,22 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('sites/sites', $data);
 	}
 	
-	public function users_edit($username)
+	public function users_edit($username,$url)
 	{
 		$data = array(
-			'user' => $this->users->get_user_data($username)
+			'user' => $this->users->get_user_data($username),
+			'backUrl' => $url
 		);
 		
 		$this->parser->parse('users/users-edit', $data);
+	}
+	public function sites_edit($id)
+	{
+		$data = array(
+			'id' => $this->sites->getDataById($id),
+		);
+		
+		$this->parser->parse('sites/sites-edit', $data);
 	}
 	
 	public function users_add()
