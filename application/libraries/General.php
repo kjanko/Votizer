@@ -80,6 +80,78 @@ class General
 		else
 			return false;
 	}
+	
+	public function insertUserActivity($ip)
+	{
+		$data = array(
+			'ip' => $ip
+		);
+		
+		return $this->_ci->db->insert('top_users_activity', $data);
+	}
+	
+	public function getUserActivityData($type, $unique)
+	{
+		if(!$unique)
+		{
+			if($type == "today")
+			{
+				$date = date("Y-m-d");
+				$query = $this->db->query("SELECT COUNT(DISTINCT ip,`date`) as `total` FROM top_users_activity WHERE `date` >= ?", array($date));
+			}
+			else
+			{
+				$date = date("Y-m-d", time() - 60*60*24*30);
+				$query = $this->db->query("SELECT COUNT(DISTINCT ip) as `total` FROM top_users_activity WHERE `date` >= ?", array($date));
+			}
+			
+			$row = $query->result_array();
+			
+			return $row[0]['total'];
+		}
+		else
+		{
+			if($type == "today")
+			{
+				$date = date("Y-m-d");
+			}
+			else
+			{
+				$date = date("Y-m-d", time() - 60*60*24*30);
+			}
+
+			$query = $this->db->query("SELECT COUNT(*) as `total` FROM top_users_activity WHERE `date` >= ?", array($date));
+
+			$row = $query->result_array();
+			
+			return $row[0]['total'];
+		}
+	}
+	
+	public function getIncome($type)
+	{
+		if($type == "this")
+		{
+			$date = date("Y-m");
+		}
+		else
+		{
+			$date = date("Y-m", time() - 60*60*24*30);
+		}
+
+		$query = $this->db->query("SELECT amount FROM top_monthly_income WHERE month=?", array($date));
+
+		if($query->num_rows())
+		{
+			$row = $query->result_array();
+
+			return $row[0]['amount'];
+		}
+		else
+		{
+			return 0;
+		}
+	}
 }
 
 // END General Class

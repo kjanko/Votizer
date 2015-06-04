@@ -1,0 +1,32 @@
+SHOW CREATE TABLE `top100`.`top_subscriptions`;
+SELECT  `id`,  `u_id`,  `username`,  `timeleft` FROM `top100`.`top_subscriptions` ORDER BY `timeleft` ASC LIMIT 1000;
+SHOW CREATE TABLE `top100`.`top_subscriptions`;
+SHOW VARIABLES LIKE 'collation_database';
+CREATE TABLE `top_subscriptions_log` (
+	`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` BIGINT UNSIGNED NOT NULL DEFAULT '0',
+	`date` VARCHAR(50) NOT NULL DEFAULT '0' COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf32_general_ci'
+ENGINE=InnoDB;
+SELECT `DEFAULT_COLLATION_NAME` FROM `information_schema`.`SCHEMATA` WHERE `SCHEMA_NAME`='top100';
+SHOW TABLE STATUS FROM `top100`;
+SHOW FUNCTION STATUS WHERE `Db`='top100';
+SHOW PROCEDURE STATUS WHERE `Db`='top100';
+SHOW TRIGGERS FROM `top100`;
+SHOW EVENTS FROM `top100`;
+SHOW CREATE TABLE `top100`.`top_subscriptions_log`;
+
+ALTER TABLE `top_subscriptions`
+	ALTER `u_id` DROP DEFAULT;
+ALTER TABLE `top_subscriptions`
+	CHANGE COLUMN `u_id` `user_id` BIGINT(20) UNSIGNED NOT NULL AFTER `id`;
+SELECT `DEFAULT_COLLATION_NAME` FROM `information_schema`.`SCHEMATA` WHERE `SCHEMA_NAME`='top100';
+SHOW TABLE STATUS FROM `top100`;
+SHOW FUNCTION STATUS WHERE `Db`='top100';
+SHOW PROCEDURE STATUS WHERE `Db`='top100';
+SHOW TRIGGERS FROM `top100`;
+SHOW EVENTS FROM `top100`;
+SHOW CREATE TABLE `top100`.`top_subscriptions`;
+
