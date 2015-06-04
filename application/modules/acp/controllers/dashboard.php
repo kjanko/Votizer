@@ -7,15 +7,15 @@ class Dashboard extends MX_Controller {
     public function __construct()
     {
         parent::__construct();
-    }
-	
-	public function index()
-	{
+		
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
-		
+    }
+	
+	public function index()
+	{		
 		//--------------------------//
 		//		  XML Data         //
 		//------------------------//
@@ -135,13 +135,17 @@ class Dashboard extends MX_Controller {
 		}
 	}
 	
+	public function pages()
+	{
+		$data = array(
+			'username' => $this->session->userdata('username')
+		);
+		
+		$this->parser->parse('pages/page', $data);
+	}
+	
 	public function users()
 	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'users' => $this->db->get('top_users')->result_array()
@@ -150,12 +154,7 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('users/users', $data);
 	}
 	public function sites()
-	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
+	{		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'sites' => $this->sites->getData()
@@ -186,7 +185,6 @@ class Dashboard extends MX_Controller {
 	{
 		$this->parser->parse('users/users-add');
 	}
-	
 	
 	public function logout()
 	{
