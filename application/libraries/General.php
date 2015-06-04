@@ -152,6 +152,20 @@ class General
 			return 0;
 		}
 	}
+	
+	public function getGraph()
+	{
+		$query = $this->_ci->db->query("SELECT date, COUNT(DISTINCT ip) ipCount FROM top_users_activity GROUP BY date");
+
+		if($query->num_rows())
+		{
+			return $query->result_array();
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 // END General Class
