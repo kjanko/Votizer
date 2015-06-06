@@ -18,13 +18,6 @@
 	<script src="/addons/acp/js/script.js"></script>  
 	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>
 	<script src="/addons/acp/js/acp.js"></script>
-	
-	<script type="application/javascript">
-		$(function() 
-		{
-			displayChart();
-		});
-	</script>
 </head>
 
 <body>
@@ -150,8 +143,9 @@
 							<div class="stripe-separator"><!-- --></div>
 							
 							<h1>User Activity</h1>
-							<h3>Work in progress!</h3>
-							<div id="chartdiv" style="height:250px;width:430px; "></div>
+							<div>
+								<img src="https://chart.googleapis.com/chart?chf=bg,s,FFFFFF&chxl=0:|{$graph.first_date}|{$graph.last_date}&chxp=0,12,87&chxr=1,0,{$graph.top}&chxs=1,676767,11.5,0,lt,676767&chxt=x,y&chs=450x190&cht=lc&chco=095a9d&chds=0,{$graph.top}&chd=t:{$graph.stack}&chdlp=l&chls=2&chma=5,5,5,5" />
+							</div>
 						</div> <!-- end content-module-main -->
 					
 					</div> <!-- end content-module -->

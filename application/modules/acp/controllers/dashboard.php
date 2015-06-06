@@ -7,15 +7,15 @@ class Dashboard extends MX_Controller {
     public function __construct()
     {
         parent::__construct();
-    }
-	
-	public function index()
-	{
+		
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
-		
+    }
+	
+	public function index()
+	{		
 		//--------------------------//
 		//		  XML Data         //
 		//------------------------//
@@ -36,19 +36,116 @@ class Dashboard extends MX_Controller {
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'navigation' => $this->general->getNavigationData(),
+			'graph' => $this->getGraph(),
 			'feeds' => $arrFeeds
 		);
 		
 		$this->parser->parse('dashboard', $data);
 	}
 	
+	private function getGraph()
+	{
+		$row = $this->general->getGraph();
+		
+		$data = array(
+			'stack' => $this->arrayFormat($row),
+			'top' => $this->getHighestValue($row),
+			'first_date' => $this->getFirstDate($row),
+			'last_date' => $this->getLastDate($row)
+		);
+		
+		return $data;
+	}
+	
+	private function getHighestValue($array)
+	{
+		if($array)
+		{
+			$highest = 0;
+
+			foreach($array as $value)
+			{
+				if($value['ipCount'] > $highest)
+				{
+					$highest = $value['ipCount'];
+				}
+			}
+
+			return $highest;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	private function arrayFormat($array)
+	{
+		if($array)
+		{
+			$output = "";
+			$first = true;
+
+			foreach($array as $month)
+			{
+				if($first)
+				{
+					$first = false;
+					$output .= $month['ipCount'];
+				}
+				else
+				{
+					$output .= ",".$month['ipCount'];
+				}
+			}
+
+			return $output;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	private function getLastDate($array)
+	{
+		if($array)
+		{
+			$value = preg_replace("/-/", " / ", $array[count($array)-1]['date']);
+
+			return preg_replace("/ \/ [0-9]*$/", "", $value);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	private function getFirstDate($array)
+	{
+		if($array)
+		{
+			$value = preg_replace("/-/", " / ", $array[0]['date']);
+
+			return preg_replace("/ \/ [0-9]*$/", "", $value);
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public function pages()
+	{
+		$data = array(
+			'username' => $this->session->userdata('username')
+		);
+		
+		$this->parser->parse('pages/page', $data);
+	}
+	
 	public function users()
 	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'users' => $this->db->get('top_users')->result_array()
@@ -57,12 +154,7 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('users/users', $data);
 	}
 	public function sites()
-	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
+	{		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'sites' => $this->sites->getData()
@@ -123,7 +215,6 @@ class Dashboard extends MX_Controller {
 	{
 		$this->parser->parse('users/users-add');
 	}
-	
 	
 	public function logout()
 	{
