@@ -70,6 +70,20 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('sites/sites', $data);
 	}
+	public function blacklist()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'blacklistIps' => $this->general->getBlacklistData()
+		);
+		
+		$this->parser->parse('blacklist/blacklist', $data);
+	}
 	
 	public function users_edit($username,$url)
 	{
@@ -87,6 +101,22 @@ class Dashboard extends MX_Controller {
 		);
 		
 		$this->parser->parse('sites/sites-edit', $data);
+	}
+	public function blacklistIps()
+	{
+		$data = array(
+			'blacklistIps' => $this->general->getBlacklistData()
+		);
+		
+		$this->parser->parse('blacklist/blacklistIps', $data);
+	}
+	public function blacklistUsers()
+	{
+		$data = array(
+			'blacklistUsers' => $this->general->getBlacklistUserData()
+		);
+		
+		$this->parser->parse('blacklist/blacklistUsers', $data);
 	}
 	
 	public function users_add()

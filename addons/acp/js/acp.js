@@ -75,6 +75,18 @@ function showEditUser(username, backUrl)
 		$('.content-module-main').html(data).show('scale');
 	});
 }
+function showBlacklistIps(){
+	$.get('/acp/dashboard/blacklistIps/', function(data) 
+	{
+		$('.content-module-main').html(data).show('scale');
+	});
+}
+function showBlacklistUsers(){
+	$.get('/acp/dashboard/blacklistUsers/', function(data) 
+	{
+		$('.content-module-main').html(data).show('scale');
+	});
+}
 function showEditSite(id)
 {
 	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
@@ -127,6 +139,72 @@ function editUser()
 				{
 					$('.information-box').remove();
 					$('#error-placeholder').html(json.msg).show('scale');
+				}
+			}
+	});	
+	return false;
+}
+function banIp()
+{
+	var form_data = 
+	{
+		ip : $("input[name='ip']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/banIp',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alert(json.msg);
+					setTimeout( function() { showBlacklistIps() }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+					setTimeout( function() { showBlacklistIps() }, 500);
+				}
+				else if(json.success === '3')
+				{
+					alert("Invalid Ip");
+					
+				}
+			}
+	});	
+	return false;
+}
+function banUser()
+{
+	var form_data = 
+	{
+		uname : $("input[name='user']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/ban_User',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alert(json.msg);
+					setTimeout( function() { showBlacklistUsers() }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
 				}
 			}
 	});	
@@ -267,6 +345,64 @@ function removeSite(siteId)
 				if(json.success === '1')
 				{
 					$('#' + siteId).hide('slow', function(){ $(this).remove(); });
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+				}
+			}
+	});	
+	return false;
+}
+function removeBlacklistIps(IpId)
+{
+	var form_data = 
+	{
+		id : IpId
+	}
+	
+	$.ajax(
+	{
+		url: '/ajax/remove_BlacklistIp',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+				}
+			}
+	});	
+	return false;
+}
+function removeBlacklistUsers(IpId)
+{
+	var form_data = 
+	{
+		id : IpId
+	}
+	
+	$.ajax(
+	{
+		url: '/ajax/remove_BlacklistUsers',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
 				}
 				else if(json.success === '2')
 				{

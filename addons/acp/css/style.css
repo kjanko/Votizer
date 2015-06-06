@@ -644,6 +644,33 @@ div.content-module-heading {
 	}
 
 div.content-module-main { padding: 1em; /* 16/16 */ }
+/* ------------- Blacklist ------------ */
+.blacklist.activeBlacklist {
+	background-color: #5d6677;
+	color: white;
+	border: none;
+}
+
+.blacklist:hover{
+	border-bottom: none;
+	
+}
+.blacklist {
+	display: inline-block;
+	box-sizing: border-box;
+	width:50px;
+	text-align:center;
+	font-style: normal;
+	font-weight: normal;
+	color:#9498a1;
+	line-height: 2em;
+	padding: 0.5em;
+	font-size: 13px;
+	background-clip: border-box;
+	border: 1px solid #eeefef;
+	border-bottom: none;
+	background-color: white;
+}
 
 
 

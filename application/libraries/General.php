@@ -52,18 +52,36 @@ class General
 		else
 			return false;
 	}
-	
-	public function removeBlacklistIP($ip)
+	/*
+		public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
 		{
 			$data = array(
-				'ip' => $ip
+				'id' => $id
 			);
 			
 			return $this->_ci->db->delete('top_blacklist_ip', $data);
 		}
 		else
+			return false;
+	}
+	*/
+	
+	public function removeBlacklistIP($id)
+	{
+		$this->_ci->db->delete('top_blacklist_ip', array('id' => $id));
+		
+		return true;
+	}
+	public function updateBlacklistUser($id,$new)
+	{
+		$data = array(
+			'blacklist' => $new
+		);
+		if($this->_ci->db->where('id', $id)->update('top_users', $data))
+			return true;
+		else 
 			return false;
 	}
 	
@@ -79,6 +97,14 @@ class General
 		}
 		else
 			return false;
+	}
+	public function getBlacklistData()
+	{
+		return $data = $this->_ci->db->get('top_blacklist_ip')->result_array();
+	}
+	public function getBlacklistUserData()
+	{
+		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
 	
 	public function insertUserActivity($ip)

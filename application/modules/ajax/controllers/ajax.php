@@ -187,6 +187,95 @@ class Ajax extends MX_Controller
 				}
 			}
 		}
+	}	
+	public function insertBlacklistIP($ip)
+	{
+		if(!self::isIPBlacklisted($ip))
+		{
+			$data = array(
+				'ip' => $ip
+			);
+			
+			return $this->_ci->db->insert('top_blacklist_ip', $data);
+		}
+		else
+			return false;
+	}
+	function ban_User(){
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+				$user = $this->input->post('uname');
+				$data = $this->users->get_user_id($user);
+				if(!empty($data))
+				{
+					$this->general->updateBlacklistUser($data,1);
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! This user .'
+					);
+					
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Error! This user does not exist!'
+					);
+					
+					echo json_encode($data);
+				}
+			
+		}
+	}
+	function banIp()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+			$this->form_validation->set_rules('ip', 'Ip', 'required|valid_ip');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$data = array(
+					'success' => '3', 
+					'msg' => validation_errors()
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$ip = $this->input->post('ip');
+				
+				if($this->general->insertBlacklistIP($ip))
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Please wait while you are being redirected.'
+					);
+					
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Error! Something went wrong while editing this user!'
+					);
+					
+					echo json_encode($data);
+				}
+			}
+		}
 	}
 	function add_user()
 	{
@@ -254,7 +343,8 @@ class Ajax extends MX_Controller
 		else
 		{
 			$uname = $this->input->post('uname');
-			
+			$query = $this->_ci->db->select('id')->from('top_users')->where('username', $username)->get()->row()->id;
+			alert("dada");
 			if($this->users->remove($uname))
 			{
 				$data = array(
@@ -306,7 +396,64 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
-	
+	function remove_BlacklistIp()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$id = $this->input->post('id');
+			if($this->general->removeBlacklistIP($id))
+			{
+				$data = array(
+					'success' => '1',
+					'msg' => 'Success! The IP has been deleted from the blacklist.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
+				);
+				
+				echo json_encode($data);
+			}
+		}
+	}
+	function remove_BlacklistUsers()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$id = $this->input->post('id');
+			if($this->general->updateBlacklistUser($id,0))
+			{
+				$data = array(
+					'success' => '1',
+					'msg' => 'Success! The IP has been deleted from the blacklist.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
+				);
+				
+				echo json_encode($data);
+			}
+		}
+	}
 	function blacklistIP($method)
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)

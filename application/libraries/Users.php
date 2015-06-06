@@ -157,7 +157,12 @@ class Users
 	
 	public function get_user_id($username)
 	{
-		return $this->_ci->db->select('id')->from('top_users')->where('username', $username)->get()->row()->id;
+		$query = $this->_ci->db->select('id')->from('top_users')->where('username', $username)->get();
+		
+		if($query->num_rows() > 0)
+			return $query->row()->id;
+		else
+			return false;
 	}
 	
 	/**
