@@ -13,8 +13,7 @@ class Page_model extends CI_Model
 		
 		if($query->num_rows() > 0)
 		{
-			$result = $query->result_array();
-			return $result[0];
+			return $query->result_array();
 		}
 		else
 			return false;
@@ -36,7 +35,7 @@ class Page_model extends CI_Model
 		$this->db->insert("top_pages", $data);
 	}
 
-	public function update($controller, $title, $content)
+	public function update($id, $controller, $title, $content)
 	{
 		$data = array(
 			'controller' => $controller,
@@ -44,6 +43,9 @@ class Page_model extends CI_Model
 			'content' => $content
 		);
 
-		$this->db->where('id', $id)->update("top_pages", $data);
+		if($this->db->where('id', $id)->update("top_pages", $data))
+			return true;
+		else
+			return false;
 	}
 }

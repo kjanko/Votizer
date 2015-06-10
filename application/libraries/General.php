@@ -24,7 +24,10 @@ class General
 	{
 		return $this->_ci->db->get('top_navigation')->result_array();
 	}
-	
+	/********************************************************************************/
+	/************************ MOVE TO BLACKLIST MODEL AND CLEANUP ******************/
+	/*** USE SAME METHODS FOR IP AND USER WITH A PARAMETER $TYPE('user' or 'ip')***/
+	/*****************************************************************************/
 	public function isIPBlacklisted($ip)
 	{
 		$query = $this->_ci->db
@@ -52,8 +55,8 @@ class General
 		else
 			return false;
 	}
-	/*
-		public function removeBlacklistIP($ip)
+	
+	public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
 		{
@@ -66,15 +69,8 @@ class General
 		else
 			return false;
 	}
-	*/
 	
-	public function removeBlacklistIP($id)
-	{
-		$this->_ci->db->delete('top_blacklist_ip', array('id' => $id));
-		
-		return true;
-	}
-	public function updateBlacklistUser($id,$new)
+	public function updateBlacklistUser($id, $new)
 	{
 		$data = array(
 			'blacklist' => $new
@@ -106,7 +102,7 @@ class General
 	{
 		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
-	
+	/********************************************************************************/
 	public function insertUserActivity($ip)
 	{
 		$data = array(

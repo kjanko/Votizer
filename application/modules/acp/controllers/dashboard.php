@@ -7,6 +7,7 @@ class Dashboard extends MX_Controller {
     public function __construct()
     {
         parent::__construct();
+		$this->load->model('Page_model', 'pages');
 		
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -138,10 +139,21 @@ class Dashboard extends MX_Controller {
 	public function pages()
 	{
 		$data = array(
-			'username' => $this->session->userdata('username')
+			'username' => $this->session->userdata('username'),
+			'pages' => $this->pages->getPages()
 		);
 		
 		$this->parser->parse('pages/page', $data);
+	}
+	
+	public function pages_edit($id, $backUrl)
+	{
+		$data = array(
+			'page' => $this->pages->getPageById($id),
+			'backUrl' => $backUrl
+		);
+		
+		$this->parser->parse('pages/pages-edit', $data);
 	}
 	
 	public function users()

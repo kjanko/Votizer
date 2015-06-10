@@ -10,6 +10,7 @@ class Ajax extends MX_Controller
         parent::__construct();
 		
 		$this->load->library('form_validation');
+		$this->load->model('acp/Page_model', 'pages');
 		
 		/*if(!$this->input->is_ajax_request())
 		{
@@ -528,6 +529,57 @@ class Ajax extends MX_Controller
 						echo json_encode($data);
 					}
 				break;
+			}
+		}
+	}
+	
+	function editPage()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('url', 'URL', 'required');
+			$this->form_validation->set_rules('content', 'Content', 'required');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$data = array(
+					'success' => '3', 
+					'msg' => validation_errors()
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$id = $this->input->post('id');
+				$title = $this->input->post('title');
+				$url = $this->input->post('url');
+				$content = $this->input->post('content');
+				
+				if($this->pages->update($id, $url, $title, $content))
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Please wait while you are being redirected.'
+					);
+					
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Error! Something went wrong while editing this page!'
+					);
+					
+					echo json_encode($data);
+				}
 			}
 		}
 	}

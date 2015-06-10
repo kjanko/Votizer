@@ -20,6 +20,7 @@
 	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>  
 	<script src="/addons/acp/js/pagination.js"></script> 
 	<script src="/addons/acp/js/acp.js"></script> 
+	<script src="/addons/acp/js/tinymce/tinymce.min.js"></script> 
 	
 	<style>
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
@@ -31,8 +32,18 @@
 	<script type="application/javascript">
 		$(function() 
 		{
-			$('#users').jPaginate({ items: 5, next: '>', previous: '<' });
+			$('#pages').jPaginate({ items: 5, next: '>', previous: '<' });
 		});
+		
+		function setup()
+		{
+			tinymce.init(
+			{
+				selector : "textarea",
+				mode : "textareas",
+				theme : "modern"
+			});
+		}
 	</script>
 </head>
 
@@ -72,7 +83,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/users" class="active-tab dashboard-tab">Users</a></li>
+				<li><a href="/acp/dashboard/users" class="active-tab dashboard-tab">Pages</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -102,27 +113,23 @@
 						<thead>
 					
 							<tr>
-								<th style="position: relative;">Id</th>
-								<th>Name</th>
-								<th>Username</th>
-								<th>Rank</th>
-								<th>Email</th>
+								<th style="position: relative;">ID</th>
+								<th>Title</th>
+								<th>URL</th>
 								<th>Actions</th>
 							</tr>
 						
 						</thead>
 						
-						<tbody id="users">
-							{foreach $users val}
-							<tr id="{$val.username}">
+						<tbody id="pages">
+							{foreach $pages val}
+							<tr id="{$val.id}">
 								<td>{$val.id}</td>
-								<td>{$val.name} {$val.l_name}</td>
-								<td>{$val.username}</td>
-								<td>{$val.rank}</td>
-								<td><a href="#">{$val.email}</a></td>
+								<td>{$val.title}</td>
+								<td><a href="/pages/{$val.controller}">{$val.controller}</a></td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditUser('{$val.username}','users')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeUser('{$val.username}')"></a>
+									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditPage('{$val.id}', 'pages')"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removePage('{$val.id}')"></a>
 								</td>
 							</tr>
 							{/foreach}

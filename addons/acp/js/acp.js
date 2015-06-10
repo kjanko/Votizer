@@ -75,13 +75,24 @@ function showEditUser(username, backUrl)
 		$('.content-module-main').html(data).show('scale');
 	});
 }
-function showBlacklistIps(){
+
+function showEditPage(id, backUrl)
+{
+	$.get('/acp/dashboard/pages_edit/' + id + '/' + backUrl , function(data) 
+	{
+		$('.content-module-main').html(data).show('scale');
+	});
+}
+
+function showBlacklistIps()
+{
 	$.get('/acp/dashboard/blacklistIps/', function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
 }
-function showBlacklistUsers(){
+function showBlacklistUsers()
+{
 	$.get('/acp/dashboard/blacklistUsers/', function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
@@ -144,6 +155,47 @@ function editUser()
 	});	
 	return false;
 }
+
+function editPage()
+{
+	var form_data = 
+	{
+		id : $("input[name='id']").val(),
+		title : $("input[name='title']").val(),
+		url : $("input[name='url']").val(),
+		content : $("textarea[name='content']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/editPage',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alert(json.msg);
+					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
+				}
+				else if(json.success === '3')
+				{
+					$('.information-box').remove();
+					$('#error-placeholder').html(json.msg).show('scale');
+				}
+			}
+	});	
+	return false;
+}
+
 function banIp()
 {
 	var form_data = 
