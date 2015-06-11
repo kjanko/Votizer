@@ -165,28 +165,10 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users', $data);
 	}
-	public function sites()
-	{		
-		$data = array(
-			'username' => $this->session->userdata('username'),
-			'sites' => $this->sites->getData()
-		);
-		
-		$this->parser->parse('sites/sites', $data);
-	}
-	public function blacklist()
+	
+	public function users_add()
 	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
-		$data = array(
-			'username' => $this->session->userdata('username'),
-			'blacklistIps' => $this->general->getBlacklistData()
-		);
-		
-		$this->parser->parse('blacklist/blacklist', $data);
+		$this->parser->parse('users/users-add');
 	}
 	
 	public function users_edit($username,$url)
@@ -198,6 +180,17 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users-edit', $data);
 	}
+	
+	public function sites()
+	{		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'sites' => $this->sites->getData()
+		);
+		
+		$this->parser->parse('sites/sites', $data);
+	}
+	
 	public function sites_edit($id)
 	{
 		$data = array(
@@ -206,6 +199,17 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('sites/sites-edit', $data);
 	}
+	
+	public function blacklist()
+	{		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'blacklistIps' => $this->general->getBlacklistData()
+		);
+		
+		$this->parser->parse('blacklist/blacklist', $data);
+	}
+	
 	public function blacklistIps()
 	{
 		$data = array(
@@ -214,6 +218,7 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistIps', $data);
 	}
+	
 	public function blacklistUsers()
 	{
 		$data = array(
@@ -221,11 +226,6 @@ class Dashboard extends MX_Controller {
 		);
 		
 		$this->parser->parse('blacklist/blacklistUsers', $data);
-	}
-	
-	public function users_add()
-	{
-		$this->parser->parse('users/users-add');
 	}
 	
 	public function logout()

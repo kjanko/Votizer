@@ -118,7 +118,7 @@
 								<td>{$val.id}</td>
 								<td>{$val.ip}</td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id})"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id}, '{$val.ip}')"></a>
 								</td>
 							</tr>
 							{/foreach}
