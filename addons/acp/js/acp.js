@@ -321,7 +321,7 @@ function removeUser(username)
 	
 	$.ajax(
 	{
-		url: '/ajax/remove_user',
+		url: '/ajax/removeUser',
 		type: 'POST',
 		data: form_data,
 		success: 

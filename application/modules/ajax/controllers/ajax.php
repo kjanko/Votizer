@@ -280,7 +280,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function remove_user()
+	function removeUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -289,8 +289,8 @@ class Ajax extends MX_Controller
 		else
 		{
 			$uname = $this->input->post('uname');
-			$query = $this->_ci->db->select('id')->from('top_users')->where('username', $username)->get()->row()->id;
-			alert("dada");
+			$query = $this->db->select('id')->from('top_users')->where('username', $uname)->get()->row()->id;
+
 			if($this->users->remove($uname))
 			{
 				$data = array(
