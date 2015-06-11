@@ -19,6 +19,24 @@ class General
 		$this->_ci = &get_instance();
 	}
 	
+	public function getXMLData($url)
+	{
+		$doc = new DOMDocument();
+		$doc->load($url);
+		$arrFeeds = array();
+		foreach ($doc->getElementsByTagName('topic') as $node) 
+		{
+			$itemRSS = array ( 
+				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+				'content' => $node->getElementsByTagName('content')->item(0)->nodeValue,
+				'date' => $node->getElementsByTagName('date')->item(0)->nodeValue
+			);
+			array_push($arrFeeds, $itemRSS);
+		}
+		
+		return $arrFeeds;
+	}
+	
 	public function getNavigationData()
 	{
 		return $this->_ci->db->get('top_navigation')->result_array();

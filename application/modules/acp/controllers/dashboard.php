@@ -17,28 +17,12 @@ class Dashboard extends MX_Controller {
 	
 	public function index()
 	{		
-		//--------------------------//
-		//		  XML Data         //
-		//------------------------//
-		$doc = new DOMDocument();
-		$doc->load('http://kjanko.com/XML.xml');
-		$arrFeeds = array();
-		foreach ($doc->getElementsByTagName('topic') as $node) 
-		{
-			$itemRSS = array ( 
-				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-				'content' => $node->getElementsByTagName('content')->item(0)->nodeValue,
-				'date' => $node->getElementsByTagName('date')->item(0)->nodeValue
-			);
-			array_push($arrFeeds, $itemRSS);
-		}	
-		//------------------------//
-		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'navigation' => $this->general->getNavigationData(),
 			'graph' => $this->getGraph(),
-			'feeds' => $arrFeeds
+			//ToDo: load this segment via AJAX to speedup the site
+			'feeds' => $this->general->getXMLData('http://kjanko.com/XML.xml') 
 		);
 		
 		$this->parser->parse('dashboard', $data);
