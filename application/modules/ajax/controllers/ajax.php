@@ -499,6 +499,37 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+	
+	function removePage()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$id = $this->input->post('postID');
+			
+			if($this->pages->remove($id))
+			{
+				$data = array(
+					'success' => '1',
+					'msg' => 'Success! Please wait while you are being redirected.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Error! Something went wrong while removing this page!'
+				);
+				
+				echo json_encode($data);
+			}
+		}
+	}
 }
 
 /* End of file ajax.php */
