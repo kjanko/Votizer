@@ -163,7 +163,7 @@ function editPage()
 		id : $("input[name='id']").val(),
 		title : $("input[name='title']").val(),
 		url : $("input[name='url']").val(),
-		content : $("textarea[name='content']").val()
+		content : tinyMCE.activeEditor.getContent()
 	};
 	
 	$.ajax(
@@ -196,16 +196,16 @@ function editPage()
 	return false;
 }
 
-function banIp()
+function removePage(id)
 {
 	var form_data = 
 	{
-		ip : $("input[name='ip']").val()
+		postID : id
 	};
 	
 	$.ajax(
 	{
-		url: '/ajax/banIp',
+		url: '/ajax/removePage',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -215,44 +215,7 @@ function banIp()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
-					setTimeout( function() { showBlacklistIps() }, 500);
-				}
-				else if(json.success === '2')
-				{
-					alert(json.msg);
-					setTimeout( function() { showBlacklistIps() }, 500);
-				}
-				else if(json.success === '3')
-				{
-					alert("Invalid Ip");
-					
-				}
-			}
-	});	
-	return false;
-}
-function banUser()
-{
-	var form_data = 
-	{
-		uname : $("input[name='user']").val()
-	};
-	
-	$.ajax(
-	{
-		url: '/ajax/ban_User',
-		type: 'POST',
-		data: form_data,
-		success: 
-			function(message) 
-			{ 
-				var json = jQuery.parseJSON(message);
-				
-				if(json.success === '1')
-				{
-					alert(json.msg);
-					setTimeout( function() { showBlacklistUsers() }, 500);
+					$('#' + id).hide('slow', function(){ $(this).remove(); });
 				}
 				else if(json.success === '2')
 				{
@@ -262,6 +225,7 @@ function banUser()
 	});	
 	return false;
 }
+
 function editSite()
 {
 	var form_data = 
@@ -406,16 +370,17 @@ function removeSite(siteId)
 	});	
 	return false;
 }
-function removeBlacklistIps(IpId)
+
+function banUser()
 {
 	var form_data = 
 	{
-		id : IpId
-	}
+		uname : $("input[name='user']").val()
+	};
 	
 	$.ajax(
 	{
-		url: '/ajax/remove_BlacklistIp',
+		url: '/ajax/banUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -425,7 +390,74 @@ function removeBlacklistIps(IpId)
 				
 				if(json.success === '1')
 				{
-					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
+					alert(json.msg);
+					setTimeout( function() { showBlacklistUsers() }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+				}
+			}
+	});	
+	return false;
+}
+
+function banIp()
+{
+	var form_data = 
+	{
+		ip : $("input[name='ip']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/banIp',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alert(json.msg);
+					setTimeout( function() { showBlacklistIps() }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alert(json.msg);
+				}
+				else if(json.success === '3')
+				{
+					alert("Invalid IP");
+					
+				}
+			}
+	});	
+	return false;
+}
+
+function removeBlacklistIps(id, ip)
+{
+	var form_data = 
+	{
+		postIP : ip
+	}
+	
+	$.ajax(
+	{
+		url: '/ajax/removeBlacklistIp',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					$('#' + id).hide('slow', function(){ $(this).remove(); });
 				}
 				else if(json.success === '2')
 				{
@@ -444,7 +476,7 @@ function removeBlacklistUsers(IpId)
 	
 	$.ajax(
 	{
-		url: '/ajax/remove_BlacklistUsers',
+		url: '/ajax/removeBlacklistUsers',
 		type: 'POST',
 		data: form_data,
 		success: 
