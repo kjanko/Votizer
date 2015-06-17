@@ -140,6 +140,15 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('pages/pages-edit', $data);
 	}
 	
+	public function pages_add($backUrl)
+	{
+		$data = array(
+			'backUrl' => $backUrl
+		);
+		
+		$this->parser->parse('pages/pages-add', $data);
+	}
+	
 	public function users()
 	{
 		$data = array(

@@ -144,8 +144,8 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('description', 'Descripton', 'required');
 			$this->form_validation->set_rules('inVotes', 'In Votes', 'required|is_natural');
 			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
-			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required');
-			$this->form_validation->set_rules('url', 'URL', 'required');
+			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
+			$this->form_validation->set_rules('url', 'URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -527,6 +527,56 @@ class Ajax extends MX_Controller
 				);
 				
 				echo json_encode($data);
+			}
+		}
+	}
+	
+	function addPage()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{			
+			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+			$this->form_validation->set_rules('title', 'Title', 'required');
+			$this->form_validation->set_rules('url', 'URL', 'required');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$data = array(
+					'success' => '3', 
+					'msg' => validation_errors()
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				$title = $this->input->post('title');
+				$url = $this->input->post('url');
+				$content = $this->input->post('content');
+				
+				if($this->pages->create($url, $title, $content))
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Please wait while you are being redirected.'
+					);
+					
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Error! Something went wrong while creating this page!'
+					);
+					
+					echo json_encode($data);
+				}
+			
 			}
 		}
 	}

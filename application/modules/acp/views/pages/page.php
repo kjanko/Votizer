@@ -30,10 +30,10 @@
 	</style>
 	
 	<script type="application/javascript">
-		$(function() 
+		/*$(function() 
 		{
 			$('#pages').jPaginate({ items: 5, next: '>', previous: '<' });
-		});
+		});*/
 		
 		function setup()
 		{
@@ -107,6 +107,8 @@
 				
 				
 				<div class="content-module-main">
+				
+					<a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddPage('pages')">Add Page</a>
 					
 					<table>
 					
