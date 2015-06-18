@@ -76,7 +76,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function edit_user()
+	function editUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -130,7 +130,7 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
-	function edit_site()
+	function editSite()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -223,7 +223,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function add_user()
+	function addUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -312,7 +312,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function remove_site()
+	function removeSite()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -578,6 +578,39 @@ class Ajax extends MX_Controller
 				}
 			
 			}
+		}
+	}
+	
+	function getSearchData($table)
+	{
+		$username = $this->input->post('query');
+		
+		$array = array(
+			'username' => $username
+		);
+		
+		$data = $this->general->searchData($table, $array);
+		
+		$output = array(
+			'users' => $data
+		);
+		
+		if($data)
+		{
+			$result = array(
+				'success' => '1',
+				'html' => $this->parser->parse('users-search', $output, true)
+			);
+			
+			echo json_encode($result);
+		}
+		else
+		{
+			$result = array(
+				'success' => '2'
+			);
+			
+			echo json_encode($result);
 		}
 	}
 }

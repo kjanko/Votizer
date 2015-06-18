@@ -136,7 +136,7 @@ function editUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/edit_user',
+		url: '/ajax/editUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -289,7 +289,7 @@ function editSite()
 	
 	$.ajax(
 	{
-		url: '/ajax/edit_site',
+		url: '/ajax/editSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -331,7 +331,7 @@ function addUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/add_user',
+		url: '/ajax/addUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -396,7 +396,7 @@ function removeSite(siteId)
 	
 	$.ajax(
 	{
-		url: '/ajax/remove_site',
+		url: '/ajax/removeSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -541,4 +541,44 @@ function removeBlacklistUsers(IpId)
 			}
 	});	
 	return false;
+}
+
+function search(type, errorMessage)
+{
+	var active = 0;	
+
+	$("input#search-keyword").live("keyup", function(e) 
+	{
+		var form_data = 
+		{
+			query : $('input#search-keyword').val()
+		}
+		
+		$.ajax(
+		{
+               type: "POST",
+               url: "/ajax/getSearchData/top_"+type,
+               data: form_data,
+               cache: false,
+               success: 
+				function(message)
+				{
+					var json = jQuery.parseJSON(message);
+					if(json.success === '1')
+					{
+						$("tbody#"+type).html(json.html);
+					}
+						else
+					{
+						if(active === 0)
+						{
+							alertify.set({ delay: 2000 });
+							alertify.error(errorMessage);
+							active = 1;
+							setTimeout(function() { active = 0; }, 2100);
+						}
+					}
+				}
+           });
+	});
 }

@@ -37,6 +37,11 @@ class General
 		return $arrFeeds;
 	}
 	
+	public function searchData($table, $data)
+	{
+		return $this->_ci->db->select('*')->like($data)->get($table)->result_array();
+	}
+	
 	public function getNavigationData()
 	{
 		return $this->_ci->db->get('top_navigation')->result_array();

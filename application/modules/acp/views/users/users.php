@@ -9,6 +9,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet'>
 	<link rel="stylesheet" href="/addons/acp/css/style.css">
 	<link rel="stylesheet" href="/addons/acp/css/jquery.jqplot.css">
+	<link rel="stylesheet" href="/addons/acp/js/alertify/dist/css/alertify-bootstrap-3.css" />
 	
 	<!-- Optimize for mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,6 +21,7 @@
 	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>  
 	<script src="/addons/acp/js/pagination.js"></script> 
 	<script src="/addons/acp/js/acp.js"></script> 
+	<script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
 	
 	<style>
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
@@ -29,10 +31,13 @@
 	</style>
 	
 	<script type="application/javascript">
-		$(function() 
+		/*$(function() 
 		{
 			$('#users').jPaginate({ items: 5, next: '>', previous: '<' });
-		});
+		});*/
+		
+		search('users', 'Such user does not exist!');
+		
 	</script>
 </head>
 
@@ -50,14 +55,6 @@
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
 			</ul> <!-- end nav -->
-
-					
-			<form action="#" method="POST" id="search-form" class="fr">
-				<fieldset>
-					<input type="text" id="search-keyword" class="round button dark ic-search image-right" placeholder="Search..." />
-					<input type="hidden" value="SUBMIT" />
-				</fieldset>
-			</form>
 
 		</div> <!-- end full-width -->	
 	
@@ -99,6 +96,14 @@
 				
 					<p>User management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
 					<a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddUser()">Add User</a>
+					
+					<form action="#" method="POST" id="search-form" class="fr"
+					style="position: absolute; right: 50px; top: 235px;">
+						<fieldset>
+							<input type="text" name="search" id="search-keyword" class="round button dark ic-search image-right" placeholder="Search...">
+							<input type="hidden" value="SUBMIT">
+						</fieldset>
+					</form>
 					
 					<table>
 					
