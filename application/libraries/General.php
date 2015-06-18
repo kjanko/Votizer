@@ -65,7 +65,16 @@ class General
 		else
 			return false;
 	}
-	
+
+    public function banWord($word, $replacement)
+    {
+        $data = array(
+           'word' => $word,
+           'replacement' => $replacement
+        );
+
+        return $this->_ci->db->insert('top_blacklist_profanity', $data);
+    }
 	public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
@@ -79,6 +88,13 @@ class General
 		else
 			return false;
 	}
+    public function removeBlacklistProfanity($id)
+    {
+        $data = array(
+            'id' => $id
+        );
+        return $this->_ci->db->delete('top_blacklist_profanity', $data);
+    }
 	
 	public function updateBlacklistUser($id, $new)
 	{
@@ -101,6 +117,10 @@ class General
 	{
 		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
+    public function getBlacklistProfanityData()
+    {
+        return $data = $this->_ci->db->get('top_blacklist_profanity')->result_array();
+    }
 
 	public function insertUserActivity($ip)
 	{

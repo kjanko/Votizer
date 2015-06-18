@@ -658,7 +658,7 @@ div.content-module-main { padding: 1em; /* 16/16 */ }
 .blacklist {
 	display: inline-block;
 	box-sizing: border-box;
-	width:50px;
+	width:80px;
 	text-align:center;
 	font-style: normal;
 	font-weight: normal;

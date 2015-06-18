@@ -222,6 +222,51 @@ class Ajax extends MX_Controller
 			
 		}
 	}
+
+    function banProfanity()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_rules('word', 'Word', 'required');
+            $this->form_validation->set_rules('replacement', 'Replacement', 'required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $word = $this->input->post('word');
+                $replacement = $this->input->post('replacement');
+
+                if ($this->general->banWord($word, $replacement))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                } else {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! This word already exists!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
 	
 	function add_user()
 	{
@@ -351,7 +396,6 @@ class Ajax extends MX_Controller
 		}
 		else
 		{
-			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('ip', 'Ip', 'required|valid_ip');
 			
 			if ($this->form_validation->run() == FALSE)
@@ -448,6 +492,36 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+    function removeBlacklistProfanity()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('postID');
+
+            if($this->general->removeBlacklistProfanity($id))
+            {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The word has been deleted from the blacklist.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this word from the blacklist!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
 	
 	function editPage()
 	{

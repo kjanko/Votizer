@@ -220,6 +220,14 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistUsers', $data);
 	}
+    public function blacklistProfanity()
+    {
+        $data = array(
+            'blacklistProfanity' => $this->general->getBlacklistProfanityData()
+        );
+
+        $this->parser->parse('blacklist/blacklistProfanity', $data);
+    }
 	
 	public function logout()
 	{
