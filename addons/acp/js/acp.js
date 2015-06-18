@@ -37,37 +37,6 @@ function adminLogin()
 	});
 }
 
-function displayChart()
-{
-	$.ajax(
-	{
-		url: '/ajax/user_activity',
-		type: 'POST',
-		success:
-			function(result)
-			{ 
-				var json =  jQuery.parseJSON(result);
-				
-				$.jqplot('chartdiv',  [[[2, 2], [5, 2], [3, 3], [1.6, 2]]],
-				{ 
-					axes:
-					{
-						yaxis:
-						{
-							min:1, 
-							max:json.result
-						},
-						xaxis:
-						{
-							min:1,
-							max:5
-						}
-					}
-				});
-			}
-	});
-}
-
 function showEditUser(username, backUrl)
 {
 	$.get('/acp/dashboard/users_edit/' + username + '/' + backUrl , function(data) 
@@ -146,12 +115,12 @@ function editUser()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '3')
@@ -186,12 +155,12 @@ function editPage()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '3')
@@ -224,10 +193,11 @@ function removePage(id)
 				if(json.success === '1')
 				{
 					$('#' + id).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The page has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -255,12 +225,12 @@ function addPage()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
@@ -299,12 +269,12 @@ function editSite()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '3')
@@ -341,12 +311,12 @@ function addUser()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
@@ -378,10 +348,11 @@ function removeUser(username)
 				if(json.success === '1')
 				{
 					$('#' + username).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The user has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -407,10 +378,11 @@ function removeSite(siteId)
 				if(json.success === '1')
 				{
 					$('#' + siteId).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The site has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -436,12 +408,12 @@ function banUser()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { showBlacklistUsers() }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -467,16 +439,16 @@ function banIp()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { showBlacklistIps() }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
-					alert("Invalid IP");
+					alertify.alert("Invalid IP.");
 					
 				}
 			}
@@ -504,10 +476,11 @@ function removeBlacklistIps(id, ip)
 				if(json.success === '1')
 				{
 					$('#' + id).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The IP has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -533,10 +506,11 @@ function removeBlacklistUsers(IpId)
 				if(json.success === '1')
 				{
 					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The user has been successfully whitelisted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
