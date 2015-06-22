@@ -80,6 +80,14 @@ class General
 
         return $this->_ci->db->insert('top_blacklist_profanity', $data);
     }
+    public function banUrl($url)
+    {
+        $data = array(
+            'url' => $url
+        );
+
+        return $this->_ci->db->insert('top_blacklist_url', $data);
+    }
 	public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
@@ -100,7 +108,13 @@ class General
         );
         return $this->_ci->db->delete('top_blacklist_profanity', $data);
     }
-	
+    public function removeBlacklistUrl($id)
+    {
+        $data = array(
+            'id' => $id
+        );
+        return $this->_ci->db->delete('top_blacklist_url', $data);
+    }
 	public function updateBlacklistUser($id, $new)
 	{
 		$data = array(
@@ -122,6 +136,10 @@ class General
 	{
 		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
+    public function getBlacklistUrlData()
+    {
+        return $data = $this->_ci->db->get('top_blacklist_url')->result_array();
+    }
     public function getBlacklistProfanityData()
     {
         return $data = $this->_ci->db->get('top_blacklist_profanity')->result_array();

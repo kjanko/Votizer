@@ -211,7 +211,13 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistIps', $data);
 	}
-	
+    public function blacklistUrls(){
+        $data = array(
+            'blacklistUrls' => $this->general->getBlacklistUrlData()
+        );
+        $this->parser->parse('blacklist/blacklistUrls', $data);
+
+    }
 	public function blacklistUsers()
 	{
 		$data = array(

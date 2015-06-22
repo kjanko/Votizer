@@ -19,7 +19,8 @@
 	<script src="/addons/acp/js/script.js"></script>  
 	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>  
 	<script src="/addons/acp/js/pagination.js"></script> 
-	<script src="/addons/acp/js/acp.js"></script> 
+	<script src="/addons/acp/js/acp.js"></script>
+    <script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
 	
 	<style>
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
@@ -97,7 +98,8 @@
 					<button class="blacklist activeBlacklist">IPs</button> 
 					<button class="blacklist" onclick="showBlacklistUsers()">Users</button>
                     <button class="blacklist" onclick="showBlacklistProfanity()">Profanity</button>
-					<form style="display:inline-block; float:right;" id="users-mod" method="POST" onsubmit="return banIp();">
+                    <button class="blacklist" onclick="showBlacklistUrls()">URLs</button>
+                    <form style="display:inline-block; float:right;" id="users-mod" method="POST" onsubmit="return banIp();">
 						<input style="width:10em;" type="text" id="simple-input" name="ip" class="round default-width-input" placeholder="Ip...">
 						<input type="submit" value="Add" class="round blue ic-add" />
 					</form>

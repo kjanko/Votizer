@@ -82,6 +82,13 @@ function showBlacklistProfanity()
         $('.content-module-main').html(data).show('scale');
     });
 }
+function showBlacklistUrls()
+{
+    $.get('/acp/dashboard/blacklistUrls/', function(data)
+    {
+        $('.content-module-main').html(data).show('scale');
+    });
+}
 function showEditSite(id)
 {
 	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
@@ -361,6 +368,10 @@ function removeUser(username)
 				{
 					alertify.alert(json.msg);
 				}
+                else
+                {
+                    alertify.error(json.msg);
+                }
 			}
 	});	
 	return false;
@@ -416,7 +427,7 @@ function banUser()
 				if(json.success === '1')
 				{
 					alertify.alert(json.msg);
-					setTimeout( function() { showBlacklistUsers() }, 500);
+					setTimeout( function() { showBlacklistUsers() }, 200);
 				}
 				else if(json.success === '2')
 				{
@@ -447,7 +458,7 @@ function banIp()
 				if(json.success === '1')
 				{
 					alertify.alert(json.msg);
-					setTimeout( function() { showBlacklistIps() }, 500);
+					setTimeout( function() { showBlacklistIps() }, 200);
 				}
 				else if(json.success === '2')
 				{
@@ -461,6 +472,52 @@ function banIp()
 			}
 	});	
 	return false;
+}
+function valid_url($url)
+{
+    $pattern = "/^((ht|f)tp(s?)\:\/\/|~/|/)?([w]{2}([\w\-]+\.)+([\w]{2,5}))(:[\d]{1,5})?/";
+    if (!preg_match($pattern, $url))
+    {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+function banUrl()
+{
+    var url = $("input[name='url']").val();
+
+    var form_data =
+    {
+        postUrl : url
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/banUrl',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { showBlacklistUrls() }, 200);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        alertify.alert("Invalid IP.");
+                    }
+                }
+        });
+    return false;
 }
 
 function removeBlacklistIps(id, ip)
@@ -523,7 +580,36 @@ function removeBlacklistUsers(IpId)
 	});	
 	return false;
 }
+function removeBlacklistUrls(postId)
+{
+    var form_data =
+    {
+        id : postId
+    }
 
+    $.ajax(
+        {
+            url: '/ajax/removeBlacklistUrls',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        $('#' + postId).hide('slow', function(){ $(this).remove(); });
+                        alertify.success("The url has been successfully whitelisted.");
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
+}
 function search(type, errorMessage)
 {
 	var active = 0;	
@@ -590,11 +676,8 @@ function banProfanity()
                     else if(json.success === '2')
                     {
                         alert(json.msg);
-                    }
-                    else if(json.success === '3')
-                    {
-                        alert("The word and replacement word fields are required");
-
+                    }else if(json.success === '3'){
+                        alert(json.msg);
                     }
                 }
         });

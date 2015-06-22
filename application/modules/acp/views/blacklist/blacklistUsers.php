@@ -1,6 +1,7 @@
 <button class="blacklist" onclick="showBlacklistIps()">IPs</button>
 <button class="blacklist activeBlacklist">Users</button>
 <button class="blacklist" onclick="showBlacklistProfanity()">Profanity</button>
+<button class="blacklist" onclick="showBlacklistUrls()">URLs</button>
 <form style="display:inline-block; float:right;" id="users-mod" method="POST" onsubmit="return banUser();">
     <input style="width:10em;" type="text" id="simple-input" name="user" class="round default-width-input" placeholder="Username...">
     <input type="submit" value="Add" class="round blue ic-add" />

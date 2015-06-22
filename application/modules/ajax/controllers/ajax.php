@@ -225,8 +225,7 @@ class Ajax extends MX_Controller
 
     function banProfanity()
     {
-        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-        {
+        if (!$this->session->userdata('activity') && $this->session->userdata('rank') < 2) {
             show_404();
         }
         else
@@ -248,8 +247,7 @@ class Ajax extends MX_Controller
                 $word = $this->input->post('word');
                 $replacement = $this->input->post('replacement');
 
-                if ($this->general->banWord($word, $replacement))
-                {
+                if ($this->general->banWord($word, $replacement)) {
                     $data = array(
                         'success' => '1',
                         'msg' => 'Success! Please wait while you are being redirected.'
@@ -257,6 +255,50 @@ class Ajax extends MX_Controller
 
                     echo json_encode($data);
                 } else {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! This word already exists!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
+	
+    function banUrl()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $url = $this->input->post('postUrl');
+            $this->form_validation->set_rules('url', 'Url', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                if ($this->general->banUrl($url))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
                     $data = array(
                         'success' => '2',
                         'msg' => 'Error! This word already exists!'
@@ -503,6 +545,36 @@ class Ajax extends MX_Controller
             $id = $this->input->post('postID');
 
             if($this->general->removeBlacklistProfanity($id))
+            {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The word has been deleted from the blacklist.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this word from the blacklist!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
+    function removeBlacklistUrls()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('id');
+
+            if($this->general->removeBlacklistUrl($id))
             {
                 $data = array(
                     'success' => '1',
