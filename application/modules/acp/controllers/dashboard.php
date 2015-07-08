@@ -17,28 +17,12 @@ class Dashboard extends MX_Controller {
 	
 	public function index()
 	{		
-		//--------------------------//
-		//		  XML Data         //
-		//------------------------//
-		$doc = new DOMDocument();
-		$doc->load('http://kjanko.com/XML.xml');
-		$arrFeeds = array();
-		foreach ($doc->getElementsByTagName('topic') as $node) 
-		{
-			$itemRSS = array ( 
-				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-				'content' => $node->getElementsByTagName('content')->item(0)->nodeValue,
-				'date' => $node->getElementsByTagName('date')->item(0)->nodeValue
-			);
-			array_push($arrFeeds, $itemRSS);
-		}	
-		//------------------------//
-		
 		$data = array(
 			'username' => $this->session->userdata('username'),
 			'navigation' => $this->general->getNavigationData(),
 			'graph' => $this->getGraph(),
-			'feeds' => $arrFeeds
+			//ToDo: load this segment via AJAX to speedup the site
+			'feeds' => $this->general->getXMLData('http://kjanko.com/XML.xml') 
 		);
 		
 		$this->parser->parse('dashboard', $data);
@@ -156,6 +140,15 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('pages/pages-edit', $data);
 	}
 	
+	public function pages_add($backUrl)
+	{
+		$data = array(
+			'backUrl' => $backUrl
+		);
+		
+		$this->parser->parse('pages/pages-add', $data);
+	}
+	
 	public function users()
 	{
 		$data = array(
@@ -165,28 +158,10 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users', $data);
 	}
-	public function sites()
-	{		
-		$data = array(
-			'username' => $this->session->userdata('username'),
-			'sites' => $this->sites->getData()
-		);
-		
-		$this->parser->parse('sites/sites', $data);
-	}
-	public function blacklist()
+	
+	public function users_add()
 	{
-		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
-		{
-			show_404();
-		}
-		
-		$data = array(
-			'username' => $this->session->userdata('username'),
-			'blacklistIps' => $this->general->getBlacklistData()
-		);
-		
-		$this->parser->parse('blacklist/blacklist', $data);
+		$this->parser->parse('users/users-add');
 	}
 	
 	public function users_edit($username,$url)
@@ -198,6 +173,17 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users-edit', $data);
 	}
+	
+	public function sites()
+	{		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'sites' => $this->sites->getData()
+		);
+		
+		$this->parser->parse('sites/sites', $data);
+	}
+	
 	public function sites_edit($id)
 	{
 		$data = array(
@@ -206,6 +192,17 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('sites/sites-edit', $data);
 	}
+	
+	public function blacklist()
+	{		
+		$data = array(
+			'username' => $this->session->userdata('username'),
+			'blacklistIps' => $this->general->getBlacklistData()
+		);
+		
+		$this->parser->parse('blacklist/blacklist', $data);
+	}
+	
 	public function blacklistIps()
 	{
 		$data = array(
@@ -214,6 +211,7 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistIps', $data);
 	}
+	
 	public function blacklistUsers()
 	{
 		$data = array(
@@ -222,11 +220,14 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistUsers', $data);
 	}
-	
-	public function users_add()
-	{
-		$this->parser->parse('users/users-add');
-	}
+    public function blacklistProfanity()
+    {
+        $data = array(
+            'blacklistProfanity' => $this->general->getBlacklistProfanityData()
+        );
+
+        $this->parser->parse('blacklist/blacklistProfanity', $data);
+    }
 	
 	public function logout()
 	{

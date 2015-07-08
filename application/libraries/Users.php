@@ -281,16 +281,21 @@ class Users
 	
 	public function remove($username)
 	{
-		// Get the user's ID
-		$id = self::get_user_id($username);
-		// Get the user's rank
-		$rank = self::get_user_rank($username);
-		// Delete the user
-		$this->_ci->db->delete('top_users', array('username' => $username));
-		// Delete the sites related to the user
-		//$this->_ci->db->delete('top_sites', array('user_id' => $id));
-		
-		return true;
+		if($this->_ci->session->userdata('username') != $username)
+		{
+			// Get the user's ID
+			$id = self::get_user_id($username);
+			// Get the user's rank
+			$rank = self::get_user_rank($username);
+			// Delete the user
+			$this->_ci->db->delete('top_users', array('username' => $username));
+			// Delete the sites related to the user
+			$this->_ci->db->delete('top_sites', array('user_id' => $id));
+			
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**

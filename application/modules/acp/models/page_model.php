@@ -19,9 +19,9 @@ class Page_model extends CI_Model
 			return false;
 	}
 
-	public function delete($id)
+	public function remove($id)
 	{
-		$this->_ci->db->delete('top_pages', array('id' => $id));
+		return $this->db->delete('top_pages', array('id' => $id));
 	}
 
 	public function create($controller, $title, $content)
@@ -32,7 +32,10 @@ class Page_model extends CI_Model
 			'content' => $content
 		);
 
-		$this->db->insert("top_pages", $data);
+		if($this->db->insert("top_pages", $data))
+			return true;
+		else
+			return false;
 	}
 
 	public function update($id, $controller, $title, $content)

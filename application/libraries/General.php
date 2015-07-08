@@ -11,7 +11,6 @@
  
 class General 
 {
-
 	private $_ci;
 
 	function __construct()
@@ -20,21 +19,68 @@ class General
 		$this->_ci = &get_instance();
 	}
 	
+	//FRONTEND START//
+	
+	public function getHeaderNavigation()
+	{
+		return $this->_ci->db->get('top_navigation_header')->result_array();
+	}
+	
+	public function getAdvertisements($location)
+	{
+		return $this->_ci->db->get_where('top_advertisements', array('location' => $location))->result_array();
+	}
+	
+	public function getHomepageData()
+	{
+		return $this->_ci->db->get('top_homepage')->result_array();
+	}
+	
+	//FRONTEND END---//
+	//--------------//
+	//BACKEND START//
+	public function getXMLData($url)
+	{
+		$doc = new DOMDocument();
+		$doc->load($url);
+		$arrFeeds = array();
+		foreach ($doc->getElementsByTagName('topic') as $node) 
+		{
+			$itemRSS = array ( 
+				'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
+				'content' => $node->getElementsByTagName('content')->item(0)->nodeValue,
+				'date' => $node->getElementsByTagName('date')->item(0)->nodeValue
+			);
+			array_push($arrFeeds, $itemRSS);
+		}
+		
+		return $arrFeeds;
+	}
+	
+	public function sanitizeSiteProfanity($word, $replacement)
+	{
+		$query = $this->_ci->db->select('title, description')->get('top_sites')->result_array();
+		$n = $query->num_rows();
+		for($i = 0; $i < $n; $i++)
+		{
+			str_replace($word, $replacement, $query[$i]['title']);
+			str_replace($word, $replacement, $query[$i]['description']);
+		}	
+	}
+	
+	public function searchData($table, $data)
+	{
+		return $this->_ci->db->select('*')->like($data)->get($table)->result_array();
+	}
+	
 	public function getNavigationData()
 	{
 		return $this->_ci->db->get('top_navigation')->result_array();
 	}
-	/********************************************************************************/
-	/************************ MOVE TO BLACKLIST MODEL AND CLEANUP ******************/
-	/*** USE SAME METHODS FOR IP AND USER WITH A PARAMETER $TYPE('user' or 'ip')***/
-	/*****************************************************************************/
+
 	public function isIPBlacklisted($ip)
 	{
-		$query = $this->_ci->db
-			->select('ip')
-			->from('top_blacklist_ip')
-			->where('ip', $ip)
-		->get();
+		$query = $this->_ci->db->get_where('top_blacklist_ip', array('ip' => $ip));
 		
 		if($query->num_rows() > 0)
 			return true;
@@ -55,13 +101,22 @@ class General
 		else
 			return false;
 	}
-	
+
+    public function banWord($word, $replacement)
+    {
+        $data = array(
+           'word' => $word,
+           'replacement' => $replacement
+        );
+
+        return $this->_ci->db->insert('top_blacklist_profanity', $data);
+    }
 	public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
 		{
 			$data = array(
-				'id' => $id
+				'ip' => $ip
 			);
 			
 			return $this->_ci->db->delete('top_blacklist_ip', $data);
@@ -69,40 +124,40 @@ class General
 		else
 			return false;
 	}
+    public function removeBlacklistProfanity($id)
+    {
+        $data = array(
+            'id' => $id
+        );
+        return $this->_ci->db->delete('top_blacklist_profanity', $data);
+    }
 	
 	public function updateBlacklistUser($id, $new)
 	{
 		$data = array(
 			'blacklist' => $new
 		);
+		
 		if($this->_ci->db->where('id', $id)->update('top_users', $data))
 			return true;
 		else 
 			return false;
 	}
 	
-	public function updateBlacklistIP($old, $new)
-	{
-		if(self::isIPBlacklisted($old))
-		{
-			$data = array(
-				'ip' => $new
-			);
-			
-			return $this->_ci->db->where('ip', $old)->update('top_blacklist_ip', $data);
-		}
-		else
-			return false;
-	}
 	public function getBlacklistData()
 	{
 		return $data = $this->_ci->db->get('top_blacklist_ip')->result_array();
 	}
+	
 	public function getBlacklistUserData()
 	{
 		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
-	/********************************************************************************/
+    public function getBlacklistProfanityData()
+    {
+        return $data = $this->_ci->db->get('top_blacklist_profanity')->result_array();
+    }
+
 	public function insertUserActivity($ip)
 	{
 		$data = array(

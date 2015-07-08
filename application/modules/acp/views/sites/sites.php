@@ -97,7 +97,7 @@
 				
 				<div class="content-module-main">
 				
-					<p>Sites management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
+					<p>This section provides state oversight for the investigation and cleanup of site's properties.</p>
 					
 					<table>
 					
