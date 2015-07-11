@@ -76,7 +76,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function editUser()
+	function edit_user()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -130,7 +130,7 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
-	function editSite()
+	function edit_site()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -188,7 +188,7 @@ class Ajax extends MX_Controller
 				}
 			}
 		}
-	}	
+	}
 	
 	function banUser()
 	{
@@ -268,7 +268,7 @@ class Ajax extends MX_Controller
         }
     }
 	
-	function addUser()
+	function add_user()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -357,7 +357,7 @@ class Ajax extends MX_Controller
 		}
 	}
 	
-	function removeSite()
+	function remove_site()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
@@ -432,6 +432,51 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+
+    function banUrl()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_rules('url', 'Ip', 'required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $url = $this->input->post('url');
+
+                if($this->general->banUrl($url))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! This IP already exists!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
 	
 	function removeBlacklistIp()
 	{
@@ -492,6 +537,38 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+
+    function removeBlacklistUrl()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('postId');
+
+            if($this->general->removeBlacklistUrl($id))
+            {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The word has been deleted from the blacklist.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this word from the blacklist!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
+
     function removeBlacklistProfanity()
     {
         if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -652,39 +729,6 @@ class Ajax extends MX_Controller
 				}
 			
 			}
-		}
-	}
-	
-	function getSearchData($table)
-	{
-		$username = $this->input->post('query');
-		
-		$array = array(
-			'username' => $username
-		);
-		
-		$data = $this->general->searchData($table, $array);
-		
-		$output = array(
-			'users' => $data
-		);
-		
-		if($data)
-		{
-			$result = array(
-				'success' => '1',
-				'html' => $this->parser->parse('users-search', $output, true)
-			);
-			
-			echo json_encode($result);
-		}
-		else
-		{
-			$result = array(
-				'success' => '2'
-			);
-			
-			echo json_encode($result);
 		}
 	}
 }

@@ -1,4 +1,6 @@
-	<div id="header">
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?>	<div id="header">
 		<div class="header_img">
 			<div class="logo"></div>
 		</div>
@@ -16,4 +18,6 @@
 		</ul>
 		<div style="clear:both;"></div>
 	</div>
-			
+			<?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>

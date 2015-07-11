@@ -1,4 +1,6 @@
-<button class="blacklist" onclick="showBlacklistIps()">IPs</button>
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?><button class="blacklist" onclick="showBlacklistIps()">IPs</button>
 <button class="blacklist" onclick="showBlacklistUsers()">Users</button>
 <button class="blacklist activeBlacklist">Profanity</button>
 <button class="blacklist" onclick="showBlacklistUrls()">URLs</button>
@@ -21,18 +23,32 @@
     </thead>
 
     <tbody id="users">
-        {foreach $blacklistProfanity val}
-        <tr id="{$val.id}">
-            <td>{$val.id}</td>
-            <td>{$val.word}</td>
-            <td>{$val.replacement}</td>
+        <?php 
+$_fh0_data = (isset($this->scope["blacklistProfanity"]) ? $this->scope["blacklistProfanity"] : null);
+if ($this->isArray($_fh0_data) === true)
+{
+	foreach ($_fh0_data as $this->scope['val'])
+	{
+/* -- foreach start output */
+?>
+        <tr id="<?php echo $this->scope["val"]["id"];?>">
+            <td><?php echo $this->scope["val"]["id"];?></td>
+            <td><?php echo $this->scope["val"]["word"];?></td>
+            <td><?php echo $this->scope["val"]["replacement"];?></td>
             <td>
-                <a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistProfanity({$val.id})"></a>
+                <a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistProfanity(<?php echo $this->scope["val"]["id"];?>)"></a>
             </td>
         </tr>
-        {/foreach}
+        <?php 
+/* -- foreach end output */
+	}
+}?>
+
     </tbody>
 
 </table>
 
 <div class="stripe-separator"><!--  --></div>
+<?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>

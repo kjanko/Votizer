@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -45,7 +47,7 @@
 			<ul id="nav" class="fl">
 	
 				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
-				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
+				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong><?php echo $this->scope["username"];?></strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
@@ -116,19 +118,30 @@
 						</thead>
 						
 						<tbody id="users">
-							{foreach $users val}
-							<tr id="{$val.username}">
-								<td>{$val.id}</td>
-								<td>{$val.name} {$val.l_name}</td>
-								<td>{$val.username}</td>
-								<td>{$val.rank}</td>
-								<td><a href="#">{$val.email}</a></td>
+							<?php 
+$_fh0_data = (isset($this->scope["users"]) ? $this->scope["users"] : null);
+if ($this->isArray($_fh0_data) === true)
+{
+	foreach ($_fh0_data as $this->scope['val'])
+	{
+/* -- foreach start output */
+?>
+							<tr id="<?php echo $this->scope["val"]["username"];?>">
+								<td><?php echo $this->scope["val"]["id"];?></td>
+								<td><?php echo $this->scope["val"]["name"];?> <?php echo $this->scope["val"]["l_name"];?></td>
+								<td><?php echo $this->scope["val"]["username"];?></td>
+								<td><?php echo $this->scope["val"]["rank"];?></td>
+								<td><a href="#"><?php echo $this->scope["val"]["email"];?></a></td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditUser('{$val.username}','users')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeUser('{$val.username}')"></a>
+									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditUser('<?php echo $this->scope["val"]["username"];?>','users')"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removeUser('<?php echo $this->scope["val"]["username"];?>')"></a>
 								</td>
 							</tr>
-							{/foreach}
+							<?php 
+/* -- foreach end output */
+	}
+}?>
+
 						</tbody>
 						
 					</table>
@@ -154,4 +167,6 @@
 	</div> <!-- end footer -->
 
 </body>
-</html>
+</html><?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>

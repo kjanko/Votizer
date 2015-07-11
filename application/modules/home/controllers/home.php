@@ -11,18 +11,13 @@ class Home extends MX_Controller {
     }
 	
 	public function index()
-	{			
-		$servers = $this->sites->getData();
-		$navigation = $this->general->getHeaderNavigation();
-		$sidebar = $this->general->getAdvertisements(0);
-		$featured = $this->sites->getFeaturedData();
-		$homepage = $this->general->getHomepageData(); //ToDo
-	
+	{	
+		$categories = $this->cms->get_database_data('top_categories');
+		$content = $this->cms->get_database_data('top_servers');
+		
 		$data = array(
-			'servers' => $servers,
-			'navigation' => $navigation,
-			'sidebar' => $sidebar,
-			'featured' => $featured
+			'categories' => $categories,
+			'servers' => $content
 		);
 		
 		$this->template
@@ -30,10 +25,8 @@ class Home extends MX_Controller {
 			->set_partial('metadata', 'partials/metadata')
 			->set_partial('header', 'partials/header')
 			->set_partial('sidebar', 'partials/sidebar')
-			->set_partial('featured', 'partials/featured')
-			//->set_partial('footer', 'partials/footer')
 			->title('IgnitionCMS | Home')
-		->build('home');
+		->build('home', $data);
 	}
 }
 

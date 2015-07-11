@@ -99,11 +99,6 @@ class Sites
 		
 		return $data;
 	}
-	
-	public function getFeaturedData()
-	{
-		return $this->_ci->db->get_where('top_sites', array('featured' => 1))->result_array();
-	}
 }
 
 // END Sites Class

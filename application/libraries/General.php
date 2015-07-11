@@ -19,26 +19,6 @@ class General
 		$this->_ci = &get_instance();
 	}
 	
-	//FRONTEND START//
-	
-	public function getHeaderNavigation()
-	{
-		return $this->_ci->db->get('top_navigation_header')->result_array();
-	}
-	
-	public function getAdvertisements($location)
-	{
-		return $this->_ci->db->get_where('top_advertisements', array('location' => $location))->result_array();
-	}
-	
-	public function getHomepageData()
-	{
-		return $this->_ci->db->get('top_homepage')->result_array();
-	}
-	
-	//FRONTEND END---//
-	//--------------//
-	//BACKEND START//
 	public function getXMLData($url)
 	{
 		$doc = new DOMDocument();
@@ -55,22 +35,6 @@ class General
 		}
 		
 		return $arrFeeds;
-	}
-	
-	public function sanitizeSiteProfanity($word, $replacement)
-	{
-		$query = $this->_ci->db->select('title, description')->get('top_sites')->result_array();
-		$n = $query->num_rows();
-		for($i = 0; $i < $n; $i++)
-		{
-			str_replace($word, $replacement, $query[$i]['title']);
-			str_replace($word, $replacement, $query[$i]['description']);
-		}	
-	}
-	
-	public function searchData($table, $data)
-	{
-		return $this->_ci->db->select('*')->like($data)->get($table)->result_array();
 	}
 	
 	public function getNavigationData()
@@ -111,6 +75,16 @@ class General
 
         return $this->_ci->db->insert('top_blacklist_profanity', $data);
     }
+
+    public function banUrl($url)
+    {
+        $data = array(
+            'url' => $url
+        );
+
+        return $this->_ci->db->insert('top_blacklist_url', $data);
+    }
+
 	public function removeBlacklistIP($ip)
 	{
 		if(self::isIPBlacklisted($ip))
@@ -124,6 +98,14 @@ class General
 		else
 			return false;
 	}
+    public function removeBlacklistUrl($id)
+    {
+        $data = array(
+            'id' => $id
+        );
+
+        return $this->_ci->db->delete('top_blacklist_url', $data);
+    }
     public function removeBlacklistProfanity($id)
     {
         $data = array(
@@ -148,6 +130,11 @@ class General
 	{
 		return $data = $this->_ci->db->get('top_blacklist_ip')->result_array();
 	}
+
+    public function getBlacklistUrlData()
+    {
+        return $data = $this->_ci->db->get('top_blacklist_url')->result_array();
+    }
 	
 	public function getBlacklistUserData()
 	{

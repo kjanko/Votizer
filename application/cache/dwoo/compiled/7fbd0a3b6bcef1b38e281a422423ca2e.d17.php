@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+/* template head */
+/* end template head */ ob_start(); /* template body */ ?><!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -27,7 +29,6 @@
 		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
 		ul.pagination li a:hover { background-color:rgb(95, 108, 121)
 	</style>
-	
 	<script type="application/javascript">
 		$(function() 
 		{
@@ -45,7 +46,7 @@
 			<ul id="nav" class="fl">
 	
 				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
-				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
+				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong><?php echo $this->scope["username"];?></strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
@@ -72,7 +73,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/users" class="active-tab dashboard-tab">Users</a></li>
+				<li><a href="/acp/dashboard/blacklist" class="active-tab dashboard-tab">Blacklist</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -88,47 +89,54 @@
 			
 				<div class="content-module-heading cf">
 				
-					<h3 class="fl">User Managment</h3>
+					<h3 class="fl">Blacklist Management</h3>
 					<span class="fr expand-collapse-text">Click to collapse</span>
 					<span class="fr expand-collapse-text initial-expand">Click to expand</span>
 				
 				</div> <!-- end content-module-heading -->
 				
-				
 				<div class="content-module-main">
-				
-					<p>User management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
-					<a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddUser()">Add User</a>
-					
+					<button class="blacklist activeBlacklist">IPs</button> 
+					<button class="blacklist" onclick="showBlacklistUsers()">Users</button>
+                    <button class="blacklist" onclick="showBlacklistProfanity()">Profanity</button>
+                    <button class="blacklist" onclick="showBlacklistUrls()">URLs</button>
+					<form style="display:inline-block; float:right;" id="users-mod" method="POST" onsubmit="return banIp();">
+						<input style="width:10em;" type="text" id="simple-input" name="ip" class="round default-width-input" placeholder="Ip...">
+						<input type="submit" value="Add" class="round blue ic-add" />
+					</form>
 					<table>
 					
 						<thead>
 					
 							<tr>
 								<th style="position: relative;">Id</th>
-								<th>Name</th>
-								<th>Username</th>
-								<th>Rank</th>
-								<th>Email</th>
+								<th>Ip</th>
 								<th>Actions</th>
 							</tr>
 						
 						</thead>
 						
 						<tbody id="users">
-							{foreach $users val}
-							<tr id="{$val.username}">
-								<td>{$val.id}</td>
-								<td>{$val.name} {$val.l_name}</td>
-								<td>{$val.username}</td>
-								<td>{$val.rank}</td>
-								<td><a href="#">{$val.email}</a></td>
+							<?php 
+$_fh0_data = (isset($this->scope["blacklistIps"]) ? $this->scope["blacklistIps"] : null);
+if ($this->isArray($_fh0_data) === true)
+{
+	foreach ($_fh0_data as $this->scope['val'])
+	{
+/* -- foreach start output */
+?>
+							<tr id="<?php echo $this->scope["val"]["id"];?>">
+								<td><?php echo $this->scope["val"]["id"];?></td>
+								<td><?php echo $this->scope["val"]["ip"];?></td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditUser('{$val.username}','users')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeUser('{$val.username}')"></a>
+									<a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistIps(<?php echo $this->scope["val"]["id"];?>, '<?php echo $this->scope["val"]["ip"];?>')"></a>
 								</td>
 							</tr>
-							{/foreach}
+							<?php 
+/* -- foreach end output */
+	}
+}?>
+
 						</tbody>
 						
 					</table>
@@ -154,4 +162,6 @@
 	</div> <!-- end footer -->
 
 </body>
-</html>
+</html><?php  /* end template body */
+return $this->buffer . ob_get_clean();
+?>
