@@ -1,6 +1,6 @@
 <div style="padding: 0 20px 0">
-    <h3 class="createEventContainer" >Site details:</h3>
-    <form class="form-horizontal">
+    <h3>User details:</h3>
+    <form class="form-horizontal" method="post" onsubmit="return registerSite()">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-10">
@@ -20,6 +20,25 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password:</label>
+            <div class="col-sm-10">
+                <input id="password" class="form-control" required type="password" placeholder="Password"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword" class="col-sm-2 control-label">Confirm password:</label>
+            <div class="col-sm-10">
+                <input id="confirmPassword" class="form-control" required type="password" placeholder="ConfirmPassword"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email:</label>
+            <div class="col-sm-10">
+                <input id="email" class="form-control" required type="text" placeholder="Email"/>
+            </div>
+        </div>
+        <h3>Site details:</h3>
+        <div class="form-group">
             <label for="url" class="col-sm-2 control-label">URL:</label>
             <div class="col-sm-10">
                 <input id="url" class="form-control" required type="text" placeholder="http://"/>
@@ -38,23 +57,16 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email:</label>
+            <label for="category" class="col-sm-2 control-label">Category:</label>
             <div class="col-sm-10">
-                <input id="email" class="form-control" required type="text" placeholder="Email"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Category:</label>
-            <div class="col-sm-10">
-                <select class="form-control">
+                <select id="category" class="form-control">
                     <option selected value="1">WOW</option>
                     <option value="2">Minecraft</option>
                 </select>
             </div>
         </div>
         <div>
-            <input class="btn btn-primary" style="width:100%; margin-top:10px;" type="submit" value="Add Site" />
+            <input class="btn btn-primary" id="submit" style="width:100%; margin-top:10px;" type="submit" value="Add Site" />
         </div>
-
     </form>
 </div>

@@ -93,7 +93,7 @@ class Users
 			// Destroy the session
 			$this->_ci->session->sess_destroy();
 			// Redirect
-			redirect('/'.$location);
+			redirect("/".$location);
 		}
 		else
 		{
@@ -206,7 +206,27 @@ class Users
 	 * @return bool
 	 *
 	 */
-	
+	public function doesExist($username,$email){
+        // Check if username already exists
+        if(!$this->_ci->db->select('username')->from('top_users')->where('username', $username)->get()->num_rows() <= 0)
+        {
+            return true;
+        }
+        // Check if email already exists
+        elseif(!$this->_ci->db->select('email')->from('top_users')->where('email', $email)->get()->num_rows() <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+    public function emailTaken($email, $id){
+        // Check if email already exists
+        if(!$this->_ci->db->select('email')->from('top_users')->where('email', $email)->where('id !=', $id)->get()->num_rows() <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
 	public function create($fname, $lname, $username, $password, $email, $rank)
 	{
 		$hash = sha1(strtoupper($password));
@@ -220,17 +240,11 @@ class Users
 			'email' => $email,
 			'rank' => $rank
 		);
-		
-		// Check if user already exists
-		if(!$this->_ci->db->select('username')->from('top_users')->where('username', $username)->get()->num_rows() <= 0)
-		{
-			return false;
-		}
-		// Check if email already exists
-		elseif(!$this->_ci->db->select('email')->from('top_users')->where('email', $email)->get()->num_rows() <= 0)
-		{
-			return false;
-		}
+
+        // Check if user already exists
+		if(self::doesExist($username,$email)){
+            return false;
+        }
 		// Insert the data
 		else
 		{
@@ -250,7 +264,7 @@ class Users
 	 * @return bool
 	 *
 	 */
-	
+	//********************
 	public function update($id, $username, $fname, $lname, $email, $rank)
 	{
 		// Set the data
@@ -268,6 +282,21 @@ class Users
 		
 		return true;
 	}
+    public function updateUser($id, $fname, $lname, $email)
+    {
+        // Set the data
+        $data = array(
+            'email' => $email,
+            'name' => $fname,
+            'l_name' => $lname,
+        );
+        // Update the user
+        $this->_ci->db
+            ->where('id', $id)
+            ->update('top_users', $data);
+
+        return true;
+    }
 	
 	/**
 	 *
@@ -312,17 +341,17 @@ class Users
 	 
 	public function edit_password($username, $old_password, $new_password)
 	{
-		$old_hash = sha1(strtoupper($old_password));
+		$hash = sha1(strtoupper($old_password));
 		$new_hash = sha1(strtoupper($new_password));
 		
 		// Get the data
-		$query = $this->_ci->db
-					->select('username', 'password')
-					->from('top_users')
-					->where('username', $username)
-					->where('password', $old_hash)
-				->get();
-		
+        $query = $this->_ci->db
+            ->select('username', 'password')
+            ->from('top_users')
+            ->where('username', $username)
+            ->where('password', $hash)
+            ->get();
+
 		// Check if such user exists
 		if($query->num_rows() <= 0)
 		{
@@ -338,11 +367,23 @@ class Users
 			// Update the data
 			$this->_ci->db
 				->where('username', $username)
-				->update('users', $data);
+				->update('top_users', $data);
 			
 			return true;
 		}
 	}
+
+    public function getUserByUserId($id){
+        $query = $this->_ci->db
+            ->get_where('top_users', array('id' => $id));
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 // END Users Class

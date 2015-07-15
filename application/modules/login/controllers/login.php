@@ -2,7 +2,7 @@
 
 // Register Controller
 
-class Register extends MX_Controller {
+class Login extends MX_Controller {
 
     public function __construct()
     {
@@ -16,12 +16,12 @@ class Register extends MX_Controller {
 		);
 
 		$this->template
-			->set_layout('register')
+			->set_layout('login')
 			->set_partial('metadata', 'partials/metadata')
             ->set_partial('header', 'partials/headerNew')
-			->set_partial('content', 'partials/register')
-			->title('IgnitionCMS | Register')
-		->build('register', $data);
+			->set_partial('content', 'partials/login')
+			->title('IgnitionCMS | Login')
+		->build('login', $data);
 	}
 }
 

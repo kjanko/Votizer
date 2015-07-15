@@ -1,3 +1,4 @@
+//**********
 function adminLogin()
 {
 	$('#login-submit').click(function() 
@@ -5,7 +6,8 @@ function adminLogin()
 		var form_data = 
 		{
 			username : $('#login-username').val(),
-			password : $('#login-password').val()
+			password : $('#login-password').val(),
+            user : "false"
 		};
 		
 		$.ajax(
@@ -307,7 +309,7 @@ function editSite()
 	
 	$.ajax(
 	{
-		url: '/ajax/edit_site',
+		url: '/ajax/editSiteACP',
 		type: 'POST',
 		data: form_data,
 		success: 

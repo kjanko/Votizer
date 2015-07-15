@@ -14,12 +14,12 @@ class Home extends MX_Controller {
 	{	
 		$categories = $this->cms->get_database_data('top_categories');
 		$content = $this->cms->get_database_data('top_servers');
-		
+
 		$data = array(
 			'categories' => $categories,
 			'servers' => $content
 		);
-		
+
 		$this->template
 			->set_layout('default')
 			->set_partial('metadata', 'partials/metadata')

@@ -28,19 +28,19 @@ class Sites
 	
 	public function isPremium($id)
 	{
-		if($this->_ci->$query = $this->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
+		if($this->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
 			return false;
 		else 
 			return true;
 	}
-	public function create($title, $content, $userid, $banner, $url)
+	public function create($title, $description, $userId, $categoryId, $url)
 	{
 		// Set the data
 		$data = array(
+            'user_id' => $userId,
+            'category_id' => $categoryId,
 			'title' => $title,
-			'content' => $content,
-			'user_id' => $userid,
-			'banner' => $banner,
+			'description' => $description,
 			'url' => $url
 		);
 		// Insert the data
@@ -57,7 +57,7 @@ class Sites
 		return true;
 	}
 	
-	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url, $premium)
+	public function updateACP($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url, $premium)
 	{
 		$data = array(
 			'title' => $title,
@@ -76,6 +76,34 @@ class Sites
 		
 		return true;
 	}
+    public function update($userId, $url, $description, $title, $categoryId)
+    {
+        $data = array(
+            'title' => $title,
+            'description' => $description,
+            'category_id' => $categoryId,
+            'url' => $url,
+        );
+
+        $this->_ci->db
+            ->where('user_id', $userId)
+            ->update('top_sites', $data);
+
+        return true;
+    }
+    //**********
+
+    public function getSiteByUserId($userId){
+        $query = $this->_ci->db
+            ->get_where('top_sites', array('user_id' => $userId));
+        if($query->num_rows() > 0){
+            return $query->row();
+        }
+        else
+        {
+            return false;
+        }
+    }
 	
 	public function getDataById($id)
 	{
