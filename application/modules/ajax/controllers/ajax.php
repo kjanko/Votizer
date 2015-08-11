@@ -21,37 +21,30 @@ class Ajax extends MX_Controller
 	{
 		show_error('Access denied!');
 	}
-    //***********
+
 	function user_login()
 	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-        $user = $this->input->post('user');
-
+		
 		if($this->users->login($username, $password))
 		{
-			if($this->users->get_user_rank($username) >= 2 && $user == "false")
+			if($this->users->get_user_rank($username) >= 2)
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! Please wait while we redirect you...'
 				);
-
+				
 				echo json_encode($data);
-			}else if($user == "true"){
-                $data = array(
-                    'success' => '3',
-					'msg' => 'Success! Please wait while we redirect you...'
-                );
-                echo json_encode($data);
-            }
+			}
 			else
 			{
 				$data = array(
 					'success' => '2',
 					'msg' => 'Access denied.'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
@@ -61,14 +54,14 @@ class Ajax extends MX_Controller
 				'success' => '2',
 				'msg' => 'Incorrect credentials.'
 			);
-
+			
 			echo json_encode($data);
 		}
 	}
-
+	
 	function user_activity()
 	{
-		if($this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -78,14 +71,14 @@ class Ajax extends MX_Controller
 				'result' => $this->users->get_total_user_count(),
 				'session' => $this->users->get_total_users_online()
 			);
-
+			
 			echo json_encode($data);
 		}
 	}
-
-	function edit_user()
+	
+	function editUser()
 	{
-		if($this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -97,14 +90,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('uname', 'Username', 'required|min_length[5]|alpha_dash');
 			$this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
 			$this->form_validation->set_rules('rank', 'Rank', 'required|is_natural');
-
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -115,14 +108,14 @@ class Ajax extends MX_Controller
 				$lname = $this->input->post('lname');
 				$email = $this->input->post('email');
 				$rank = $this->input->post('rank');
-
+				
 				if($this->users->update($id, $uname, $fname, $lname, $email, $rank))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -131,39 +124,36 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this user!'
 					);
-
+					
 					echo json_encode($data);
 				}
 			}
 		}
 	}
-    //**********
-	function editSiteACP()
+	function editSite()
 	{
-        if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
-        {
-            show_404();
-        }
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
 		else
 		{
 			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
-			$this->form_validation->set_rules('categoryId', 'CategoryId', 'required|is_natural');
+			$this->form_validation->set_rules('categoryId', 'Username', 'required|is_natural');
 			$this->form_validation->set_rules('title', 'Title', 'required');
-			$this->form_validation->set_rules('description', 'Description', 'required');
+			$this->form_validation->set_rules('description', 'Descripton', 'required');
 			$this->form_validation->set_rules('inVotes', 'In Votes', 'required|is_natural');
 			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
-			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required');
-            $this->form_validation->set_rules('premium', 'Premium', 'required|is_natural');
-			$this->form_validation->set_rules('url', 'URL', 'required');
-			//Valid url check
-            //Check valid image url at banner url
+			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
+			$this->form_validation->set_rules('url', 'URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -177,14 +167,14 @@ class Ajax extends MX_Controller
 				$bannerUrl = $this->input->post('bannerUrl');
 				$url = $this->input->post('url');
 				$premium = $this->input->post('premium');
-
-				if($this->sites->updateACP($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url, $premium))
+				
+				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url, $premium))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -193,16 +183,16 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this user!'
 					);
-
+					
 					echo json_encode($data);
 				}
 			}
 		}
-	}
-
+	}	
+	
 	function banUser()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -217,7 +207,7 @@ class Ajax extends MX_Controller
 						'success' => '1',
 						'msg' => 'Success! The user '.$user.' has been banned!'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -226,16 +216,16 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! This user does not exist!'
 					);
-
+					
 					echo json_encode($data);
 				}
-
+			
 		}
 	}
 
     function banProfanity()
     {
-        if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
         {
             show_404();
         }
@@ -277,15 +267,15 @@ class Ajax extends MX_Controller
             }
         }
     }
-
-	function add_user()
+	
+	function addUser()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
-		{
+		{			
 			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
 			$this->form_validation->set_rules('lname', 'Last Name', 'required|alpha');
@@ -293,14 +283,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('password', 'Password', 'required|min_length[7]|alpha_dash');
 			$this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
 			$this->form_validation->set_rules('rank', 'Rank', 'required|is_natural');
-
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -311,33 +301,33 @@ class Ajax extends MX_Controller
 				$email = $this->input->post('email');
 				$password = $this->input->post('password');
 				$rank = $this->input->post('rank');
-
+				
 				if($this->users->create($fname, $lname, $uname, $password, $email, $rank))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
 				{
 					$data = array(
 						'success' => '2',
-						'msg' => 'Username or email is already taken.'
+						'msg' => 'Error! Something went wrong while creating this user! Please make sure that another user does not exist with the same username or email.'
 					);
-
+					
 					echo json_encode($data);
 				}
-
+			
 			}
 		}
 	}
-
+	
 	function removeUser()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -352,7 +342,7 @@ class Ajax extends MX_Controller
 					'success' => '1',
 					'msg' => 'Success! The user has been deleted.'
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -361,29 +351,29 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this user!'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
 	}
-
-	function remove_site()
+	
+	function removeSite()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
 		{
 			$id = $this->input->post('id');
-
+			
 			if($this->sites->remove($id))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! The user has been deleted.'
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -392,42 +382,42 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this user!'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
 	}
-
+	
 	function banIp()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
 		{
 			$this->form_validation->set_rules('ip', 'Ip', 'required|valid_ip');
-
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
 			{
 				$ip = $this->input->post('ip');
-
+				
 				if($this->general->insertBlacklistIP($ip))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -436,75 +426,30 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! This IP already exists!'
 					);
-
+					
 					echo json_encode($data);
 				}
 			}
 		}
 	}
-
-    function banUrl()
-    {
-        if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
-        {
-            show_404();
-        }
-        else
-        {
-            $this->form_validation->set_rules('url', 'Ip', 'required');
-
-            if ($this->form_validation->run() == FALSE)
-            {
-                $data = array(
-                    'success' => '3',
-                    'msg' => validation_errors()
-                );
-
-                echo json_encode($data);
-            }
-            else
-            {
-                $url = $this->input->post('url');
-
-                if($this->general->banUrl($url))
-                {
-                    $data = array(
-                        'success' => '1',
-                        'msg' => 'Success! Please wait while you are being redirected.'
-                    );
-
-                    echo json_encode($data);
-                }
-                else
-                {
-                    $data = array(
-                        'success' => '2',
-                        'msg' => 'Error! This IP already exists!'
-                    );
-
-                    echo json_encode($data);
-                }
-            }
-        }
-    }
-
+	
 	function removeBlacklistIp()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
 		{
 			$ip = $this->input->post('postIP');
-
+			
 			if($this->general->removeBlacklistIP($ip))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! The IP has been deleted from the blacklist.'
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -513,14 +458,14 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
 	}
 	function removeBlacklistUsers()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -533,7 +478,7 @@ class Ajax extends MX_Controller
 					'success' => '1',
 					'msg' => 'Success! The IP has been deleted from the blacklist.'
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -542,46 +487,14 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
 	}
-
-    function removeBlacklistUrl()
-    {
-        if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
-        {
-            show_404();
-        }
-        else
-        {
-            $id = $this->input->post('postId');
-
-            if($this->general->removeBlacklistUrl($id))
-            {
-                $data = array(
-                    'success' => '1',
-                    'msg' => 'Success! The word has been deleted from the blacklist.'
-                );
-
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Error! Something went wrong while deleting this word from the blacklist!'
-                );
-
-                echo json_encode($data);
-            }
-        }
-    }
-
     function removeBlacklistProfanity()
     {
-        if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
         {
             show_404();
         }
@@ -609,10 +522,10 @@ class Ajax extends MX_Controller
             }
         }
     }
-
+	
 	function editPage()
 	{
-		if(!$this->session->userdata('activity') | $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -622,14 +535,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('url', 'URL', 'required');
 			$this->form_validation->set_rules('content', 'Content', 'required');
-
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -638,14 +551,14 @@ class Ajax extends MX_Controller
 				$title = $this->input->post('title');
 				$url = $this->input->post('url');
 				$content = $this->input->post('content');
-
+				
 				if($this->pages->update($id, $url, $title, $content))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -654,30 +567,30 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this page!'
 					);
-
+					
 					echo json_encode($data);
 				}
 			}
 		}
 	}
-
+	
 	function removePage()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
 		{
 			$id = $this->input->post('postID');
-
+			
 			if($this->pages->remove($id))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! Please wait while you are being redirected.'
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -686,30 +599,31 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while removing this page!'
 				);
-
+				
 				echo json_encode($data);
 			}
 		}
 	}
-	function addSite()
+	
+	function addPage()
 	{
-		if(!$this->session->userdata('activity') || $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
 		else
-		{
+		{			
+			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('url', 'URL', 'required');
-            $this->form_validation->set_rules('content', 'Content', 'required');
-
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3',
+					'success' => '3', 
 					'msg' => validation_errors()
 				);
-
+				
 				echo json_encode($data);
 			}
 			else
@@ -717,14 +631,14 @@ class Ajax extends MX_Controller
 				$title = $this->input->post('title');
 				$url = $this->input->post('url');
 				$content = $this->input->post('content');
-
+				
 				if($this->pages->create($url, $title, $content))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-
+					
 					echo json_encode($data);
 				}
 				else
@@ -733,15 +647,48 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while creating this page!'
 					);
-
+					
 					echo json_encode($data);
 				}
-
+			
 			}
 		}
 	}
-	//***************
-    function registerSite()
+	
+	function getSearchData($table)
+	{
+		$username = $this->input->post('query');
+		
+		$array = array(
+			'username' => $username
+		);
+		
+		$data = $this->general->searchData($table, $array);
+		
+		$output = array(
+			'users' => $data
+		);
+		
+		if($data)
+		{
+			$result = array(
+				'success' => '1',
+				'html' => $this->parser->parse('users-search', $output, true)
+			);
+			
+			echo json_encode($result);
+		}
+		else
+		{
+			$result = array(
+				'success' => '2'
+			);
+			
+			echo json_encode($result);
+		}
+	}
+	
+	function registerSite()
     {
         $this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
         $this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
@@ -801,105 +748,7 @@ class Ajax extends MX_Controller
 
         }
     }
-    //***************
-    function editSite()
-    {
-        $this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
-        $this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
-        $this->form_validation->set_rules('lname', 'Last Name', 'required|alpha');
-        $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
-        $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('url', 'URL', 'required');
-        $this->form_validation->set_rules('description', 'Description', 'required');
-        $this->form_validation->set_rules('category', 'Category', 'required|is_natural');
-
-        if ($this->form_validation->run() == FALSE)
-        {
-            $data = array(
-                'success' => '2',
-                'msg' => validation_errors()
-            );
-
-            echo json_encode($data);
-        }
-        else
-        {
-            $fname = $this->input->post('fname');
-            $lname = $this->input->post('lname');
-            $email = $this->input->post('email');
-            $url = $this->input->post('url');
-            $description = $this->input->post('description');
-            $title = $this->input->post('title');
-            $categoryId = $this->input->post('category');
-
-            $userId = $this->session->userdata('id');
-
-            if(!$this->users->emailTaken($email,$userId))
-            {
-                //if url is valid
-                if($this->sites->update($userId, $url, $description, $title, $categoryId) && $this->users->updateUser($userId, $fname, $lname, $email)) {
-                    $data = array(
-                        'success' => '1',
-                        'msg' => 'Success! Please wait while you are being redirected.'
-                    );
-                }
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Email is already taken.'
-                );
-                echo json_encode($data);
-            }
-
-        }
-    }
-    //***************
-    function changePassword()
-    {
-        $this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
-        $this->form_validation->set_rules('password', 'Password', 'required|min_length[7]|alpha_dash');
-        $this->form_validation->set_rules('newPassword', 'New password', 'required|min_length[7]|alpha_dash');
-
-        if ($this->form_validation->run() == FALSE)
-        {
-            $data = array(
-                'success' => '3',
-                'msg' => validation_errors()
-            );
-
-            echo json_encode($data);
-        }
-        else
-        {
-            $oldPassword = $this->input->post('password');
-            $password = $this->input->post('newPassword');
-
-            $username = $this->session->userdata('username');
-
-            if($this->users->edit_password($username, $oldPassword, $password))
-            {
-                $data = array(
-                    'success' => '1',
-                    'msg' => 'Success! Please wait while you are being redirected.'
-                );
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Password is incorrect.'
-                );
-                echo json_encode($data);
-            }
-        }
-    }
 }
-
-
 
 /* End of file ajax.php */
 /* Location: ./application/modules/ajax/controllers/ajax.php */

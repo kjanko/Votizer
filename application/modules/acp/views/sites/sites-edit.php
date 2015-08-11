@@ -9,7 +9,7 @@
     <p>
         <label for="full-width-input">Username</label>
         <input id="full-width-input" class="round full-width-input" type="text" readonly="readonly" name="uname" value="{$val.username}" />
-        <em>Username.</em>
+        <em>This field is required.</em>
     </p>
     <p>
         <label for="full-width-input">Category</label>

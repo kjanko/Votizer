@@ -1,7 +1,6 @@
 <button class="blacklist" onclick="showBlacklistIps()">IPs</button>
 <button class="blacklist" onclick="showBlacklistUsers()">Users</button>
 <button class="blacklist activeBlacklist">Profanity</button>
-<button class="blacklist" onclick="showBlacklistUrls()">URLs</button>
 <form style="display:inline-block; float:right;" id="users-mod" method="POST" onsubmit="return banProfanity();">
     <input style="width:10em;" type="text" id="simple-input" name="word" class="round default-width-input" placeholder="Word...">
     <input style="width:10em;" type="text" id="simple-input" name="replacement" class="round default-width-input" placeholder="Replacement word...">

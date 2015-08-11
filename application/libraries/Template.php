@@ -254,7 +254,8 @@ class Template
 			$template['body'] = $this->_body;
 
 			// Find the main body and 3rd param means parse if its a theme view (only if parser is enabled)
-			$this->_body =  self::_load_view('layouts/'.$this->_layout, $this->_data, TRUE, self::_find_view_folder());
+			$this->_body =  self::_load_view('layouts/'.$this->_layout, $this->_data, $this->_parser_body_enabled, self::_find_view_folder());
+
 		}
 
 		// Want it returned or output to browser?
