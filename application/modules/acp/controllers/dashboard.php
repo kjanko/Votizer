@@ -9,7 +9,7 @@ class Dashboard extends MX_Controller {
         parent::__construct();
 		$this->load->model('Page_model', 'pages');
 		
-		if($this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
 		}
@@ -211,15 +211,6 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistIps', $data);
 	}
-
-    public function blacklistUrls()
-    {
-        $data = array(
-            'blacklistUrls' => $this->general->getBlacklistUrlData()
-        );
-
-        $this->parser->parse('blacklist/blacklistUrls', $data);
-    }
 	
 	public function blacklistUsers()
 	{
@@ -229,6 +220,14 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('blacklist/blacklistUsers', $data);
 	}
+    public function blacklistUrls()
+    {
+        $data = array(
+            'blacklistUrls' => $this->general->getBlacklistUrlData()
+        );
+
+        $this->parser->parse('blacklist/blacklistUrls', $data);
+    }
     public function blacklistProfanity()
     {
         $data = array(
@@ -237,7 +236,7 @@ class Dashboard extends MX_Controller {
 
         $this->parser->parse('blacklist/blacklistProfanity', $data);
     }
-	
+
 	public function logout()
 	{
 		$this->users->logout('acp');

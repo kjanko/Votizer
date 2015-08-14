@@ -80,7 +80,7 @@ $autoload['helper'] = array('asset_helper', 'url');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('settings');
 
 
 /*

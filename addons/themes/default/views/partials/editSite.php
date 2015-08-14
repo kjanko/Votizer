@@ -22,11 +22,11 @@
     <div class="col-sm-10">
         <select id="category" class="form-control">
             <option
-                {if $site.category== 1}
+                {if $site.category == 1}
                     selected
                 {/if}   value="1">WOW</option>
             <option
-                {if $site.category== 2}
+                {if $site.category == 2}
                     selected
                 {/if} value="2">Minecraft</option>
         </select>

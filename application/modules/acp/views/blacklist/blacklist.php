@@ -9,6 +9,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet'>
 	<link rel="stylesheet" href="/addons/acp/css/style.css">
 	<link rel="stylesheet" href="/addons/acp/css/jquery.jqplot.css">
+    <link rel="stylesheet" href="/addons/acp/js/alertify/dist/css/alertify-bootstrap-3.css" />
 	
 	<!-- Optimize for mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,7 +20,8 @@
 	<script src="/addons/acp/js/script.js"></script>  
 	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>  
 	<script src="/addons/acp/js/pagination.js"></script> 
-	<script src="/addons/acp/js/acp.js"></script> 
+	<script src="/addons/acp/js/acp.js"></script>
+    <script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
 	
 	<style>
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }

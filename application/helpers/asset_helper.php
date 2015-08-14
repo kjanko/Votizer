@@ -20,6 +20,26 @@ function get_asset_instance()
 	return $ci->asset;
 }
 
+function get_ci_instance()
+{
+	$ci =& get_instance();
+	return $ci;
+}
+
+// ------------------------------------------------------------------------
+
+function get_site_keywords()
+{
+	return get_ci_instance()->config->item('site_keywords');
+}
+
+function get_site_description()
+{
+	return get_ci_instance()->config->item('site_description');
+}
+
+// ------------------------------------------------------------------------
+
 function css($asset_name, $module_name = NULL, $attributes = array())
 {
 	return get_asset_instance()->css($asset_name, $module_name, $attributes);

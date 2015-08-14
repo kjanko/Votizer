@@ -28,26 +28,26 @@ class Sites
 	
 	public function isPremium($id)
 	{
-		if($this->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
+		if($this->_ci->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
 			return false;
 		else 
 			return true;
 	}
-	public function create($title, $description, $userId, $categoryId, $url)
-	{
-		// Set the data
-		$data = array(
+    public function create($title, $description, $userId, $categoryId, $url)
+    {
+        // Set the data
+        $data = array(
             'user_id' => $userId,
             'category_id' => $categoryId,
-			'title' => $title,
-			'description' => $description,
-			'url' => $url
-		);
-		// Insert the data
-		$this->_ci->db->insert('top_sites', $data);
-		
-		return true;
-	}
+            'title' => $title,
+            'description' => $description,
+            'url' => $url
+        );
+        // Insert the data
+        $this->_ci->db->insert('top_sites', $data);
+
+        return true;
+    }
 	
 	public function remove($id)
 	{
@@ -57,7 +57,7 @@ class Sites
 		return true;
 	}
 	
-	public function updateACP($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url, $premium)
+	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url, $premium)
 	{
 		$data = array(
 			'title' => $title,
@@ -76,7 +76,7 @@ class Sites
 		
 		return true;
 	}
-    public function update($userId, $url, $description, $title, $categoryId)
+    public function updateUCP($userId, $url, $description, $title, $categoryId)
     {
         $data = array(
             'title' => $title,
@@ -91,29 +91,20 @@ class Sites
 
         return true;
     }
-    //**********
-
-    public function getSiteByUserId($userId){
-        $query = $this->_ci->db
-            ->get_where('top_sites', array('user_id' => $userId));
-        if($query->num_rows() > 0){
-            return $query->row();
-        }
-        else
-        {
-            return false;
-        }
-    }
 	
 	public function getDataById($id)
 	{
-		$data = $this->_ci->db
-					->get_where('top_sites', array('id' => $id))
-					->result_array();
-					
-		$data[0]['username'] = $this->_ci->users->getUsername($data[0]['user_id']);
+		$result = $this->_ci->db->get_where('top_sites', array('id' => $id));
 		
-		return $data;
+		if($result->num_rows() > 0)
+		{
+			$data = $result->result_array();		
+			$data[0]['username'] = $this->_ci->users->getUsername($data[0]['user_id']);
+			
+			return $data;
+		}
+		else
+			return false;
 	}
 	
 	public function getData()
@@ -127,6 +118,25 @@ class Sites
 		
 		return $data;
 	}
+	
+	public function getFeaturedData()
+	{
+		return $this->_ci->db->get_where('top_sites', array('featured' => 1))->result_array();
+	}
+	
+	public function getSiteByUserId($userId)
+	{
+        $query = $this->_ci->db->get_where('top_sites', array('user_id' => $userId));
+		
+        if($query->num_rows() > 0)
+		{
+            return $query->row();
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 // END Sites Class

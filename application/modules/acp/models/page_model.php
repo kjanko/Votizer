@@ -18,6 +18,18 @@ class Page_model extends CI_Model
 		else
 			return false;
 	}
+	
+	public function getPageByController($controller)
+	{
+		$query = $this->db->get_where('top_pages', array('controller' => $controller));
+		
+		if($query->num_rows() > 0)
+		{
+			return $query->result_array();
+		}
+		else
+			return false;
+	}
 
 	public function remove($id)
 	{

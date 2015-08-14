@@ -210,6 +210,10 @@ class Template
 
 		// Assign by reference, as all loaded views will need access to partials
 		$this->_data['template'] =& $template;
+		$this->_data['user_activity'] = $this->_ci->session->userdata('activity');
+		
+		if($this->_ci->session->userdata('activity'))
+			$this->_data['user_rank'] = $this->_ci->users->getUserRank($this->_ci->session->userdata('username'));
 
 		foreach ($this->_partials as $name => $partial)
 		{
@@ -254,7 +258,8 @@ class Template
 			$template['body'] = $this->_body;
 
 			// Find the main body and 3rd param means parse if its a theme view (only if parser is enabled)
-			$this->_body =  self::_load_view('layouts/'.$this->_layout, $this->_data, TRUE, self::_find_view_folder());
+			$this->_body =  self::_load_view('layouts/'.$this->_layout, $this->_data, $this->_parser_body_enabled, self::_find_view_folder());
+
 		}
 
 		// Want it returned or output to browser?

@@ -19,6 +19,31 @@ class General
 		$this->_ci = &get_instance();
 	}
 	
+	//FRONTEND START//
+	
+	public function getHeaderNavigation()
+	{
+		return $this->_ci->db->get('top_navigation_header')->result_array();
+	}
+	
+	// location 0: top
+	// location 1: sidebar
+	
+	public function getAdvertisements($location)
+	{
+		return $this->_ci->db->get_where('top_advertisements', array('location' => $location))->result_array();
+	}
+	
+	public function getHomepageData()
+	{
+		return $this->_ci->db->get('top_homepage')->result_array();
+	}
+	
+	//FRONTEND END---//
+	
+	//--------------//
+	
+	//BACKEND START//
 	public function getXMLData($url)
 	{
 		$doc = new DOMDocument();
@@ -37,6 +62,11 @@ class General
 		return $arrFeeds;
 	}
 	
+	public function searchData($table, $data)
+	{
+		return $this->_ci->db->select('*')->like($data)->get($table)->result_array();
+	}
+	
 	public function getNavigationData()
 	{
 		return $this->_ci->db->get('top_navigation')->result_array();
@@ -51,6 +81,24 @@ class General
 		else
 			return false;
 	}
+
+    public function isUrlBlacklisted($url){
+        $query = $this->_ci->db->get_where('top_blacklist_url', array('url' => $url));
+
+        if($query->num_rows() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public function isWordBlacklisted($word){
+        $query = $this->_ci->db->get_where('top_blacklist_profanity', array('word' => $word));
+
+        if($query->num_rows() > 0)
+            return true;
+        else
+            return false;
+    }
 	
 	public function insertBlacklistIP($ip)
 	{
@@ -68,21 +116,29 @@ class General
 
     public function banWord($word, $replacement)
     {
-        $data = array(
-           'word' => $word,
-           'replacement' => $replacement
-        );
+        if(!self::isWordBlacklisted($word)) 
+		{
+            $data = array(
+                'word' => $word,
+                'replacement' => $replacement
+            );
 
-        return $this->_ci->db->insert('top_blacklist_profanity', $data);
+            return $this->_ci->db->insert('top_blacklist_profanity', $data);
+        }
+        return false;
     }
 
     public function banUrl($url)
     {
-        $data = array(
-            'url' => $url
-        );
+        if(!self::isUrlBlacklisted($url))
+        {
+            $data = array(
+                'url' => $url
+            );
 
-        return $this->_ci->db->insert('top_blacklist_url', $data);
+            return $this->_ci->db->insert('top_blacklist_url', $data);
+        }
+        return false;
     }
 
 	public function removeBlacklistIP($ip)
@@ -98,6 +154,7 @@ class General
 		else
 			return false;
 	}
+
     public function removeBlacklistUrl($id)
     {
         $data = array(
@@ -106,6 +163,7 @@ class General
 
         return $this->_ci->db->delete('top_blacklist_url', $data);
     }
+
     public function removeBlacklistProfanity($id)
     {
         $data = array(
@@ -128,21 +186,22 @@ class General
 	
 	public function getBlacklistData()
 	{
-		return $data = $this->_ci->db->get('top_blacklist_ip')->result_array();
+		return $this->_ci->db->get('top_blacklist_ip')->result_array();
+	}
+	
+	public function getBlacklistUserData()
+	{
+		return $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
 	}
 
     public function getBlacklistUrlData()
     {
-        return $data = $this->_ci->db->get('top_blacklist_url')->result_array();
+        return $this->_ci->db->get('top_blacklist_url')->result_array();
     }
-	
-	public function getBlacklistUserData()
-	{
-		return $data = $this->_ci->db->get_where('top_users', array('blacklist' => 1))->result_array();
-	}
+
     public function getBlacklistProfanityData()
     {
-        return $data = $this->_ci->db->get('top_blacklist_profanity')->result_array();
+        return $this->_ci->db->get('top_blacklist_profanity')->result_array();
     }
 
 	public function insertUserActivity($ip)

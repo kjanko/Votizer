@@ -1,4 +1,3 @@
-//**********
 function adminLogin()
 {
 	$('#login-submit').click(function() 
@@ -12,7 +11,7 @@ function adminLogin()
 		
 		$.ajax(
 		{
-			url: '/ajax/user_login',
+			url: '/ajax/userLogin',
 			type: 'POST',
 			data: form_data,
 			success: 
@@ -36,37 +35,6 @@ function adminLogin()
 			
 		return false;
 			
-	});
-}
-
-function displayChart()
-{
-	$.ajax(
-	{
-		url: '/ajax/user_activity',
-		type: 'POST',
-		success:
-			function(result)
-			{ 
-				var json =  jQuery.parseJSON(result);
-				
-				$.jqplot('chartdiv',  [[[2, 2], [5, 2], [3, 3], [1.6, 2]]],
-				{ 
-					axes:
-					{
-						yaxis:
-						{
-							min:1, 
-							max:json.result
-						},
-						xaxis:
-						{
-							min:1,
-							max:5
-						}
-					}
-				});
-			}
 	});
 }
 
@@ -101,7 +69,6 @@ function showBlacklistIps()
 		$('.content-module-main').html(data).show('scale');
 	});
 }
-
 function showBlacklistUrls()
 {
     $.get('/acp/dashboard/blacklistUrls/', function(data)
@@ -109,7 +76,6 @@ function showBlacklistUrls()
         $('.content-module-main').html(data).show('scale');
     });
 }
-
 function showBlacklistUsers()
 {
 	$.get('/acp/dashboard/blacklistUsers/', function(data) 
@@ -117,7 +83,6 @@ function showBlacklistUsers()
 		$('.content-module-main').html(data).show('scale');
 	});
 }
-
 function showBlacklistProfanity()
 {
     $.get('/acp/dashboard/blacklistProfanity/', function(data)
@@ -125,7 +90,6 @@ function showBlacklistProfanity()
         $('.content-module-main').html(data).show('scale');
     });
 }
-
 function showEditSite(id)
 {
 	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
@@ -156,7 +120,7 @@ function editUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/edit_user',
+		url: '/ajax/editUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -166,12 +130,12 @@ function editUser()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '3')
@@ -206,12 +170,12 @@ function editPage()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '3')
@@ -244,10 +208,11 @@ function removePage(id)
 				if(json.success === '1')
 				{
 					$('#' + id).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The page has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -275,12 +240,12 @@ function addPage()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
@@ -309,7 +274,7 @@ function editSite()
 	
 	$.ajax(
 	{
-		url: '/ajax/editSiteACP',
+		url: '/ajax/editSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -319,12 +284,12 @@ function editSite()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '3')
@@ -351,7 +316,7 @@ function addUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/add_user',
+		url: '/ajax/addUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -361,12 +326,12 @@ function addUser()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
@@ -398,10 +363,11 @@ function removeUser(username)
 				if(json.success === '1')
 				{
 					$('#' + username).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The user has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
@@ -416,7 +382,7 @@ function removeSite(siteId)
 	
 	$.ajax(
 	{
-		url: '/ajax/remove_site',
+		url: '/ajax/removeSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -427,56 +393,25 @@ function removeSite(siteId)
 				if(json.success === '1')
 				{
 					$('#' + siteId).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The site has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
 	return false;
 }
-
-function banUser() {
-    var form_data =
-    {
-        uname: $("input[name='user']").val()
-    };
-
-    $.ajax(
-        {
-            url: '/ajax/banUser',
-            type: 'POST',
-            data: form_data,
-            success: function (message) {
-                var json = jQuery.parseJSON(message);
-
-                if (json.success === '1') {
-                    alert(json.msg);
-                    setTimeout(function () {
-                        showBlacklistUsers()
-                    }, 500);
-                }
-                else if (json.success === '2') {
-                    alert(json.msg);
-                }
-            }
-        }
-    );
-    return false;
-}
-
-function banProfanity()
+function banUrl()
 {
     var form_data =
     {
-        word : $("input[name='word']").val(),
-        replacement : $("input[name='replacement']").val()
+        url : $("input[name='url']").val()
     };
-
     $.ajax(
         {
-            url: '/ajax/banProfanity',
+            url: '/ajax/banUrl',
             type: 'POST',
             data: form_data,
             success:
@@ -486,21 +421,51 @@ function banProfanity()
 
                     if(json.success === '1')
                     {
-                        alert(json.msg);
-                        setTimeout( function() { showBlacklistProfanity() }, 500);
+                        alertify.alert(json.msg);
+                        setTimeout( function() { showBlacklistUrls() }, 500);
                     }
                     else if(json.success === '2')
                     {
-                        alert(json.msg);
+                        alertify.alert(json.msg);
                     }
                     else if(json.success === '3')
                     {
-                        alert("The word and replacement word fields are required");
-
+                        alertify.alert("Invalid URL");
                     }
                 }
         });
     return false;
+}
+
+function banUser()
+{
+	var form_data = 
+	{
+		uname : $("input[name='user']").val()
+	};
+	
+	$.ajax(
+	{
+		url: '/ajax/banUser',
+		type: 'POST',
+		data: form_data,
+		success: 
+			function(message) 
+			{ 
+				var json = jQuery.parseJSON(message);
+				
+				if(json.success === '1')
+				{
+					alertify.alert(json.msg);
+					setTimeout( function() { showBlacklistUsers() }, 500);
+				}
+				else if(json.success === '2')
+				{
+					alertify.alert(json.msg);
+				}
+			}
+	});	
+	return false;
 }
 
 function banIp()
@@ -522,54 +487,21 @@ function banIp()
 				
 				if(json.success === '1')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 					setTimeout( function() { showBlacklistIps() }, 500);
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 				else if(json.success === '3')
 				{
-					alert("Invalid IP");
+					alertify.alert("Invalid IP.");
+					
 				}
 			}
 	});	
 	return false;
-}
-
-function banUrl()
-{
-    var form_data =
-    {
-        url : $("input[name='url']").val()
-    };
-    $.ajax(
-        {
-            url: '/ajax/banUrl',
-            type: 'POST',
-            data: form_data,
-            success:
-                function(message)
-                {
-                    var json = jQuery.parseJSON(message);
-
-                    if(json.success === '1')
-                    {
-                        alert(json.msg);
-                        setTimeout( function() { showBlacklistUrls() }, 500);
-                    }
-                    else if(json.success === '2')
-                    {
-                        alert(json.msg);
-                    }
-                    else if(json.success === '3')
-                    {
-                        alert("Invalid URL");
-                    }
-                }
-        });
-    return false;
 }
 
 function removeBlacklistIps(id, ip)
@@ -592,16 +524,16 @@ function removeBlacklistIps(id, ip)
 				if(json.success === '1')
 				{
 					$('#' + id).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The IP has been successfully deleted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
 	return false;
 }
-
 function removeBlacklistUrls(id)
 {
     var form_data =
@@ -622,39 +554,11 @@ function removeBlacklistUrls(id)
                     if(json.success === '1')
                     {
                         $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        alertify.success("The Url has been successfully deleted.");
                     }
                     else if(json.success === '2')
                     {
-                        alert(json.msg);
-                    }
-                }
-        });
-    return false;
-}
-function removeBlacklistProfanity(id)
-{
-    var form_data =
-    {
-        postID : id
-    }
-
-    $.ajax(
-        {
-            url: '/ajax/removeBlacklistProfanity',
-            type: 'POST',
-            data: form_data,
-            success:
-                function(message)
-                {
-                    var json = jQuery.parseJSON(message);
-
-                    if(json.success === '1')
-                    {
-                        $('#' + id).hide('slow', function(){ $(this).remove(); });
-                    }
-                    else if(json.success === '2')
-                    {
-                        alert(json.msg);
+                        alertify.alert(json.msg);
                     }
                 }
         });
@@ -680,12 +584,121 @@ function removeBlacklistUsers(IpId)
 				if(json.success === '1')
 				{
 					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The user has been successfully whitelisted.");
 				}
 				else if(json.success === '2')
 				{
-					alert(json.msg);
+					alertify.alert(json.msg);
 				}
 			}
 	});	
 	return false;
+}
+
+function search(type, errorMessage)
+{
+	var active = 0;	
+
+	$("input#search-keyword").live("keyup", function(e) 
+	{
+		var form_data = 
+		{
+			query : $('input#search-keyword').val()
+		}
+		
+		$.ajax(
+		{
+               type: "POST",
+               url: "/ajax/getSearchData/top_"+type,
+               data: form_data,
+               cache: false,
+               success: 
+				function(message)
+				{
+					var json = jQuery.parseJSON(message);
+					if(json.success === '1')
+					{
+						$("tbody#"+type).html(json.html);
+					}
+						else
+					{
+						if(active === 0)
+						{
+							alertify.set({ delay: 2000 });
+							alertify.error(errorMessage);
+							active = 1;
+							setTimeout(function() { active = 0; }, 2100);
+						}
+					}
+				}
+           });
+	});
+}
+
+function banProfanity()
+{
+    var form_data =
+    {
+        word : $("input[name='word']").val(),
+        replacement : $("input[name='replacement']").val()
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/banProfanity',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { showBlacklistProfanity() }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        alertify.alert("The word and replacement word fields are required");
+
+                    }
+                }
+        });
+    return false;
+}
+
+function removeBlacklistProfanity(id)
+{
+    var form_data =
+    {
+        postID : id
+    }
+
+    $.ajax(
+        {
+            url: '/ajax/removeBlacklistProfanity',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
 }
