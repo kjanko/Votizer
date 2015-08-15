@@ -63,23 +63,28 @@
 							<td><a href="<?php echo base_url(); ?>in/vote/{$site.id}" class="btn btn-danger btn-xs" role="button"><i class="fa fa-thumbs-o-up"></i> Vote for us!</a></td>
 						</tr>
 						
+						<tr>
+							<td>Join date</td>
+							<td>{$site.date}</td>
+						</tr>
+						
 					</tbody>
 					
 				</table>
 				
 				<div class="panel-heading"><i class="fa fa-line-chart"></i> Statistics</div>
 				
-				<div class="col-md-4 text-center details-statistics">
+				<div class="col-md-4 text-center details-statistics" style="padding: 0">
 					<span class="statistics-votes">{$site.in_votes}</span>
-					<h4>Unique visits</h4>
+					<h4>Unique Votes</h4>
 				</div>
 				<div class="col-md-4 text-center details-statistics">
 					<span class="statistics-votes">{$site.out_votes}</span>
-					<h4>Unique visits</h4>
+					<h4>Unique Visits</h4>
 				</div>
 				<div class="col-md-4 text-center details-statistics">
 					<span class="statistics-votes">{$site.total_visitors}</span>
-					<h4>Total visits</h4>
+					<h4>Total Visits</h4>
 				</div>
 				
 				<div class="col-md-12" style= "padding:10px; font-size: 1.3em">

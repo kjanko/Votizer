@@ -16,7 +16,6 @@ class Home extends MX_Controller
 		$navigation = $this->general->getHeaderNavigation();
 		$sidebar = $this->general->getAdvertisements(0);
 		$featured = $this->sites->getFeaturedData();
-		$homepage = $this->general->getHomepageData(); //ToDo
 	
 		$data = array(
 			'servers' => $servers,

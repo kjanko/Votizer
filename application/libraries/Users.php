@@ -207,7 +207,7 @@ class Users
 	 *
 	 */
 	
-public function doesExist($username, $email)
+	public function doesExist($username, $email)
 	{
         // Check if username already exists
         if($this->_ci->db->select('username')->from('top_users')->where('username', $username)->get()->num_rows() > 0)
@@ -247,7 +247,8 @@ public function doesExist($username, $email)
         );
 
         // Check if user already exists
-        if(self::doesExist($username,$email)){
+        if(self::doesExist($username,$email))
+		{
             return false;
         }
         // Insert the data

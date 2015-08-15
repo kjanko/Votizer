@@ -15,7 +15,12 @@ class Details extends MX_Controller
         $site = $this->sites->getDataById($id);
 
         $total = $site[0]['in_votes'] + $site[0]['out_votes'] + $site[0]['total_visitors'];
-        $total = 100/$total;
+		
+		if($total != 0)
+			$total = 100/$total;
+		else
+			$total = 0;
+			
         $graphData = array();
         $graphData['in_votes'] = $total * $site[0]['in_votes'];
         $graphData['out_votes'] = $total * $site[0]['out_votes'];

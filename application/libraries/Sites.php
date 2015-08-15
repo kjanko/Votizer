@@ -35,13 +35,15 @@ class Sites
 	}
     public function create($title, $description, $userId, $categoryId, $url)
     {
+		$date = date("Y-m-d");
         // Set the data
         $data = array(
             'user_id' => $userId,
             'category_id' => $categoryId,
             'title' => $title,
             'description' => $description,
-            'url' => $url
+            'url' => $url,
+			'date' => $date
         );
         // Insert the data
         $this->_ci->db->insert('top_sites', $data);
