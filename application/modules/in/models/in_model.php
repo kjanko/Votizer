@@ -6,6 +6,8 @@ class In_model extends CI_Model
 	{
 		$query = $this->db->get_where('top_daily_voters', array('ip' => $ip, 'site_id' => $id, 'type' => $type));
 		
+		$this->db->query("UPDATE top_sites SET total_visitors=total_visitors+1 WHERE id='$id'");
+
 		if($query->num_rows() > 0)
 			return false;
 		else

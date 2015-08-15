@@ -19,17 +19,6 @@ body
 	padding: 0; 
 }
 
-.panel-heading
-{
-	font-size: 14px !important;
-}
-
-.panel-body h3
-{
-	color: #333 !important;
-}
-
-
 /* Preloader */
 #preloader {
 	position: fixed;
@@ -121,6 +110,8 @@ img
 {
 	nav#main
 	{
+		position: relative;
+		z-index: 10000; 
 		background:url(../img/header-navigation.png) repeat-x;
 		width: 100%;
 		min-height: 74px;
@@ -397,6 +388,39 @@ aside#right
 {
 	float: right;
 }
+
+.panel-heading
+{
+	font-size: 14px !important;
+}
+
+.panel-body h3
+{
+	color: #333 !important;
+}
+
+ul .dropdown-menu
+{
+	margin-top: 5px !important;
+	margin-bottom: 0px !important;
+}
+
+	ul .dropdown-menu li a
+	{
+		display: block !important;
+		clear: both !important;
+		font-weight: 400 !important;
+		line-height: 1.42857143 !important;
+		color: #333 !important;
+		white-space: nowrap !important;
+		text-transform: none !important;
+		font-size: 14px !important;
+	}
+	
+		ul .dropdown-menu li a:hover
+		{
+			color: #829ad2 !important;
+		}
 
 #middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_twitter_hcount > span > span > span.stMainServices.st-twitter-counter
 {

@@ -212,6 +212,11 @@ class Template
 		$this->_data['template'] =& $template;
 		$this->_data['user_activity'] = $this->_ci->session->userdata('activity');
 		
+		//Parse partial default data
+		
+		$this->_ci->load->model('category/category_model', 'categories');
+		$this->_data['top_categories'] = $this->_ci->categories->getData();
+		
 		if($this->_ci->session->userdata('activity'))
 			$this->_data['user_rank'] = $this->_ci->users->getUserRank($this->_ci->session->userdata('username'));
 

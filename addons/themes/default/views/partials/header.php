@@ -60,6 +60,24 @@
 							</li>
 						{/foreach}
 						
+						<li style="bottom: 10px;" role="presentation">
+						
+							<div class="dropdown">
+						
+								<button class="btn btn-warning dropdown-toggle" type="button" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									Categories
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="dropdown2">
+									{foreach $top_categories val}
+										<li><a href="<?php echo base_url(); ?>category/{$val.category}">{$val.category}</a></li>
+									{/foreach}
+								</ul>
+								
+							</div>
+							
+						</li>
+						
 						{if $user_activity}
 							<li style="bottom: 10px;" role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>logout"><button type="button" class="btn btn-danger">Logout</button></a></li>
 						{/if}
