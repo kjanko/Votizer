@@ -106,7 +106,7 @@ function changePassword(){
                     if(json.success === '1')
                     {
                         alertify.alert(json.msg);
-                        setTimeout( function() { location="/login" }, 1000);
+                        setTimeout( function() { location="/ucp" }, 750);
                     }
                     else if(json.success === '2')
                     {

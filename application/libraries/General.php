@@ -82,7 +82,8 @@ class General
 			return false;
 	}
 
-    public function isUrlBlacklisted($url){
+    public function isUrlBlacklisted($url)
+	{
         $query = $this->_ci->db->get_where('top_blacklist_url', array('url' => $url));
 
         if($query->num_rows() > 0)
@@ -91,7 +92,8 @@ class General
             return false;
     }
 
-    public function isWordBlacklisted($word){
+    public function isWordBlacklisted($word)
+	{
         $query = $this->_ci->db->get_where('top_blacklist_profanity', array('word' => $word));
 
         if($query->num_rows() > 0)
@@ -114,14 +116,13 @@ class General
 			return false;
 	}
 
-    public function banWord($word, $replacement)
+    public function banWord($word)
     {
         if(!self::isWordBlacklisted($word)) 
 		{
             $data = array(
-                'word' => $word,
-                'replacement' => $replacement
-            );
+                'word' => $word            
+			);
 
             return $this->_ci->db->insert('top_blacklist_profanity', $data);
         }

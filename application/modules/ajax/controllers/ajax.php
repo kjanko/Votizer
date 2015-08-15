@@ -1,9 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 // AJAX Controller
+include APPPATH . 'libraries/banbuilder/CensorWords.php';
+
 
 class Ajax extends MX_Controller 
 {
+	protected $censor;
+	protected $badlinks;
 
     public function __construct()
     {
@@ -12,6 +16,23 @@ class Ajax extends MX_Controller
 		$this->load->library('form_validation');
 		$this->load->model('acp/Page_model', 'pages');
 		
+		$this->censor = new CensorWords;
+		
+		$censoredWords = $this->general->getBlacklistProfanityData();
+		$censoredLinks = $this->general->getBlacklistUrlData();
+		
+		$this->badlinks = array();
+		
+		foreach($censoredLinks as $v)
+		{
+			array_push($this->badlinks, $v['url']);
+		}
+
+		foreach($censoredWords as $v)
+		{
+			array_push($this->censor->badwords, $v['word']);
+		}
+				
 		/*if(!$this->input->is_ajax_request())
 		{
 			show_404();
@@ -222,7 +243,6 @@ class Ajax extends MX_Controller
         else
         {
             $this->form_validation->set_rules('word', 'Word', 'required');
-            $this->form_validation->set_rules('replacement', 'Replacement', 'required');
 
             if ($this->form_validation->run() == FALSE)
             {
@@ -236,9 +256,8 @@ class Ajax extends MX_Controller
             else
             {
                 $word = $this->input->post('word');
-                $replacement = $this->input->post('replacement');
 
-                if ($this->general->banWord($word, $replacement))
+                if ($this->general->banWord($word))
                 {
                     $data = array(
                         'success' => '1',
@@ -246,7 +265,9 @@ class Ajax extends MX_Controller
                     );
 
                     echo json_encode($data);
-                } else {
+                } 
+				else
+				{
                     $data = array(
                         'success' => '2',
                         'msg' => 'Error! This word is already banned!'
@@ -755,13 +776,12 @@ class Ajax extends MX_Controller
 	}
 	function registerSite()
     {
-        $this->form_validation->set_error_delimiters('<div style="padding-left: 40px" class="error-box">', '</div>');
+        $this->form_validation->set_error_delimiters('<div style="width: 80%" class="alert alert-danger">', '</div>');
         $this->form_validation->set_rules('fname', 'Name', 'required|alpha');
         $this->form_validation->set_rules('lname', 'Surname', 'required|alpha');
         $this->form_validation->set_rules('uname', 'Username', 'required|min_length[5]|alpha_dash');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[7]|alpha_dash');
         $this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
-        $this->form_validation->set_rules('rank', 'Rank', 'required|is_natural');
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('url', 'URL', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
@@ -783,33 +803,48 @@ class Ajax extends MX_Controller
             $lname = $this->input->post('lname');
             $email = $this->input->post('email');
             $password = $this->input->post('password');
-            $rank = $this->input->post('rank');
+            $rank = 0;
             $url = $this->input->post('url');
             $description = $this->input->post('description');
             $title = $this->input->post('title');
             $categoryId = $this->input->post('category');
-            if(!$this->users->doesExist($uname, $email))
-            {
-                //if url is valid
-                if($this->users->create($fname,$lname,$uname,$password,$email,$rank)) {
-                    $userId = $this->users->getUserId($uname);
-                    $this->sites->create($title, $description, $userId, $categoryId, $url);
-                    $data = array(
-                        'success' => '1',
-                        'msg' => 'Success! Please wait while you are being redirected.'
-                    );
-                }
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Username or email is already taken.'
-                );
-                echo json_encode($data);
-            }
-
+						
+			$censorTitle = $this->censor->censorString($title);
+			$censorDesc = $this->censor->censorString($description);
+			
+			if(in_array($url, $this->badlinks))
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Your URL is blacklisted. Please try again.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				if(!$this->users->doesExist($uname, $email))
+				{
+					if($this->users->create($fname, $lname, $uname, $password, $email, $rank)) 
+					{
+						$userId = $this->users->getUserId($uname);
+						$this->sites->create($censorTitle['clean'], $censorDesc['clean'], $userId, $categoryId, $url);
+						$data = array(
+							'success' => '1',
+							'msg' => 'Success! Please wait while you are being redirected.'
+						);
+					}
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Username or email is already taken.'
+					);
+					echo json_encode($data);
+				}
+			}
         }
     }
     function editUserDetails()
@@ -883,28 +918,44 @@ class Ajax extends MX_Controller
             $categoryId = $this->input->post('category');
 
             $userId = $this->session->userdata('id');
-
-            //if url is valid
-            if($this->sites->updateUCP($userId, $url, $description, $title, $categoryId)) {
-                $data = array(
-                    'success' => '1',
-                    'msg' => 'Success! Site details has been changed.'
-                );
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Sorry something went wrong.'
-                );
-                echo json_encode($data);
-            }
+			
+			$censorTitle = $this->censor->censorString($title);
+			$censorDesc = $this->censor->censorString($description);
+			
+			if(in_array($url, $this->badlinks))
+			{
+				$data = array(
+					'success' => '2',
+					'msg' => 'Your URL is blacklisted. Please try again.'
+				);
+				
+				echo json_encode($data);
+			}
+			else
+			{
+				//if url is valid
+				if($this->sites->updateUCP($userId, $url, $censorDesc['clean'], $censorTitle['clean'], $categoryId)) 
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Site details has been changed.'
+					);
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Sorry something went wrong.'
+					);
+					echo json_encode($data);
+				}
+			}
         }
     }
     function changePassword()
     {
-        $this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+        $this->form_validation->set_error_delimiters('<div style="width: 80%" class="alert alert-danger">', '</div>');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[7]|alpha_dash');
         $this->form_validation->set_rules('newPassword', 'New password', 'required|min_length[7]|alpha_dash');
 

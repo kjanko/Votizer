@@ -639,8 +639,7 @@ function banProfanity()
 {
     var form_data =
     {
-        word : $("input[name='word']").val(),
-        replacement : $("input[name='replacement']").val()
+        word : $("input[name='word']").val()
     };
 
     $.ajax(

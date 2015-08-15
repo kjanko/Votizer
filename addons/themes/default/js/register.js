@@ -2,6 +2,7 @@ function registerSite()
 {
     $("#password").removeClass('error-input');
     $("#confirmPassword").removeClass('error-input');
+	
     var form_data =
     {
         fname : $("#name").val(),
@@ -12,9 +13,9 @@ function registerSite()
         url : $("#url").val(),
         title : $("#title").val(),
         description : $("#description").val(),
-        category : $("#category").val(),
-        rank : 0
+        category : $("#category").val()
     };
+	
     if(form_data.password != $("#confirmPassword").val())
     {
         $("#password").addClass('error-input');
@@ -35,7 +36,7 @@ function registerSite()
                     if(json.success === '1')
                     {
                         alertify.alert(json.msg);
-                        setTimeout( function() { location="/home" }, 500);
+                        setTimeout( function() { location="/home" }, 1000);
                     }
                     else if(json.success === '2')
                     {
