@@ -397,4 +397,12 @@ aside#right
 {
 	float: right;
 }
-$('.information-box').addClass('confirmation-box')
+
+#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_twitter_hcount > span > span > span.stMainServices.st-twitter-counter
+{
+	height: 22px !important;
+}
+#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_facebook_hcount > span > span > span.stMainServices.st-facebook-counter
+{
+	height: 22px !important;
+}

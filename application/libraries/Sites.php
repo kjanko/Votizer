@@ -109,7 +109,8 @@ class Sites
 	
 	public function getData()
 	{
-		$data = $this->_ci->db->get('top_sites')->result_array();
+		$data = $this->_ci->db->order_by("in_votes", "desc")->get('top_sites')->result_array();
+		
 		foreach($data as $k => $v)
 		{
 			$username = $this->_ci->users->getUsername($data[$k]['user_id']);
@@ -136,6 +137,20 @@ class Sites
         {
             return false;
         }
+    }
+	
+	public function getRank($id)
+	{
+        $servers = self::getData();
+        $pos = 1;
+		
+        foreach($servers as $server)
+		{
+            if($server['id'] == $id)
+                break;
+            $pos = $pos + 1;
+        }
+        return $pos;
     }
 }
 

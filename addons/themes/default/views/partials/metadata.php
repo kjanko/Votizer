@@ -15,10 +15,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script src="https://www.google.com/jsapi"></script>
+
 	{theme_js('wow.js')}
 	{theme_js('register.js')}
 	{theme_js('login.js')}
 	{theme_js('ucp.js')}
+	{theme_js('details.js')}
 	{theme_css('alertify-bootstrap-3.css')}
 	{theme_js('alertify/dist/js/alertify.js')}
 
