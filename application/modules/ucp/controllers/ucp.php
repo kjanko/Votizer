@@ -34,7 +34,12 @@ class Ucp extends MX_Controller
                     'description' => $site->description,
                     'category' => $site->category_id
                 );
-			
+				
+				$this->load->model('category/category_model', 'categories');
+
+				$currentCategory['name'] = $this->categories->getCategoryName($site->category_id);
+				$currentCategory['id'] = $site->category_id;
+				$categories = $this->categories->getData();
 				$navigation = $this->general->getHeaderNavigation();
 				$sidebar = $this->general->getAdvertisements(0);
 				$featured = $this->sites->getFeaturedData();
@@ -43,6 +48,8 @@ class Ucp extends MX_Controller
 					'navigation' => $navigation,
 					'sidebar' => $sidebar,
 					'featured' => $featured,
+					'categories' => $categories,
+					'currentCategory' => $currentCategory,
 					'site' => $siteData,
                     'user' => $userData
 				);

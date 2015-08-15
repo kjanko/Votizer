@@ -85,14 +85,12 @@
 							<label for="category" class="col-sm-2 control-label">Category:</label>
 							<div class="col-sm-10">
 								<select id="category" class="form-control">
-									<option
-										{if $site.category == 1}
-											selected
-										{/if}   value="1">WoW</option>
-									<option
-										{if $site.category == 2}
-											selected
-										{/if} value="2">Minecraft</option>
+									<option selected value="{$currentCategory.id}">{$currentCategory.name}</option>
+									{foreach $categories key, val, name='default'}
+										{if $val.id != $currentCategory.id}
+											<option value="{$val.id}">{$val.category}</option>
+										{/if}
+									{/foreach}
 								</select>
 							</div>
 						</div>

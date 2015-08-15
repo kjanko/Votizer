@@ -1,6 +1,5 @@
-<p>ToDo</p>
-These should be added by the admin.
+{foreach $sidebar key, val, name='default'}
 
-<!--<img src="./img/banners/sidebar.gif" class="img-responsive" alt="" />
-<img src="./img/banners/sidebar.gif" class="img-responsive" alt="" />
-<img src="./img/banners/sidebar.gif" class="img-responsive" alt="" />-->
+	<img src="{$val.url}" class="img-responsive" alt="" />
+
+{/foreach}

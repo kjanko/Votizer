@@ -120,6 +120,19 @@ class Sites
 		return $data;
 	}
 	
+	public function getDataByCategory($id)
+	{
+		$data = $this->_ci->db->order_by("in_votes", "desc")->get_where('top_sites', array('category_id' => $id))->result_array();
+		
+		foreach($data as $k => $v)
+		{
+			$username = $this->_ci->users->getUsername($data[$k]['user_id']);
+			$data[$k]['username'] = $username;
+		}
+		
+		return $data;
+	}
+	
 	public function getFeaturedData()
 	{
 		return $this->_ci->db->get_where('top_sites', array('featured' => 1))->result_array();

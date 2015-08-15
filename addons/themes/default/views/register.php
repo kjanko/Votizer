@@ -77,8 +77,14 @@
 				<label for="category" class="col-sm-2 control-label">Category:</label>
 				<div class="col-sm-10">
 					<select id="category" class="form-control">
-						<option selected value="1">WOW</option>
-						<option value="2">Minecraft</option>
+					{foreach $categories key, val, name='default'}
+						{if $dwoo.foreach.default.first}
+							<option selected value="{$val.id}">{$val.category}</option>
+						
+						{else}
+							<option value="{$val.id}">{$val.category}</option>
+						{/if}
+					{/foreach}
 					</select>
 				</div>
 			</div>
