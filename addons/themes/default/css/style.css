@@ -389,6 +389,23 @@ aside#right
 	float: right;
 }
 
+span.statistics-votes
+{
+	margin-top: 10px;
+    display: block;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    color: #444;
+}
+
+.details-statistics h4
+{
+    font-weight: 700;
+    color: #999;
+	font: 11px 'Open Sans';
+}
+
 .panel-heading
 {
 	font-size: 14px !important;
