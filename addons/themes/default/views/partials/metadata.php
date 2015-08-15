@@ -3,8 +3,8 @@
 	<meta charset="utf-8" />
 	{set_theme('default')}
 	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-	<meta name="keywords" content="{get_site_keywords}" />
-	<meta name="description" content="{get_site_description}" />
+	<meta name="keywords" content="{getConfigValue('site_keywords')}" />
+	<meta name="description" content="{getConfigValue('site_description')}" />
 	<meta name="viewport" content="width=device-width" />
 	
 	{theme_css('style.css')}

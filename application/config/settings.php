@@ -27,6 +27,17 @@ $config['site_title'] = 'IgnitionCMS';
 $config['site_keywords'] = 'Ignition, Topsite, WoW, Minecraft';
 $config['site_description'] = "This is my site's description.";
 
+/*
+| -------------------------------------------------------------------------
+| Theme Details
+| -------------------------------------------------------------------------
+*/
+
+$config['logo_blue'] = 'evisium';
+$config['logo_gray'] = 'cms';
+$config['middle_section_title'] = 'Community Servers';
+$config['middle_section_description'] = 'LOREM IPSUM DOLOR SIT AMET. CONSTEQUENCES ELICETIRA IMET';
+
 
 
 /* End of file settings.php */

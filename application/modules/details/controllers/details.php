@@ -9,9 +9,6 @@ class Details extends MX_Controller
 	
 	public function show($id)
 	{
-        $navigation = $this->general->getHeaderNavigation();
-        $sidebar = $this->general->getAdvertisements(0);
-        $featured = $this->sites->getFeaturedData();
         $site = $this->sites->getDataById($id);
 
         $total = $site[0]['in_votes'] + $site[0]['out_votes'] + $site[0]['total_visitors'];
@@ -32,9 +29,6 @@ class Details extends MX_Controller
         $rank = $this->sites->getRank($id);
         $site[0]['rank'] = $rank;
         $data = array(
-            'navigation' => $navigation,
-            'sidebar' => $sidebar,
-            'featured' => $featured,
             'site' => $site[0],
             'graphData' => $graphData
         );

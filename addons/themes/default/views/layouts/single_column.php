@@ -28,8 +28,8 @@
 	
 		<section id="middle-top" class="wow animated zoomIn">
 		
-			<h1>Community Servers</h1>
-			<h2>LOREM IPSUM DOLOR SIT AMET. CONSTEQUENCES ELICETIRA IMET</h2>
+			<h1>{getConfigValue('middle_section_title')}</h1>
+			<h2>{getConfigValue('middle_section_description')}</h2>
 			
 		</section>
 		

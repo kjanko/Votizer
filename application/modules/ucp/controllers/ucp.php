@@ -40,14 +40,8 @@ class Ucp extends MX_Controller
 				$currentCategory['name'] = $this->categories->getCategoryName($site->category_id);
 				$currentCategory['id'] = $site->category_id;
 				$categories = $this->categories->getData();
-				$navigation = $this->general->getHeaderNavigation();
-				$sidebar = $this->general->getAdvertisements(0);
-				$featured = $this->sites->getFeaturedData();
 				
 				$data = array(
-					'navigation' => $navigation,
-					'sidebar' => $sidebar,
-					'featured' => $featured,
 					'categories' => $categories,
 					'currentCategory' => $currentCategory,
 					'site' => $siteData,
