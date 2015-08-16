@@ -22,10 +22,9 @@ class Premium extends MX_Controller
 		);
 		
 		$this->template
-			->set_layout('default')
+			->set_layout('single_column')
 			->set_partial('metadata', 'partials/metadata')
 			->set_partial('header', 'partials/header')
-			->set_partial('sidebar', 'partials/sidebar')
 			->set_partial('featured', 'partials/featured')
 			->set_partial('footer', 'partials/footer')
 			->title($this->config->item('site_title'), 'Premium')
@@ -50,10 +49,14 @@ class Premium extends MX_Controller
 					$this->users->updateBalance($this->session->userdata('username'), $this->users->getBalance($this->session->userdata('username')) - $this->config->item('shop_starter'));
 					$final = self::endCycle($date, 1);
 					$this->points->insertSubscription($site->id, $final);
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "Your purchase was completed."));
+					redirect('notification/success');
 				}
 				else
-					redirect('premium');
+				{
+					$this->session->set_userdata(array("notification-message" => "You do not have enough points to complete this purchase."));
+					redirect('notification/error');
+				}
 			break;
 			
 			case 2:
@@ -62,10 +65,13 @@ class Premium extends MX_Controller
 					$this->users->updateBalance($this->session->userdata('username'), $this->users->getBalance($this->session->userdata('username')) - $this->config->item('shop_value'));
 					$final = self::endCycle($date, 3);
 					$this->points->insertSubscription($site->id, $final);
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "Your purchase was completed."));
+					redirect('notification/success');
 				}
 				else
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "You do not have enough points to complete this purchase."));
+					redirect('notification/error');
+
 			break;
 			
 			case 3:
@@ -74,10 +80,12 @@ class Premium extends MX_Controller
 					$this->users->updateBalance($this->session->userdata('username'), $this->users->getBalance($this->session->userdata('username')) - $this->config->item('shop_pro'));
 					$final = self::endCycle($date, 6);
 					$this->points->insertSubscription($site->id, $final);
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "Your purchase was completed."));
+					redirect('notification/success');
 				}
 				else
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "You do not have enough points to complete this purchase."));
+					redirect('notification/error');
 
 			break;
 			
@@ -87,10 +95,12 @@ class Premium extends MX_Controller
 					$this->users->updateBalance($this->session->userdata('username'), $this->users->getBalance($this->session->userdata('username')) - $this->config->item('shop_premium'));
 					$final = self::endCycle($date, 12);
 					$this->points->insertSubscription($site->id, $final);
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "Your purchase was completed."));
+					redirect('notification/success');
 				}
 				else
-					redirect('premium');
+					$this->session->set_userdata(array("notification-message" => "You do not have enough points to complete this purchase."));
+					redirect('notification/error');
 			break;
 		}
 	}
