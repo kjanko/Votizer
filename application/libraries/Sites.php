@@ -28,7 +28,7 @@ class Sites
 	
 	public function isPremium($id)
 	{
-		if($this->_ci->db->get_where('top_sites', array('id' => $id))->get()->row()->premium == 0)
+		if($this->_ci->db->get_where('top_sites', array('id' => $id))->row()->premium == 0)
 			return false;
 		else 
 			return true;

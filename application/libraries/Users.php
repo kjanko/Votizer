@@ -197,6 +197,31 @@ class Users
 	
 	/**
 	 *
+	 * Returns the user's balance
+	 *
+	 * @access public
+	 * @param string
+	 * @return int
+	 *
+	 */
+	
+	public function getBalance($username)
+	{
+		$query = $this->_ci->db->select('balance')->from('top_users')->where('username', $username)->get();
+		
+		if($query->num_rows() > 0)
+			return $query->row()->balance;
+		else
+			return false;
+	}
+	
+	public function updateBalance($username, $new)
+	{
+		$this->_ci->db->query("UPDATE top_users SET balance='$new' WHERE username='$username'");
+	}
+	
+	/**
+	 *
 	 * Creates a new user
 	 *
 	 * @access public

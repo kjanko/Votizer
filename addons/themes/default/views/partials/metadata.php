@@ -10,6 +10,8 @@
 	{theme_css('style.css')}
 	{theme_css('animate.css')}
 	{theme_css('font-awesome.min.css')}
+	{theme_css('alertify-bootstrap-3.css')}
+	{theme_css('pricing-table.css')}
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		
@@ -23,7 +25,6 @@
 	{theme_js('login.js')}
 	{theme_js('ucp.js')}
 	{theme_js('details.js')}
-	{theme_css('alertify-bootstrap-3.css')}
 	{theme_js('alertify/dist/js/alertify.js')}
 
 	<script>

@@ -439,11 +439,12 @@ ul .dropdown-menu
 			color: #829ad2 !important;
 		}
 
-#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_twitter_hcount > span > span > span.stMainServices.st-twitter-counter
+.table-striped>tbody>tr:nth-of-type(even)
 {
-	height: 22px !important;
+	background-color: #f9f9f9 !important;
 }
-#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_facebook_hcount > span > span > span.stMainServices.st-facebook-counter
+
+.table-striped>tbody>tr:nth-of-type(odd)
 {
-	height: 22px !important;
+	background-color: #ffffff !important;
 }
