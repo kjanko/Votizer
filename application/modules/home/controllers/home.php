@@ -13,9 +13,16 @@ class Home extends MX_Controller
 	public function index()
 	{			
 		$servers = $this->sites->getData();
+		$navigation = $this->general->getHeaderNavigation();
+		$sidebar = $this->general->getAdvertisements(0);
+		$featured = $this->sites->getFeaturedData();
+		$homepage = $this->general->getHomepageData(); //ToDo
 	
 		$data = array(
-			'servers' => $servers
+			'servers' => $servers,
+			'navigation' => $navigation,
+			'sidebar' => $sidebar,
+			'featured' => $featured
 		);
 		
 		$this->template

@@ -5,7 +5,7 @@
 			<aside id="nav-left" class="wow animated fadeInDown">
 			
 				<h1>
-					{getConfigValue('logo_blue')}<span class="sub-logo">{getConfigValue('logo_gray')}</span>
+					evisium<span class="sub-logo">cms</span>
 				</h1>
 			
 			</aside>

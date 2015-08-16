@@ -12,8 +12,14 @@ class Register extends MX_Controller
 		$this->load->model('category/category_model', 'categories');
 
 		$categories = $this->categories->getData();
+		$navigation = $this->general->getHeaderNavigation();
+		$sidebar = $this->general->getAdvertisements(0);
+		$featured = $this->sites->getFeaturedData();
 		
 		$data = array(
+			'navigation' => $navigation,
+			'sidebar' => $sidebar,
+			'featured' => $featured,
 			'categories' => $categories
 		);
 		

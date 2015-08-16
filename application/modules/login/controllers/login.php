@@ -17,8 +17,16 @@ class Login extends MX_Controller {
 			redirect('home');
 		}
 		else
-		{			
-			$data = array();
+		{
+			$navigation = $this->general->getHeaderNavigation();
+			$sidebar = $this->general->getAdvertisements(0);
+			$featured = $this->sites->getFeaturedData();
+			
+			$data = array(
+				'navigation' => $navigation,
+				'sidebar' => $sidebar,
+				'featured' => $featured
+			);
 			
 			$this->template
 				->set_layout('default')

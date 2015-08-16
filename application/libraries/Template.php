@@ -216,9 +216,6 @@ class Template
 		
 		$this->_ci->load->model('category/category_model', 'categories');
 		$this->_data['top_categories'] = $this->_ci->categories->getData();
-		$this->_data['navigation'] = $this->_ci->general->getHeaderNavigation();
-		$this->_data['sidebar'] = $this->_ci->general->getAdvertisements(0);
-		$this->_data['featured'] = $this->_ci->sites->getFeaturedData();
 		
 		if($this->_ci->session->userdata('activity'))
 			$this->_data['user_rank'] = $this->_ci->users->getUserRank($this->_ci->session->userdata('username'));

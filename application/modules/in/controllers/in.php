@@ -11,6 +11,9 @@ class In extends MX_Controller
 	
 	public function vote($id)
 	{						
+		$navigation = $this->general->getHeaderNavigation();
+		$sidebar = $this->general->getAdvertisements(0);
+		$featured = $this->sites->getFeaturedData();
 		$site = $this->sites->getDataById($id);
 		
 		if(!$site)
@@ -21,6 +24,9 @@ class In extends MX_Controller
 		$key = $this->config->item('recaptcha_api_key');
 		
 		$data = array(
+			'navigation' => $navigation,
+			'sidebar' => $sidebar,
+			'featured' => $featured,
 			'site' => $site[0],
 			'api_key' => $key
 		);

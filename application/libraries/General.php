@@ -34,6 +34,11 @@ class General
 		return $this->_ci->db->get_where('top_advertisements', array('location' => $location))->result_array();
 	}
 	
+	public function getHomepageData()
+	{
+		return $this->_ci->db->get('top_homepage')->result_array();
+	}
+	
 	//FRONTEND END---//
 	
 	//--------------//
@@ -202,10 +207,8 @@ class General
 
 	public function insertUserActivity($ip)
 	{
-		$date = date("Y-m-d");
 		$data = array(
-			'ip' => $ip,
-			'date' => $date
+			'ip' => $ip
 		);
 		
 		return $this->_ci->db->insert('top_users_activity', $data);

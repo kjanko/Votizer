@@ -158,6 +158,26 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users', $data);
 	}
+    //******
+    public function categories()
+    {
+        $data = array(
+            'username' => $this->session->userdata('username'),
+            'categories' => $this->db->get('top_categories')->result_array()
+        );
+
+        $this->parser->parse('settings/categories', $data);
+    }
+    //******
+    public function advertisements()
+    {
+        $data = array(
+            'username' => $this->session->userdata('username'),
+            'adverts' => $this->db->get('top_advertisements')->result_array()
+        );
+
+        $this->parser->parse('settings/advertisements', $data);
+    }
 	
 	public function users_add()
 	{

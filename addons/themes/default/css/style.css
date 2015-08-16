@@ -389,23 +389,6 @@ aside#right
 	float: right;
 }
 
-span.statistics-votes
-{
-	margin-top: 10px;
-    display: block;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    color: #444;
-}
-
-.details-statistics h4
-{
-    font-weight: 700;
-    color: #999;
-	font: 11px 'Open Sans';
-}
-
 .panel-heading
 {
 	font-size: 14px !important;
@@ -439,12 +422,11 @@ ul .dropdown-menu
 			color: #829ad2 !important;
 		}
 
-.table-striped>tbody>tr:nth-of-type(even)
+#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_twitter_hcount > span > span > span.stMainServices.st-twitter-counter
 {
-	background-color: #f9f9f9 !important;
+	height: 22px !important;
 }
-
-.table-striped>tbody>tr:nth-of-type(odd)
+#middle > div > div > div.col-md-10.community-servers > div.panel.panel-default > div.panel-body > div > div:nth-child(6) > div:nth-child(2) > div.col-md-10.text-center > span.st_facebook_hcount > span > span > span.stMainServices.st-facebook-counter
 {
-	background-color: #ffffff !important;
+	height: 22px !important;
 }

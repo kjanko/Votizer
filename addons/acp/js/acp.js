@@ -503,6 +503,185 @@ function banIp()
 	});	
 	return false;
 }
+//***********
+function addCategory()
+{
+    var form_data =
+    {
+        category : $("input[name='categoryName']").val()
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/addCategory',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/categories" }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        alertify.alert(json.msg);
+
+                    }
+                }
+        });
+    return false;
+}
+//*********
+//***********
+function addAdvert()
+{
+    var form_data =
+    {
+        bannerUrl : $("input[name='bannerUrl']").val(),
+        targetUrl : $("input[name='targetUrl']").val(),
+        location : $("input[name='location']").val()
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/addAdvert',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/advertisements" }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        alertify.alert(json.msg);
+
+                    }
+                }
+        });
+    return false;
+}
+//********
+function editCategory(categoryName, id)
+{
+    var form_data =
+    {
+        category : categoryName,
+        id : id
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/editCategory',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
+}
+//*******
+function editAdvert(value, id, field)
+{
+    var form_data =
+    {
+        value : value,
+        id : id,
+        field : field
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/editAdvert',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
+}
+function editUser()
+{
+    var form_data =
+    {
+        id : $("input[name='id']").val(),
+        uname : $("input[name='uname']").val(),
+        fname : $("input[name='fname']").val(),
+        lname : $("input[name='lname']").val(),
+        email : $("input[name='email']").val(),
+        rank : $("input[name='rank']").val()
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/editUser',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/users" }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/users" }, 500);
+                    }
+                    else if(json.success === '3')
+                    {
+                        $('.information-box').remove();
+                        $('#error-placeholder').html(json.msg).show('scale');
+                    }
+                }
+        });
+    return false;
+}
 
 function removeBlacklistIps(id, ip)
 {
@@ -533,6 +712,68 @@ function removeBlacklistIps(id, ip)
 			}
 	});	
 	return false;
+}
+//*********
+function removeCategory(id)
+{
+    var form_data =
+    {
+        id : id
+    }
+
+    $.ajax(
+        {
+            url: '/ajax/removeCategory',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
+}
+//**********
+function removeAdvert(id)
+{
+    var form_data =
+    {
+        id : id
+    }
+
+    $.ajax(
+        {
+            url: '/ajax/removeAdvert',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
 }
 function removeBlacklistUrls(id)
 {
