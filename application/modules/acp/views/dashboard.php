@@ -28,7 +28,7 @@
 
 			<ul id="nav" class="fl">
 	
-				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
+				<li class="v-sep"><a href="<?php echo base_url(); ?>" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
@@ -130,13 +130,30 @@
 							<p>Loading Time: <?php echo $this->benchmark->elapsed_time('total_execution_time_start', 'total_execution_time_end'); ?></p>
 							<p>Memory Usage: <?php echo round(memory_get_usage() / 1024); ?> KB</p>
 							<?php
-								if(in_array('mod_rewrite', apache_get_modules()))
+								if(!function_exists('apache_get_modules'))
 								{
-									echo '<div class="confirmation-box round"> mod_rewrite is enabled! </div>';
+									echo '<div class="error-box round"> apache_get_modules is not enabled! </div>';
 								}
 								else
 								{
-									echo '<div class="error-box round"> mod_rewrite is not enabled! </div>';
+									if(in_array('mod_rewrite', apache_get_modules()))
+									{
+										echo '<div class="confirmation-box round"> mod_rewrite is enabled! </div>';
+									}
+									else
+									{
+										echo '<div class="error-box round"> mod_rewrite is not enabled! </div>';
+									}
+								
+									if(extension_loaded('openssl')) 
+									{
+										echo '<div class="confirmation-box round"> openssl is enabled! </div>';
+									}
+									else
+									{
+										echo '<div class="error-box round"> openssl is not enabled! </div>';
+									}
+
 								}
 							?>
 							<div class="warning-box round"> Remote updater is under development! </div>

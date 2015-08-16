@@ -1,5 +1,5 @@
 {foreach $sidebar key, val, name='default'}
 
-	<img src="{$val.url}" class="img-responsive" alt="" />
+	<a href="{$val.href}"><img src="{$val.url}" class="img-responsive" alt="" /></a>
 
 {/foreach}

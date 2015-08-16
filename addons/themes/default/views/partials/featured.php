@@ -14,7 +14,7 @@
 						<h1>Rank</h1>
 						<h2>{$dwoo.foreach.default.index + 1}</h2>
 						
-						<button class="btn btn-primary custom btn-block">Read More</button>
+						<button onclick="location.href='<?php echo base_url(); ?>details/show/{$val.id}';" class="btn btn-primary custom btn-block">Read More</button>
 						<br />
 						<button onclick="location.href='<?php echo base_url(); ?>in/vote/{$val.id}';" class="btn btn-primary custom btn-block">Vote</button>
 					

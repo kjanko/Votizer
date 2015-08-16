@@ -197,6 +197,31 @@ class Users
 	
 	/**
 	 *
+	 * Returns the user's balance
+	 *
+	 * @access public
+	 * @param string
+	 * @return int
+	 *
+	 */
+	
+	public function getBalance($username)
+	{
+		$query = $this->_ci->db->select('balance')->from('top_users')->where('username', $username)->get();
+		
+		if($query->num_rows() > 0)
+			return $query->row()->balance;
+		else
+			return false;
+	}
+	
+	public function updateBalance($username, $new)
+	{
+		$this->_ci->db->query("UPDATE top_users SET balance='$new' WHERE username='$username'");
+	}
+	
+	/**
+	 *
 	 * Creates a new user
 	 *
 	 * @access public
@@ -207,7 +232,7 @@ class Users
 	 *
 	 */
 	
-public function doesExist($username, $email)
+	public function doesExist($username, $email)
 	{
         // Check if username already exists
         if($this->_ci->db->select('username')->from('top_users')->where('username', $username)->get()->num_rows() > 0)
@@ -247,7 +272,8 @@ public function doesExist($username, $email)
         );
 
         // Check if user already exists
-        if(self::doesExist($username,$email)){
+        if(self::doesExist($username,$email))
+		{
             return false;
         }
         // Insert the data

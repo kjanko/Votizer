@@ -4,6 +4,8 @@
 	
 	<div class="panel-body" style="padding: 0 20px 0">
 
+		<h6 style="margin-left: 15px">Your premium subscription expires: <strong>{$expiration_date}</strong></h6>
+	
 		<div class="container-fluid">
 			
 			<br />

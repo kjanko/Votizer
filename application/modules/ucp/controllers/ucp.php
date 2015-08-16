@@ -5,6 +5,11 @@ class Ucp extends MX_Controller
     public function __construct()
     {
         parent::__construct();
+		
+		if(!$this->session->userdata('activity'))
+		{
+			redirect('login');
+		}
     }
 	
 	public function index()
@@ -15,6 +20,12 @@ class Ucp extends MX_Controller
             $site = $this->sites->getSiteByUserId($userId);
             $user = $this->users->getUserById($userId);
 			
+			if($site->premium == 1)
+			{
+				$this->load->model('points/points_model', 'points');
+				$expiry_date = $this->points->getExpirationDate($site->id);
+			}
+				
             if(empty($site) || empty($user))
 			{
                 show_404();
@@ -40,18 +51,13 @@ class Ucp extends MX_Controller
 				$currentCategory['name'] = $this->categories->getCategoryName($site->category_id);
 				$currentCategory['id'] = $site->category_id;
 				$categories = $this->categories->getData();
-				$navigation = $this->general->getHeaderNavigation();
-				$sidebar = $this->general->getAdvertisements(0);
-				$featured = $this->sites->getFeaturedData();
 				
 				$data = array(
-					'navigation' => $navigation,
-					'sidebar' => $sidebar,
-					'featured' => $featured,
 					'categories' => $categories,
 					'currentCategory' => $currentCategory,
 					'site' => $siteData,
-                    'user' => $userData
+                    'user' => $userData,
+					'expiration_date' => $expiry_date
 				);
 		
 				$this->template
@@ -67,7 +73,7 @@ class Ucp extends MX_Controller
 		}
 		else
 		{
-			redirect('home');
+			redirect('login');
 		}
 	}
 }

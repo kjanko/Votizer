@@ -14,18 +14,11 @@ class Pages extends MX_Controller
 	
 	public function index($controller)
 	{
-		$navigation = $this->general->getHeaderNavigation();
-		$sidebar = $this->general->getAdvertisements(0);
-		$featured = $this->sites->getFeaturedData();
-
 		$this->load->model('acp/page_model', 'pages');
 		
 		$page = $this->pages->getPageByController($controller);
 		
 		$data = array(
-			'navigation' => $navigation,
-			'sidebar' => $sidebar,
-			'featured' => $featured,
 			'page' => $page[0]
 		);
 		
