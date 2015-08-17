@@ -12,6 +12,14 @@ class Settings_model extends CI_Model
             return false;
     }
 
+    public function navigationIdExists($id){
+        $query = $this->db->get_where('top_navigation_header', array('id' => $id));
+
+        if($query->num_rows() > 0)
+            return true;
+        else
+            return false;
+    }
 
     public function advertExists($url, $href, $location)
     {
@@ -76,6 +84,27 @@ class Settings_model extends CI_Model
         return $this->db->delete('top_categories', $data);
     }
 
+    public function removeNavigation($id)
+    {
+        $data = array(
+            'id' => $id
+        );
+
+        return $this->db->delete('top_navigation_header', $data);
+    }
+
+    public function insertNavigation($url, $name, $permission)
+    {
+        $position = count($this->db->get('top_navigation_header')->result_array());
+        $data = array(
+            'href' => $url,
+            'name' => $name,
+            'permission' => $permission,
+            'position' => $position
+        );
+
+        return $this->db->insert('top_navigation_header', $data);
+    }
     public function removeAdvert($id)
     {
         $data = array(
@@ -84,7 +113,17 @@ class Settings_model extends CI_Model
 
         return $this->db->delete('top_advertisements', $data);
     }
-
+    public function updateNavPositions($id){
+        $link = $this->db->get_where('top_navigation_header', array('id' => $id))->result_array();
+        $pos = $link['0']['position'];
+        $links = $this->db->get('top_navigation_header')->result_array();
+        foreach($links as $link){
+            if($link['position'] > $pos){
+                $linkId = $link['id'];
+                $this->db->query("UPDATE top_navigation_header SET position=position-1 WHERE id='$linkId'");
+            }
+        }
+    }
     public function updateCategory($id, $category)
     {
         if(!self::categoryExists($category))
@@ -139,6 +178,63 @@ class Settings_model extends CI_Model
             );
 
             return $this->db->where('id', $id)->update('top_advertisements', $data);
+        }
+        else
+            return false;
+    }
+
+    public function updateNavigationHref($id, $value)
+    {
+        if(self::navigationIdExists($id))
+        {
+            $data = array(
+                'href' => $value
+            );
+
+            return $this->db->where('id', $id)->update('top_navigation_header', $data);
+        }
+        else
+            return false;
+    }
+
+    public function updateNavigationName($id, $value)
+    {
+        if(self::navigationIdExists($id))
+        {
+            $data = array(
+                'name' => $value
+            );
+
+            return $this->db->where('id', $id)->update('top_navigation_header', $data);
+        }
+        else
+            return false;
+    }
+
+    public function updateNavigationPermission($id, $value)
+    {
+        if(self::navigationIdExists($id))
+        {
+            $data = array(
+                'permission' => $value
+            );
+
+            return $this->db->where('id', $id)->update('top_navigation_header', $data);
+        }
+        else
+            return false;
+    }
+
+    public function updateNavigationPosition($id, $position)
+    {
+        $castedId = (int)$id;
+        if(self::navigationIdExists($castedId))
+        {
+            $data = array(
+                'position' => $position
+            );
+
+            return $this->db->where('id', $castedId)->update('top_navigation_header', $data);
         }
         else
             return false;

@@ -47,6 +47,8 @@ class Sites
         );
         // Insert the data
         $this->_ci->db->insert('top_sites', $data);
+        $site = self::getSiteByUserId($userId);
+        $this->_ci->users->updateSiteId($userId, $site->id);
 
         return true;
     }

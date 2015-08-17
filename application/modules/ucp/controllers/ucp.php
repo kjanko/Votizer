@@ -19,14 +19,6 @@ class Ucp extends MX_Controller
             $userId = $this->session->userdata('id');
             $site = $this->sites->getSiteByUserId($userId);
             $user = $this->users->getUserById($userId);
-			
-			if($site->premium == 1)
-			{
-				$this->load->model('points/points_model', 'points');
-				$expiry_date = $this->points->getExpirationDate($site->id);
-			}
-            else
-                $expiry_date = "no active subscription";
 				
             if(empty($site) || empty($user))
 			{
@@ -34,6 +26,13 @@ class Ucp extends MX_Controller
             }
 			else
 			{
+                if($site->premium == 1)
+                {
+                    $this->load->model('points/points_model', 'points');
+                    $expiry_date = $this->points->getExpirationDate($site->id);
+                }
+                else
+                    $expiry_date = "no active subscription";
                 $userData = array(
                     'username' => $user->username,
                     'name' => $user->name,

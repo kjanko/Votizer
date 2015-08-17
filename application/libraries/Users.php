@@ -328,6 +328,15 @@ class Users
 
         return true;
     }
+    public function updateSiteId($id, $siteId){
+        $data = array(
+            's_id' => $siteId
+        );
+        $this->_ci->db
+            ->where('id', $id)
+            ->update('top_users', $data);
+        return true;
+    }
 	
 	/**
 	 *

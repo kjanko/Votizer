@@ -145,9 +145,14 @@ class Dashboard extends MX_Controller {
 		$data = array(
 			'backUrl' => $backUrl
 		);
-		
+
 		$this->parser->parse('pages/pages-add', $data);
 	}
+
+    public function navigationAdd()
+    {
+        $this->parser->parse('settings/navigationAdd');
+    }
 	
 	public function users()
 	{
@@ -253,6 +258,15 @@ class Dashboard extends MX_Controller {
         );
 
         $this->parser->parse('settings/advertisements', $data);
+    }
+    public function navigation()
+    {
+        $data = array(
+            'username' => $this->session->userdata('username'),
+            'navigation' => $this->db->order_by("position")->get('top_navigation_header')->result_array()
+        );
+
+        $this->parser->parse('settings/navigation', $data);
     }
 
 	public function logout()

@@ -62,6 +62,14 @@ function showAddPage(backUrl)
 	});
 }
 
+function showAddNavigation()
+{
+    $.get('/acp/dashboard/navigationAdd' , function(data)
+    {
+        $('.content-module-main').html(data).show('scale');
+    });
+}
+
 function showBlacklistIps()
 {
 	$.get('/acp/dashboard/blacklistIps/', function(data) 
@@ -147,7 +155,28 @@ function editUser()
 	});	
 	return false;
 }
+function updateNavigationPosition(array){
+    var form_data =
+    {
+        orderedLinks : JSON.stringify(array)
+    };
+    $.ajax(
+        {
+            url: '/ajax/editNavigationPosition',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
 
+                    if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+}
 function editPage()
 {
 	var form_data = 
@@ -255,6 +284,44 @@ function addPage()
 			}
 	});	
 	return false;
+}
+
+function addNavigation()
+{
+    var form_data =
+    {
+        name : $("input[name='name']").val(),
+        url : $("input[name='url']").val(),
+        permission : $("select[name='permission']").val()
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/addNavigation',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/navigation" }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        $('.information-box').remove();
+                        $('#error-placeholder').html(json.msg).show('scale');
+                    }
+                }
+        });
+    return false;
 }
 
 function editSite()
@@ -372,6 +439,36 @@ function removeUser(username)
 			}
 	});	
 	return false;
+}
+function removeNavigation(id)
+{
+    var form_data =
+    {
+        id : id
+    }
+
+    $.ajax(
+        {
+            url: '/ajax/removeNavigation',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        alertify.success("The navigation link has been successfully deleted.");
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
 }
 function removeSite(siteId)
 {
@@ -648,6 +745,37 @@ function editAdvert(value, id, field)
     $.ajax(
         {
             url: '/ajax/editAdvert',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+    return false;
+}
+function editNavigation(value, id, field)
+{
+    var form_data =
+    {
+        value : value,
+        id : id,
+        field : field
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/editNavigation',
             type: 'POST',
             data: form_data,
             success:
