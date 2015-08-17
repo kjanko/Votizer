@@ -15,6 +15,7 @@ class Ajax extends MX_Controller
 		
 		$this->load->library('form_validation');
 		$this->load->model('acp/Page_model', 'pages');
+        $this->load->model('acp/Settings_model', 'settings');
 		
 		$this->censor = new CensorWords;
 		
@@ -86,7 +87,275 @@ class Ajax extends MX_Controller
             echo json_encode($data);
         }
     }
-	
+    function addCategory()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_error_delimiters(' ', ' ');
+            $this->form_validation->set_rules('category', 'Category', 'required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $category = $this->input->post('category');
+
+                if($this->settings->insertCategory($category))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! The category was successfully added.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! This category already exists!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
+    function addAdvert()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_error_delimiters(' ', ' ');
+            $this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required');
+            $this->form_validation->set_rules('targetUrl', 'Target URL', 'required');
+            $this->form_validation->set_rules('location', 'Location', 'required|is_natural');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $url = $this->input->post('bannerUrl');
+                $href = $this->input->post('targetUrl');
+                $location = $this->input->post('location');
+
+                if($this->settings->insertAdvert($url, $href, $location))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! The advertisement was successfully added.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! This advertisement already exists!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
+    function editAdvert()
+    {
+        $this->form_validation->set_error_delimiters(' ', ' ');
+
+        $field = $this->input->post('field');
+        $id = $this->input->post('id');
+        $value = $this->input->post('value');
+        if($field == "url"){
+            $this->form_validation->set_rules('value', 'Banner URL', 'required');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateAdvertUrl($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Advertisement has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        else if($field == "target")
+        {
+            $this->form_validation->set_rules('value', 'Target URL', 'required');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateAdvertHref($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Advertisement has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        else if($field == "location")
+        {
+            $this->form_validation->set_rules('value', 'Location', 'required|is_natural');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateAdvertLocation($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Advertisement has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        $data = array(
+            'success' => '2',
+            'msg' => 'Advertisement already exists.'
+        );
+        echo json_encode($data);
+    }
+    function editCategory()
+    {
+        $this->form_validation->set_error_delimiters(' ', ' ');
+        $this->form_validation->set_rules('category', 'Category name', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data = array(
+                'success' => '2',
+                'msg' => validation_errors()
+            );
+
+            echo json_encode($data);
+        }
+        else
+        {
+            $category = $this->input->post('category');
+            $id = $this->input->post('id');
+
+            if($this->settings->updateCategory($id, $category)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Category has been changed.'
+                );
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Category already exists.'
+                );
+                echo json_encode($data);
+            }
+
+        }
+    }
+    function removeCategory()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('id');
+
+            if($this->settings->removeCategory($id))
+            {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The category has been successfully deleted.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this category!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
+    function removeAdvert()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('id');
+
+            if($this->settings->removeAdvert($id))
+            {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The advertisement has been successfully deleted.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this advertisement!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
 	function editUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)

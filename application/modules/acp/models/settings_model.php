@@ -23,6 +23,20 @@ class Settings_model extends CI_Model
             return false;
     }
 
+    public function getAdvertById($id)
+    {
+        $query = $this->db->get_where('top_advertisements', array('id' => $id));
+
+        if($query->num_rows() > 0)
+        {
+            return $query->row();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public function insertCategory($category)
     {
         if(!self::categoryExists($category))
@@ -73,48 +87,59 @@ class Settings_model extends CI_Model
 
     public function updateCategory($id, $category)
     {
-        $data = array(
-            'category' => $category
-        );
+        if(!self::categoryExists($category))
+        {
+            $data = array(
+                'category' => $category
+            );
 
-        if($this->db->where('id', $id)->update('top_categories', $data))
-            return true;
+            return $this->db->where('id', $id)->update('top_categories', $data);
+        }
         else
             return false;
     }
 
     public function updateAdvertUrl($id, $value)
     {
-        $data = array(
-            'url' => $value
-        );
+        $advert = self::getAdvertById($id);
+        if(!self::advertExists($value, $advert->href, $advert->location))
+        {
+            $data = array(
+                'url' => $value
+            );
 
-        if($this->db->where('id', $id)->update('top_advertisements', $data))
-            return true;
+            return $this->db->where('id', $id)->update('top_advertisements', $data);
+        }
         else
             return false;
     }
 
     public function updateAdvertHref($id, $value)
     {
-        $data = array(
-            'href' => $value
-        );
+        $advert = self::getAdvertById($id);
+        if(!self::advertExists($advert->url, $value, $advert->location))
+        {
+            $data = array(
+                'href' => $value
+            );
 
-        if($this->db->where('id', $id)->update('top_advertisements', $data))
-            return true;
+            return $this->db->where('id', $id)->update('top_advertisements', $data);
+        }
         else
             return false;
     }
 
     public function updateAdvertLocation($id, $value)
     {
-        $data = array(
-            'location' => $value
-        );
+        $advert = self::getAdvertById($id);
+        if(!self::advertExists($advert->url, $advert->href, $value))
+        {
+            $data = array(
+                'location' => $value
+            );
 
-        if($this->db->where('id', $id)->update('top_advertisements', $data))
-            return true;
+            return $this->db->where('id', $id)->update('top_advertisements', $data);
+        }
         else
             return false;
     }

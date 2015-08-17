@@ -25,6 +25,8 @@ class Ucp extends MX_Controller
 				$this->load->model('points/points_model', 'points');
 				$expiry_date = $this->points->getExpirationDate($site->id);
 			}
+            else
+                $expiry_date = "no active subscription";
 				
             if(empty($site) || empty($user))
 			{
