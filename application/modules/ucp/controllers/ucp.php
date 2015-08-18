@@ -16,6 +16,10 @@ class Ucp extends MX_Controller
 	{			
 		if($this->session->userdata('activity'))
         {
+			$this->load->model('auction/auction_model', 'auction');
+			
+			$winnerBid = $this->auction->isWinner();
+			
             $userId = $this->session->userdata('id');
             $site = $this->sites->getSiteByUserId($userId);
             $user = $this->users->getUserById($userId);
@@ -61,6 +65,9 @@ class Ucp extends MX_Controller
                     'user' => $userData,
 					'expiration_date' => $expiry_date
 				);
+				
+				if($winnerBid)
+					$data['winnerBid'] = $winnerBid;
 		
 				$this->template
 					->set_layout('default')

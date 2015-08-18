@@ -11,4 +11,10 @@ function getConfigValue($var)
 	return getInstance()->config->item($var);
 }
 
+function getSiteTitle($site_id)
+{
+	$site = getInstance()->sites->getDataById($site_id);
+	return $site[0]['title'];
+}
+
 ?>

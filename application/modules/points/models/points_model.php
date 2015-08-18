@@ -4,7 +4,12 @@ class Points_model extends CI_Model
 {
 	public function add($id, $amount)
 	{
-		$this->db->query("UPDATE top_sites SET balance=balance+$amount WHERE id='$id'");
+		$this->db->query("UPDATE top_users SET balance=balance+$amount WHERE id='$id'");
+	}
+	
+	public function remove($id, $amount)
+	{
+		$this->db->query("UPDATE top_users SET balance=balance-$amount WHERe id='$id'");
 	}
 	
 	public function log($user_id, $ref, $date)

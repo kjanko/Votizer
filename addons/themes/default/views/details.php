@@ -30,43 +30,43 @@
 			
 				<div class="panel-heading"><i class="fa fa-star"></i> Info</div>
 				
-				<table class="table table-striped table-bordered">
+				<table class="table table-striped table-bordered table-responsive">
 				
 					<tbody>
 					
-					<tr>
-							<td  width="30%">Rank</td>
-							<td>
-								<strong>{$site.rank}</strong>							
-							</td>
-					</tr>
-					
-					<tr>
-							<td>Social</td>
-							<td>
-								<div class="a2a_kit a2a_default_style">
-									<a class="a2a_button_facebook"></a>
-									<a class="a2a_button_twitter"></a>
-									<a class="a2a_button_google_plus"></a>
-								</div>
-								<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
-							</td>
+						<tr>
+								<td  width="30%">Rank</td>
+								<td>
+									<strong>{$site.rank}</strong>							
+								</td>
 						</tr>
 						
 						<tr>
-							<td>Website</td>
-							<td><a href="<?php echo base_url(); ?>out/vote/{$site.id}" class="btn btn-info btn-xs" role="button"><i class="fa fa-external-link-square"></i> Join now!</a></td>
-						</tr>
-						
-						<tr>
-							<td>Vote</td>
-							<td><a href="<?php echo base_url(); ?>in/vote/{$site.id}" class="btn btn-danger btn-xs" role="button"><i class="fa fa-thumbs-o-up"></i> Vote for us!</a></td>
-						</tr>
-						
-						<tr>
-							<td>Join date</td>
-							<td>{$site.date}</td>
-						</tr>
+								<td>Social</td>
+								<td>
+									<div class="a2a_kit a2a_default_style">
+										<a class="a2a_button_facebook"></a>
+										<a class="a2a_button_twitter"></a>
+										<a class="a2a_button_google_plus"></a>
+									</div>
+									<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+								</td>
+							</tr>
+							
+							<tr>
+								<td>Website</td>
+								<td><a href="<?php echo base_url(); ?>out/vote/{$site.id}" class="btn btn-info btn-xs" role="button"><i class="fa fa-external-link-square"></i> Join now!</a></td>
+							</tr>
+							
+							<tr>
+								<td>Vote</td>
+								<td><a href="<?php echo base_url(); ?>in/vote/{$site.id}" class="btn btn-danger btn-xs" role="button"><i class="fa fa-thumbs-o-up"></i> Vote for us!</a></td>
+							</tr>
+							
+							<tr>
+								<td>Join date</td>
+								<td>{$site.date}</td>
+							</tr>
 						
 					</tbody>
 					

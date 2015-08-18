@@ -10,6 +10,16 @@
 			
 			<br />
 			
+			{if $winnerBid}
+			<a href="<?php echo base_url(); ?>auction/pay">
+				<div class="alert alert-success" role="alert">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					<span class="sr-only">Congratulations:</span>
+					You won the sponsored auction! To finish the procedure, you need to pay <strong>{$winnerBid}</strong> credits. If you are ready, click this notification.
+				</div>
+			</a>
+			{/if}
+			
 			<ul class="nav nav-tabs">
 				<li class="active"><a data-toggle="tab" href="#menu3">User Details</a></li>
 				<li><a data-toggle="tab" href="#menu2">Site Details</a></li>

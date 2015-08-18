@@ -59,6 +59,14 @@ $config['logo_gray'] = 'cms';
 $config['middle_section_title'] = 'Community Servers';
 $config['middle_section_description'] = 'LOREM IPSUM DOLOR SIT AMET. CONSTEQUENCES ELICETIRA IMET';
 
+/*
+| -------------------------------------------------------------------------
+| Auction Settings
+| -------------------------------------------------------------------------
+*/
+
+$config['auction_minimum_bid'] = "20";
+$config['auction_minimum_rank'] = 200;
 
 
 /* End of file settings.php */
