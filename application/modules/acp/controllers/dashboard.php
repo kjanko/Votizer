@@ -149,9 +149,9 @@ class Dashboard extends MX_Controller {
 		$this->parser->parse('pages/pages-add', $data);
 	}
 
-    public function navigationAdd()
+    public function addNavigation()
     {
-        $this->parser->parse('settings/navigationAdd');
+        $this->parser->parse('settings/addNavigation');
     }
 	
 	public function users()
@@ -178,6 +178,29 @@ class Dashboard extends MX_Controller {
 		
 		$this->parser->parse('users/users-edit', $data);
 	}
+
+    public function addPremium($id, $url)
+    {
+        $site = $this->db->get_where('top_sites', array('id' => $id))->result_array();
+        $user = $this->db->get_where('top_users', array('id' => $site['0']['user_id']))->result_array();
+        $username = $user['0']['username'];
+        $title = $site['0']['title'];
+
+        if($site['0']['premium'] == 0)
+            $date = null;
+        else
+            $date = $this->db->get_where('top_subscriptions', array('site_id' => $id))->row()->exp_date;
+
+        $data = array(
+            'id' => $id,
+            'username' => $username,
+            'backUrl' => $url,
+            'title' => $title,
+            'date' => $date
+        );
+
+        $this->parser->parse('settings/addPremium', $data);
+    }
 	
 	public function sites()
 	{		
@@ -267,6 +290,25 @@ class Dashboard extends MX_Controller {
         );
 
         $this->parser->parse('settings/navigation', $data);
+    }
+
+    public function subscriptions()
+    {
+        $subscriptions = $this->db->get('top_subscriptions')->result_array();
+        $counter = 0;
+        foreach($subscriptions as $item){
+            $site = $this->db->get_where('top_sites', array('id' => $item['site_id']))->result_array();
+            $user = $this->db->get_where('top_users', array('id' => $site['0']['user_id']))->result_array();
+            $subscriptions[$counter]['username'] = $user['0']['username'];
+            $subscriptions[$counter]['title'] = $site['0']['title'];
+            $counter++;
+        }
+        $data = array(
+            'username' => $this->session->userdata('username'),
+            'subscriptions' => $subscriptions
+        );
+
+        $this->parser->parse('settings/subscriptions', $data);
     }
 
 	public function logout()

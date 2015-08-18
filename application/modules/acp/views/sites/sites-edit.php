@@ -46,11 +46,6 @@
         <input id="full-width-input" class="round full-width-input" type="text" name="url" value="{$val.url}" />
         <em>This field is not required. Default: 0</em>
     </p>
-    <p>
-        <label for="full-width-input">Premium</label>
-        <input id="full-width-input" class="round full-width-input" type="text" name="premium" value="{$val.premium}" />
-        <em>This field is not required. Default: 0</em>
-    </p>
     {/foreach}
 
     <br/><div class="information-box round">Valid informations required.</div>

@@ -10,6 +10,7 @@
 	<link rel="stylesheet" href="/addons/acp/css/style.css">
 	<link rel="stylesheet" href="/addons/acp/css/jquery.jqplot.css">
 	<link rel="stylesheet" href="/addons/acp/js/alertify/dist/css/alertify-bootstrap-3.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 	
 	<!-- Optimize for mobile devices -->
@@ -35,7 +36,9 @@
 	<script type="application/javascript">
 		$(function() 
 		{
-			$('#users').jPaginate({ items: 5, next: '>', previous: '<' });
+            $(".premium").dblclick(function(){
+                showAddPremium($(this).attr('id'),'sites');
+            });
 		});
 	</script>
 </head>
@@ -101,7 +104,7 @@
 				
 				<div class="content-module-main">
 				
-					<p>This section provides state oversight for the investigation and cleanup of site's properties.</p>
+					<p>This section provides state oversight for the investigation and cleanup of site's properties. Make a site premium by double clicking the premium field.</p>
 					
 					<table>
 					
@@ -129,7 +132,7 @@
 								<td>{$val.category_id}</td>
 								<td>{$val.in_votes}</td>
 								<td>{$val.out_votes}</td>
-								<td>
+								<td id="{$val.id}" class="premium">
 									{if $val.premium == 1}
 										True
 									{else}

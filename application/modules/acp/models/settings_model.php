@@ -225,6 +225,36 @@ class Settings_model extends CI_Model
             return false;
     }
 
+    public function makePremium($id, $date){
+        $site = $this->db->get_where('top_sites', array('id' => $id))->row();
+        $newDate = new DateTime($date);
+        if($site->premium == 1) {
+            $existingDate = $this->db->get_where('top_subscriptions', array('site_id' => $id))->row()->exp_date;
+            $existingDateObj = new DateTime($existingDate);
+            if($existingDateObj>$newDate)
+                return false;
+            $data = array(
+                'exp_date' => $newDate->format('Y-m-d')
+            );
+            $this->db->where('site_id', $id)->update('top_subscriptions', $data);
+        }else{
+            $data = array(
+                'premium' => 1
+            );
+
+            $this->db->where('id', $id)->update('top_sites', $data);
+
+            $data = array(
+                'site_id' => $id,
+                'exp_date' => $newDate->format('Y-m-d')
+            );
+
+            $this->db->insert('top_subscriptions', $data);
+        }
+        return true;
+
+    }
+
     public function updateNavigationPosition($id, $position)
     {
         $castedId = (int)$id;
