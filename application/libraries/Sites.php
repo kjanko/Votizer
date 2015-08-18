@@ -61,7 +61,7 @@ class Sites
 		return true;
 	}
 	
-	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url, $premium)
+	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url)
 	{
 		$data = array(
 			'title' => $title,
@@ -70,8 +70,7 @@ class Sites
 			'in_votes' => $in,
 			'out_votes' => $out,
 			'banner_url' => $bannerUrl,
-			'url' => $url,
-			'premium' => $premium
+			'url' => $url
 		);
 		
 		$this->_ci->db

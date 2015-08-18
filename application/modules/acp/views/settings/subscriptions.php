@@ -23,40 +23,24 @@
 	<script src="/addons/acp/js/acp.js"></script> 
 	<script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
     <script src="/addons/acp/js/jquery.jeditable.mini.js"></script>
-
-
-    <script src="/addons/acp/js/Sortable.min.js"></script>
-
+	
 	<style>
-        /*
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
 		ul.pagination li { display:inline; }
 		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)*/
-        .move {
-            cursor: move;
-            cursor: -webkit-grabbing;
-        }
+		ul.pagination li a:hover { background-color:rgb(95, 108, 121)
 	</style>
 	
 	<script>
         $(document).ready(function() {
-            var sortable = Sortable.create(listWithHandle, {
-                handle: '.move',
-                dataIdAttr: 'id',
-                onSort: function (evt) {
-                    updateNavigationPosition(sortable.toArray());
-                }
-            });
             $('.editable').editable(function(value, settings) {
-                editNavigation(value,$(this).attr('id'),$(this).attr('data-field'));
+                editCategory(value,$(this).attr('id'));
                 return(value);
             }, {
                 onblur    : 'submit',
                 event : 'dblclick'
             });
         });
-
 	</script>
 </head>
 
@@ -88,7 +72,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/navigation" class="active-tab dashboard-tab">Navigation</a></li>
+				<li><a href="/acp/dashboard/categories" class="active-tab dashboard-tab">Categories</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -104,16 +88,18 @@
 			
 				<div class="content-module-heading cf">
 				
-					<h3 class="fl">Navigation</h3>
+					<h3 class="fl">Subscription</h3>
 					<span class="fr expand-collapse-text">Click to collapse</span>
 					<span class="fr expand-collapse-text initial-expand">Click to expand</span>
 				
 				</div> <!-- end content-module-heading -->
+				
+				
 				<div class="content-module-main">
-					<p>Here you manage your navigation links. Double click on a field to edit existing data. Arrange link display order using drag and drop on the id fields.</p>
-                    <a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddNavigation()">Add Navigation</a>
+					<p>Here you can list all of the premium subscribers. In order to manually make a site premium go <a href="/acp/dashboard/sites">here</a>.</p>
+					
 					<form action="#" method="POST" id="search-form" class="fr"
-					style="position: absolute; right: 50px; top: 235px;">
+					style="position: absolute; right: 50px; top: 220px;">
 						<fieldset>
 							<input type="text" name="search" id="search-keyword" class="round button dark ic-search image-right" placeholder="Search...">
 							<input type="hidden" value="SUBMIT">
@@ -126,29 +112,23 @@
 
 							<tr>
 								<th style="position: relative;">Id</th>
-								<th>Link Name</th>
-								<th>Link URL</th>
-								<th>Permission</th>
-                                <th>Actions</th>
+								<th>Username</th>
+								<th>Title</th>
+								<th>Expiry date</th>
 							</tr>
 
 						</thead>
-                        </tbody>
-                        <tbody id="listWithHandle">
-                        {foreach $navigation val}
-                        <tr id="{$val.id}">
-                            <td class="move">{$val.id}</td>
-                            <td id="{$val.id}" data-field="name" class="editable">{$val.name}</td>
-                            <td id="{$val.id}" data-field="href" class="editable">{$val.href}</td>
-                            <td id="{$val.id}" data-field="permission" class="editable">{$val.permission}</td>
-                            <td>
-                                <a href="#" class="table-actions-button ic-table-delete" onclick="removeNavigation({$val.id})"></a>
-                            </td>
-                        </tr>
-                        {/foreach}
-                        </tbody>
-
-
+						
+						<tbody id="users">
+							{foreach $subscriptions val}
+							<tr id="{$val.id}">
+								<td>{$val.id}</td>
+								<td>{$val.username}</td>
+								<td>{$val.title}</td>
+								<td>{$val.exp_date}</td>
+							</tr>
+							{/foreach}
+						</tbody>
 						
 					</table>
 					

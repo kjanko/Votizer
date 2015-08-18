@@ -64,7 +64,7 @@ function showAddPage(backUrl)
 
 function showAddNavigation()
 {
-    $.get('/acp/dashboard/navigationAdd' , function(data)
+    $.get('/acp/dashboard/addNavigation' , function(data)
     {
         $('.content-module-main').html(data).show('scale');
     });
@@ -104,6 +104,54 @@ function showEditSite(id)
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
+}
+function showAddPremium(id,backUrl)
+{
+    $.get('/acp/dashboard/addPremium/' + id + '/' + backUrl , function(data)
+    {
+        $('.content-module-main').html(data).show('scale');
+    });
+}
+function addPremium(){
+    var myDate = $("#datepicker" ).datepicker("getDate");
+    if(myDate == null){
+        alertify.alert("Invalid date");
+        return;
+    }
+    var dateString = (myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate());
+    var form_data =
+    {
+        id : $("input[name='id']").val(),
+        endDate : dateString
+    };
+
+    $.ajax(
+        {
+            url: '/ajax/addPremium',
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.alert(json.msg);
+                        setTimeout( function() { location="/acp/dashboard/sites" }, 500);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        $('.information-box').remove();
+                        $('#error-placeholder').html(json.msg).show('scale');
+                    }
+                }
+        });
+    return false;
 }
 
 function showAddUser()
@@ -335,7 +383,6 @@ function editSite()
 		inVotes : $("input[name='inVotes']").val(),
 		outVotes : $("input[name='outVotes']").val(),
 		bannerUrl : $("input[name='bannerUrl']").val(),
-		premium : $("input[name='premium']").val(),
 		url : $("input[name='url']").val()
 	};
 	

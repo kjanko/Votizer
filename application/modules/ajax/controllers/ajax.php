@@ -584,9 +584,8 @@ class Ajax extends MX_Controller
 				$out = $this->input->post('outVotes');
 				$bannerUrl = $this->input->post('bannerUrl');
 				$url = $this->input->post('url');
-				$premium = $this->input->post('premium');
 				
-				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url, $premium))
+				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
 				{
 					$data = array(
 						'success' => '1',
@@ -742,6 +741,53 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+    function addPremium()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_error_delimiters(' ', ' ');
+            $this->form_validation->set_rules('endDate', 'End date', 'required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $id = $this->input->post('id');
+                $endDate = $this->input->post('endDate');
+
+                if($this->settings->makePremium($id, $endDate))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'The time period that premium is valid cannot be reduced.'
+                    );
+
+                    echo json_encode($data);
+                }
+
+            }
+        }
+    }
     function addNavigation()
     {
         if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
