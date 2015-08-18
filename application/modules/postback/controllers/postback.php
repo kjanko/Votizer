@@ -27,13 +27,17 @@ class Postback extends MX_Controller
 		if($pingback->validate()) 
 		{
 			$virtualCurrency = $pingback->getVirtualCurrencyAmount();
+			$date = date('Y-m-d')
+			$uid = $this->input->get('uid');
 			
 			if($pingback->isDeliverable()) 
 			{
 				if($this->points->isValid($this->input->get('ref')))
 				{
-					$this->points->add($this->input->get('uid'), $virtualCurrency);
-					$this->points->log($this->input->get('uid'), $ref, date("Y-m-d"));
+					
+					$this->points->add($uid, $virtualCurrency);
+					$this->points->log($uid, $ref, $date);
+					$this->points->updateDailyIncome($date, $virtualCurrency);
 				}
 			} 
 			elseif($pingback->isCancelable()) 
