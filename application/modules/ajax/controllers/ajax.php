@@ -259,6 +259,84 @@ class Ajax extends MX_Controller
         );
         echo json_encode($data);
     }
+    function editNavigation()
+    {
+        $this->form_validation->set_error_delimiters(' ', ' ');
+
+        $field = $this->input->post('field');
+        $id = $this->input->post('id');
+        $value = $this->input->post('value');
+        if($field == "href"){
+            $this->form_validation->set_rules('value', 'Link URL', 'required');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateNavigationHref($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Navigation link has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        else if($field == "name")
+        {
+            $this->form_validation->set_rules('value', 'Link Name', 'required');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateNavigationName($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Navigation link has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        else if($field == "permission")
+        {
+            $this->form_validation->set_rules('value', 'Link Name', 'required|is_natural');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+                return;
+            }
+            if($this->settings->updateNavigationPermission($id, $value)) {
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! Navigation link has been changed.'
+                );
+                echo json_encode($data);
+                return;
+            }
+        }
+        $data = array(
+            'success' => '2',
+            'msg' => 'Advertisement already exists.'
+        );
+        echo json_encode($data);
+    }
     function editCategory()
     {
         $this->form_validation->set_error_delimiters(' ', ' ');
@@ -296,6 +374,32 @@ class Ajax extends MX_Controller
 
         }
     }
+    function editNavigationPosition()
+    {
+        $orderedLinks = json_decode($_POST['orderedLinks']);
+        $position = 0;
+        foreach($orderedLinks as $linkId){
+            if($this->settings->updateNavigationPosition($linkId, $position)) {
+
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Sorry. Something went wrong.'
+                );
+                echo json_encode($data);
+                return;
+            }
+            $position++;
+        }
+        $data = array(
+            'success' => '1',
+            'msg' => 'Success! Category has been changed.'
+        );
+        echo json_encode($data);
+
+    }
     function removeCategory()
     {
         if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -326,6 +430,40 @@ class Ajax extends MX_Controller
             }
         }
     }
+
+    function removeNavigation()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $id = $this->input->post('id');
+
+            if($this->settings->navigationIdExists($id))
+            {
+                $this->settings->updateNavPositions($id);
+                $this->settings->removeNavigation($id);
+                $data = array(
+                    'success' => '1',
+                    'msg' => 'Success! The navigation link has been successfully deleted.'
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $data = array(
+                    'success' => '2',
+                    'msg' => 'Error! Something went wrong while deleting this navigation link!'
+                );
+
+                echo json_encode($data);
+            }
+        }
+    }
+
     function removeAdvert()
     {
         if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -604,6 +742,56 @@ class Ajax extends MX_Controller
 			}
 		}
 	}
+    function addNavigation()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
+            $this->form_validation->set_rules('url', 'Link URL', 'required');
+            $this->form_validation->set_rules('name', 'Link Name', 'required');
+            $this->form_validation->set_rules('permission', 'Permission', 'required|is_natural');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $name = $this->input->post('name');
+                $url = $this->input->post('url');
+                $permission = $this->input->post('permission');
+
+                if($this->settings->insertNavigation($url, $name, $permission))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! Something went wrong while creating this navigation!'
+                    );
+
+                    echo json_encode($data);
+                }
+
+            }
+        }
+    }
 	
 	function removeUser()
 	{
