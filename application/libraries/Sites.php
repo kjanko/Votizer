@@ -79,6 +79,20 @@ class Sites
 		
 		return true;
 	}
+	
+	public function reset($date)
+	{
+		$query = $this->_ci->db->get_where('top_finished_resets', array('date' => $date));
+		
+		if($query->num_rows() == 0)
+		{
+			$this->_ci->db->insert('top_finished_resets', array('date' => $date));
+			$this->_ci->db->update('top_sites', array('in_votes' => 0, 'out_votes' => 0));
+		}
+		else
+			return false;
+	}
+	
     public function updateUCP($userId, $url, $description, $title, $categoryId)
     {
         $data = array(

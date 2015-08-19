@@ -47,6 +47,7 @@ $config['shop_premium'] = '65';
 $config['site_title'] = 'IgnitionCMS';
 $config['site_keywords'] = 'Ignition, Topsite, WoW, Minecraft';
 $config['site_description'] = "This is my site's description.";
+$config['admin_mail'] = 'mail@kjanko.com';
 
 /*
 | -------------------------------------------------------------------------
