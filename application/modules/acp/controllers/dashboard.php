@@ -292,6 +292,15 @@ class Dashboard extends MX_Controller {
         $this->parser->parse('settings/navigation', $data);
     }
 
+    public function settings()
+    {
+        $data = array(
+            'username' => $this->session->userdata('username'),
+        );
+
+        $this->parser->parse('settings/settings', $data);
+    }
+
     public function subscriptions()
     {
         $subscriptions = $this->db->get('top_subscriptions')->result_array();

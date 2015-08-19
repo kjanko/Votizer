@@ -559,7 +559,7 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('categoryId', 'Username', 'required|is_natural');
 			$this->form_validation->set_rules('title', 'Title', 'required');
-			$this->form_validation->set_rules('description', 'Descripton', 'required');
+			$this->form_validation->set_rules('description', 'Description', 'required');
 			$this->form_validation->set_rules('inVotes', 'In Votes', 'required|is_natural');
 			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
 			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
@@ -605,9 +605,59 @@ class Ajax extends MX_Controller
 				}
 			}
 		}
-	}	
-	
-	function banUser()
+	}
+
+    function editSiteSettings()
+    {
+        if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+        {
+            show_404();
+        }
+        else
+        {
+            $this->form_validation->set_error_delimiters(' ', ' ');
+            $this->form_validation->set_rules('siteTitle', 'Title', 'required');
+            $this->form_validation->set_rules('siteKeywords', 'Keywords', 'required');
+            $this->form_validation->set_rules('siteDescription', 'Description', 'required');
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data = array(
+                    'success' => '3',
+                    'msg' => validation_errors()
+                );
+
+                echo json_encode($data);
+            }
+            else
+            {
+                $userId = $this->session->userdata('id');
+                $siteTitle = $this->input->post('siteTitle');
+                $siteKeywords = $this->input->post('siteKeywords');
+                $siteDescription = $this->input->post('siteDescription');
+                // continue
+                if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
+                {
+                    $data = array(
+                        'success' => '1',
+                        'msg' => 'Success! Please wait while you are being redirected.'
+                    );
+
+                    echo json_encode($data);
+                }
+                else
+                {
+                    $data = array(
+                        'success' => '2',
+                        'msg' => 'Error! Something went wrong while editing this user!'
+                    );
+
+                    echo json_encode($data);
+                }
+            }
+        }
+    }
+
+    function banUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
