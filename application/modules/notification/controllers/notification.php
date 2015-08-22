@@ -22,7 +22,7 @@ class Notification extends MX_Controller
 			->set_partial('sidebar', 'partials/sidebar')
 			->set_partial('featured', 'partials/featured')
 			->set_partial('footer', 'partials/footer')
-			->title($this->config->item('site_title'), 'User Control Panel')
+			->title($this->config->item('site_title'), 'Notification')
 		->build('error', $data);
 	}
 	
@@ -39,7 +39,7 @@ class Notification extends MX_Controller
 			->set_partial('sidebar', 'partials/sidebar')
 			->set_partial('featured', 'partials/featured')
 			->set_partial('footer', 'partials/footer')
-			->title($this->config->item('site_title'), 'User Control Panel')
+			->title($this->config->item('site_title'), 'Notification')
 		->build('success', $data);
 		
 		$this->session->unset_userdata('notification-message');

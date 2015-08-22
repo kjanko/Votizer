@@ -77,6 +77,7 @@ function showBlacklistIps()
 		$('.content-module-main').html(data).show('scale');
 	});
 }
+
 function showBlacklistUrls()
 {
     $.get('/acp/dashboard/blacklistUrls/', function(data)
@@ -84,6 +85,7 @@ function showBlacklistUrls()
         $('.content-module-main').html(data).show('scale');
     });
 }
+
 function showBlacklistUsers()
 {
 	$.get('/acp/dashboard/blacklistUsers/', function(data) 
@@ -91,6 +93,7 @@ function showBlacklistUsers()
 		$('.content-module-main').html(data).show('scale');
 	});
 }
+
 function showBlacklistProfanity()
 {
     $.get('/acp/dashboard/blacklistProfanity/', function(data)
@@ -98,6 +101,7 @@ function showBlacklistProfanity()
         $('.content-module-main').html(data).show('scale');
     });
 }
+
 function showEditSite(id)
 {
 	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
@@ -105,6 +109,7 @@ function showEditSite(id)
 		$('.content-module-main').html(data).show('scale');
 	});
 }
+
 function showAddPremium(id,backUrl)
 {
     $.get('/acp/dashboard/addPremium/' + id + '/' + backUrl , function(data)
@@ -112,6 +117,7 @@ function showAddPremium(id,backUrl)
         $('.content-module-main').html(data).show('scale');
     });
 }
+
 function addPremium(){
     var myDate = $("#datepicker" ).datepicker("getDate");
     if(myDate == null){
@@ -1016,28 +1022,29 @@ function removeBlacklistUrls(id)
     }
 
     $.ajax(
-        {
-            url: '/ajax/removeBlacklistUrl',
-            type: 'POST',
-            data: form_data,
-            success:
-                function(message)
-                {
-                    var json = jQuery.parseJSON(message);
+	{
+		url: '/ajax/removeBlacklistUrl',
+		type: 'POST',
+		data: form_data,
+		success:
+			function(message)
+			{
+				var json = jQuery.parseJSON(message);
 
-                    if(json.success === '1')
-                    {
-                        $('#' + id).hide('slow', function(){ $(this).remove(); });
-                        alertify.success("The Url has been successfully deleted.");
-                    }
-                    else if(json.success === '2')
-                    {
-                        alertify.alert(json.msg);
-                    }
-                }
-        });
+				if(json.success === '1')
+				{
+					$('#' + id).hide('slow', function(){ $(this).remove(); });
+					alertify.success("The Url has been successfully deleted.");
+				}
+				else if(json.success === '2')
+				{
+					alertify.alert(json.msg);
+				}
+			}
+	});
     return false;
 }
+
 function removeBlacklistUsers(IpId)
 {
 	var form_data = 

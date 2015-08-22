@@ -17,7 +17,9 @@ class Category extends MX_Controller
 	public function index($category)
 	{			
 		$this->load->model('category_model', 'categories');
-
+		
+		$category = urldecode($category);
+		
 		$id = $this->categories->getCategoryId($category);
 		
 		$servers = $this->sites->getDataByCategory($id);

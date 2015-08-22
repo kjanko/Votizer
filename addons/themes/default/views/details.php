@@ -55,12 +55,12 @@
 							
 							<tr>
 								<td>Website</td>
-								<td><a href="<?php echo base_url(); ?>out/vote/{$site.id}" class="btn btn-info btn-xs" role="button"><i class="fa fa-external-link-square"></i> Join now!</a></td>
+								<td><a href="<?php echo base_url(); ?>out/vote/{$site.id}" class="btn btn-danger btn-xs" role="button"><i class="fa fa-external-link-square"></i> Join now!</a></td>
 							</tr>
 							
 							<tr>
 								<td>Vote</td>
-								<td><a href="<?php echo base_url(); ?>in/vote/{$site.id}" class="btn btn-danger btn-xs" role="button"><i class="fa fa-thumbs-o-up"></i> Vote for us!</a></td>
+								<td><a href="<?php echo base_url(); ?>in/vote/{$site.id}" class="btn btn-success btn-xs" role="button"><i class="fa fa-thumbs-o-up"></i> Vote for us!</a></td>
 							</tr>
 							
 							<tr>

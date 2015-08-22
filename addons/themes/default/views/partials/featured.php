@@ -64,7 +64,7 @@
 							
 						</div>
 						
-						<br /><br />
+						<br />
 						<h1>Server address:</h1>
 						<a href="<?php echo base_url(); ?>out/vote/{$val.id}">{$val.url}</a>
 					
