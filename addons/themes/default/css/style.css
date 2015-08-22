@@ -231,7 +231,6 @@ img
 {
 	section.box
 	{
-		max-height: 185px;
 		margin-top: 10px;
 		margin-bottom: 10px;
 		padding-left: 10px;
@@ -284,15 +283,15 @@ img
 	
 	section.box h3
 	{
-		font: 14px Diavlo;
+		font: 16px Diavlo;
 		color: #829ad2;
-		margin-top: 5px;
-		margin-bottom: 0;
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 	
 	section.box p
 	{
-		font: 11px Arial;
+		font: 12px Tahoma;
 		margin-top: 5px;
 	}
 	

@@ -87,7 +87,7 @@ class Sites
 		if($query->num_rows() == 0)
 		{
 			$this->_ci->db->insert('top_finished_resets', array('date' => $date));
-			$this->_ci->db->update('top_sites', array('in_votes' => 0, 'out_votes' => 0));
+			$this->_ci->db->update('top_sites', array('in_votes' => 0, 'out_votes' => 0, 'total_visits' => 0));
 		}
 		else
 			return false;

@@ -20,6 +20,8 @@ class Ucp extends MX_Controller
 			
 			$winnerBid = $this->auction->isWinner();
 			
+			$servers = $this->sites->getDataById($this->users->getSiteId($this->session->userdata('id')));
+			
             $userId = $this->session->userdata('id');
             $site = $this->sites->getSiteByUserId($userId);
             $user = $this->users->getUserById($userId);
@@ -37,6 +39,7 @@ class Ucp extends MX_Controller
                 }
                 else
                     $expiry_date = "no active subscription";
+					
                 $userData = array(
                     'username' => $user->username,
                     'name' => $user->name,
@@ -62,7 +65,8 @@ class Ucp extends MX_Controller
 					'currentCategory' => $currentCategory,
 					'site' => $siteData,
                     'user' => $userData,
-					'expiration_date' => $expiry_date
+					'expiration_date' => $expiry_date,
+					'servers' => $servers
 				);
 				
 				if($winnerBid)
