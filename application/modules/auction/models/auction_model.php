@@ -167,21 +167,6 @@ class Auction_model extends CI_Model
 			return false;
 	}
 	
-	public function removeExpiredSponsorship($date)
-	{
-		$query = $this->db->get_where('top_auctions', array('sponsored_close' => $date));
-		
-		if($query->num_rows() > 0)
-		{
-			$data = $query->result();
-			
-			foreach($data as $row)
-				$this->db->where('id', $row->winner_id)->update('top_sites', array('featured' => 0));
-		}
-		else
-			return false;
-	}
-	
 	function add_months($months, DateTime $dateObject) 
     {
         $next = new DateTime($dateObject->format('Y-m-d'));

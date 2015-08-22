@@ -20,14 +20,14 @@ cookies = if you want to use cookies to remember which page the user is on, true
 (function($){
     $.fn.jPaginate = function(options) {
         var defaults = {
-            items: 4,
-            next: "Next",
-            previous: "Previous",
+            items: 1,
+            next: ">",
+            previous: "<",
             active: "active",
             pagination_class: "pagination",
             minimize: false,
-            nav_items: 6,
-			cookies: true
+            nav_items: 10,
+			cookies: false
         };
         var options = $.extend(defaults, options);
 
@@ -35,16 +35,15 @@ cookies = if you want to use cookies to remember which page the user is on, true
             // object is the selected pagination element list
             obj = $(this);
             // this is how you call the option passed in by plugin of items
-            var show_per_page = options.items;
+            show_per_page = options.items;
             //getting the amount of elements inside parent element
-            var number_of_items = obj.children().size();
+            number_of_items = obj.children().size();
             //calculate the number of pages we are going to have
-            var number_of_pages = Math.ceil(number_of_items/show_per_page);
-            
+            number_of_pages = Math.ceil(number_of_items/show_per_page);
             //create the pages of the pagination
-            var array_of_elements = [];
-            var numP = 0;
-            var nexP = show_per_page;
+            array_of_elements = [];
+            numP = 0;
+            nexP = show_per_page;
             //loop through all pages and assign elements into array
             for (i=1;i<=number_of_pages;i++)
             {    
@@ -64,11 +63,16 @@ cookies = if you want to use cookies to remember which page the user is on, true
 					createPagination(get_cookie("current"));
 				}
 			} else {
-				showPage(1);
+                showPage(1);
 				createPagination(1);
 			}
             //show selected page
             function showPage(page) {
+                if(number_of_pages===0) {
+                    number_of_pages=1;
+                    createPagination(1);
+                    return;
+                }
                 obj.children().hide();
                 array_of_elements[page].show('slow');
             }
@@ -77,8 +81,8 @@ cookies = if you want to use cookies to remember which page the user is on, true
             function createPagination(curr) {
                 var start, items = "", end, nav = "";
                 start = "<ul class='"+options.pagination_class+"'>";
-                var previous = "<li><a class='goto_previous' href='#'>"+options.previous+"</a></li>";
-                var next = "<li><a class='goto_next' href='#'>"+options.next+"</a></li>";
+                var previous = "<li><a class='goto_previous'>"+options.previous+"</a></li>";
+                var next = "<li><a class='goto_next'>"+options.next+"</a></li>";
 				var previous_inactive = "<li><a class='inactive'>"+options.previous+"</a></li>";
                 var next_inactive = "<li><a class='inactive'>"+options.next+"</a></li>";
                 end = "</ul>"
@@ -109,6 +113,8 @@ cookies = if you want to use cookies to remember which page the user is on, true
                 }
                 if (curr != 1 && curr != number_of_pages) {
                     nav = start + previous + items + next + end;
+                } else if (curr == 1 && curr == number_of_pages) {
+                    nav = start + previous_inactive + items + next_inactive + end;
                 } else if (curr == number_of_pages){
                     nav = start + previous + items + next_inactive + end;
                 } else if (curr == 1) {
@@ -133,32 +139,37 @@ cookies = if you want to use cookies to remember which page the user is on, true
 				return {start:start, end:end};
 			}
 			
-            // handle click on pagination 
-            $(".goto").live("click", function(e){
-                e.preventDefault();
-                showPage($(this).attr("title"));
-				set_cookie( "current", $(this).attr("title"));
-                $(".pagination").remove();
-                createPagination($(this).attr("title"));
-            });
-            $(".goto_next").live("click", function(e) {
-                e.preventDefault();
-                var act = "."+options.active;
-                var newcurr = parseInt($(".pagination").find(".active").attr("title")) + 1;
-                set_cookie( "current", newcurr);
-				showPage(newcurr);
-                $(".pagination").remove();
-                createPagination(newcurr);
-            });
-            $(".goto_previous").live("click", function(e) {
-                e.preventDefault();
-                var act = "."+options.active;
-                var newcurr = parseInt($(".pagination").find(".active").attr("title")) - 1;
-				set_cookie( "current", newcurr);
-                showPage(newcurr);
-                $(".pagination").remove();
-                createPagination(newcurr);
-            });
+            // handle click on pagination
+            if(window.pagination !== true){
+                $(".goto").live("click", function(e){
+                    e.preventDefault();
+                    showPage($(this).attr("title"));
+                    set_cookie( "current", $(this).attr("title"));
+                    $(".pagination").remove();
+                    createPagination($(this).attr("title"));
+                });
+                $(".goto_previous").live("click", function(e) {
+                    e.preventDefault();
+                    var act = "."+options.active;
+                    var newcurr = parseInt($(".pagination").find(".active").attr("title")) - 1;
+                    set_cookie( "current", newcurr);
+                    showPage(newcurr);
+                    $(".pagination").remove();
+                    createPagination(newcurr);
+                });
+                $(".goto_next").live("click", function(e) {
+                    e.preventDefault();
+                    var act = "."+options.active;
+                    var newcurr = parseInt($(".pagination").find(".active").attr("title")) + 1;
+                    set_cookie( "current", newcurr);
+                    showPage(newcurr);
+                    $(".pagination").remove();
+                    createPagination(newcurr);
+                });
+                window.pagination = true;
+            }
+
+
         });
         
        

@@ -137,7 +137,7 @@ function addPremium(){
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() { location="/acp/dashboard/sites" }, 500);
                     }
                     else if(json.success === '2')
@@ -186,7 +186,7 @@ function editUser()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
@@ -247,7 +247,7 @@ function editPage()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
@@ -317,7 +317,7 @@ function addPage()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
@@ -355,7 +355,7 @@ function addNavigation()
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() { location="/acp/dashboard/navigation" }, 500);
                     }
                     else if(json.success === '2')
@@ -398,7 +398,7 @@ function editSite()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '2')
@@ -416,10 +416,10 @@ function editSite()
 	return false;
 }
 
-function settingsAjaxCall(form_data, method){
+function settingsAjaxCall(form_data){
     $.ajax(
         {
-            url: '/ajax/' + method,
+            url: '/ajax/editSettings',
             type: 'POST',
             data: form_data,
             success:
@@ -447,12 +447,12 @@ function editSiteSetting()
 {
     var form_data =
     {
-        siteTitle : $("input[name='site_title']").val(),
-        siteKeywords : $("input[name='site_keywords']").val(),
-        siteDescription : $("input[name='site_description']").val()
+        site_title : $("input[name='site_title']").val(),
+        site_keywords : $("input[name='site_keywords']").val(),
+        site_description : $("input[name='site_description']").val()
     };
 
-    settingsAjaxCall(form_data, "editSiteSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -460,13 +460,13 @@ function editShopSetting()
 {
     var form_data =
     {
-        shopStarter : $("input[name='shop_starter']").val(),
-        shopValue : $("input[name='shop_value']").val(),
-        shopPro : $("input[name='shop_pro']").val(),
-        shopPremium : $("input[name='shop_premium']").val()
+        shop_starter : $("input[name='shop_starter']").val(),
+        shop_value : $("input[name='shop_value']").val(),
+        shop_pro : $("input[name='shop_pro']").val(),
+        shop_premium : $("input[name='shop_premium']").val()
     };
 
-    settingsAjaxCall(form_data, "editShopSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -474,11 +474,11 @@ function editCaptchaSetting()
 {
     var form_data =
     {
-        recaptchaSecretKey : $("input[name='recaptcha_secret_key']").val(),
-        recaptchaApiKey : $("input[name='recaptcha_api_key']").val()
+        recaptcha_secret_key : $("input[name='recaptcha_secret_key']").val(),
+        recaptcha_api_key : $("input[name='recaptcha_api_key']").val()
     };
 
-    settingsAjaxCall(form_data, "editCaptchaSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -486,12 +486,12 @@ function editPaymentwallSettings()
 {
     var form_data =
     {
-        paymentwallSecretKey : $("input[name='paymentwall_secret_key']").val(),
-        paymentwallAppKey : $("input[name='paymentwall_app_key']").val(),
-        paymentwallWidgetCode : $("input[name='paymentwall_widget_code']").val()
+        paymentwall_secret_key : $("input[name='paymentwall_secret_key']").val(),
+        paymentwall_app_key : $("input[name='paymentwall_app_key']").val(),
+        paymentwall_widget_code : $("input[name='paymentwall_widget_code']").val()
     };
 
-    settingsAjaxCall(form_data, "editPaymentwallSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -499,13 +499,14 @@ function editThemeSettings()
 {
     var form_data =
     {
-        logoBlue : $("input[name='logo_blue']").val(),
-        logoGray : $("input[name='logo_gray']").val(),
-        middleSectionTitle : $("input[name='middle_section_title']").val(),
-        middleSectionDescription : $("input[name='middle_section_description']").val()
+        logo_blue : $("input[name='logo_blue']").val(),
+        logo_gray : $("input[name='logo_gray']").val(),
+        middle_section_title : $("input[name='middle_section_title']").val(),
+        middle_section_description : $("input[name='middle_section_description']").val(),
+        disqus_shortname : $("input[name='disqus_shortname']").val()
     };
 
-    settingsAjaxCall(form_data, "editAuctionSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -513,11 +514,11 @@ function editAuctionSettings()
 {
     var form_data =
     {
-        auctionMinimumBi : $("input[name='auction_minimum_bid']").val(),
-        auctionMinimumRank : $("input[name='auction_minimum_rank']").val()
+        auction_minimum_bid : $("input[name='auction_minimum_bid']").val(),
+        auction_minimum_rank : $("input[name='auction_minimum_rank']").val()
     };
 
-    settingsAjaxCall(form_data, "editAuctionSettings");
+    settingsAjaxCall(form_data);
     return false;
 }
 
@@ -545,7 +546,7 @@ function addUser()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { location="/acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
@@ -670,7 +671,7 @@ function banUrl()
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() { showBlacklistUrls() }, 500);
                     }
                     else if(json.success === '2')
@@ -705,7 +706,7 @@ function banUser()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { showBlacklistUsers() }, 500);
 				}
 				else if(json.success === '2')
@@ -736,7 +737,7 @@ function banIp()
 				
 				if(json.success === '1')
 				{
-					alertify.alert(json.msg);
+                    alertify.success(json.msg);
 					setTimeout( function() { showBlacklistIps() }, 500);
 				}
 				else if(json.success === '2')
@@ -1127,7 +1128,7 @@ function banProfanity()
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() { showBlacklistProfanity() }, 500);
                     }
                     else if(json.success === '2')
@@ -1164,7 +1165,7 @@ function removeBlacklistProfanity(id)
                     if(json.success === '1')
                     {
                         $('#' + id).hide('slow', function(){ $(this).remove(); });
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                     }
                     else if(json.success === '2')
                     {

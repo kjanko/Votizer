@@ -14,6 +14,13 @@ $(function(){
             changePassword();
         }
     });
+    $('input').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $(this).parent().parent().siblings('.submit').focus().click();
+            return false;
+        }
+    });
 });
 function editUserDetails(){
     var form_data =
@@ -34,7 +41,7 @@ function editUserDetails(){
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                     }
                     else if(json.success === '2')
                     {
@@ -66,7 +73,7 @@ function editSiteDetails()
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                     }
                     else if(json.success === '2')
                     {
@@ -105,7 +112,7 @@ function changePassword(){
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() { location="/ucp" }, 750);
                     }
                     else if(json.success === '2')

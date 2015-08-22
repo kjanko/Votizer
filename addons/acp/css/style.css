@@ -678,12 +678,42 @@ div.content-module-main { padding: 1em; /* 16/16 */ }
 	background-color: white;
 }
 
-
-
-
-
 /* ---------- FOOTER ---------- */
 div#footer {
 	text-align: center;
 	padding: 1.875em 0; /* 30/16 */
 }
+
+/* ---------- Pagination ---------- */
+*{
+            box-sizing: border-box;
+        }
+		ul.pagination {
+            position: absolute;
+            margin-top: 37px;
+            list-style: none;
+        }
+		ul.pagination li {
+            display:inline;
+            cursor: pointer;
+        }
+        .inactive, .active {
+            cursor: default;
+        }
+        ul.pagination li a.active {
+            background: #F8F9FA;
+            border-radius: 4px;
+            color: black;
+        }
+		ul.pagination li a {
+            padding:6px;
+            text-decoration:none;
+            background: #5d6677;
+            color: white;
+            margin: 0 5px;
+        }
+		ul.pagination li a:hover {
+            border: 0.1em solid #3f4551;
+            -webkit-transition: border .2s ease-in-out;
+            -o-transition: border .2s ease-in-out;
+            transition: border .2s ease-in-out;}

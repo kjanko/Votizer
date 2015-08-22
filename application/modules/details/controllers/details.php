@@ -30,7 +30,8 @@ class Details extends MX_Controller
         $site[0]['rank'] = $rank;
         $data = array(
             'site' => $site[0],
-            'graphData' => $graphData
+            'graphData' => $graphData,
+            'disqusShortname' => $this->config->item("disqus_shortname")
         );
 
 

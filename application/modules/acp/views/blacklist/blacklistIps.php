@@ -18,13 +18,13 @@
 
     </thead>
 
-    <tbody id="users">
+    <tbody id="items">
         {foreach $blacklistIps val}
         <tr id="{$val.id}">
             <td>{$val.id}</td>
             <td>{$val.ip}</td>
             <td>
-                <a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id}, '{$val.ip}')"></a>
+                <a class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id}, '{$val.ip}')"></a>
             </td>
         </tr>
         {/foreach}
@@ -33,3 +33,8 @@
 </table>
 
 <div class="stripe-separator"><!--  --></div>
+<script>
+    $(function(){
+        $("#items").jPaginate();
+    });
+</script>

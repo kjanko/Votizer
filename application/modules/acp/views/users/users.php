@@ -31,10 +31,9 @@
 	</style>
 	
 	<script type="application/javascript">
-		/*$(function() 
-		{
-			$('#users').jPaginate({ items: 5, next: '>', previous: '<' });
-		});*/
+        $(function(){
+            $("#items").jPaginate();
+        });
 		
 		search('users', 'Such user does not exist!');
 		
@@ -120,7 +119,7 @@
 						
 						</thead>
 						
-						<tbody id="users">
+						<tbody id="items">
 							{foreach $users val}
 							<tr id="{$val.username}">
 								<td>{$val.id}</td>

@@ -19,14 +19,12 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src="https://www.google.com/jsapi"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
 
 	{theme_js('wow.js')}
 	{theme_js('register.js')}
 	{theme_js('login.js')}
 	{theme_js('ucp.js')}
 	{theme_js('details.js')}
-	{theme_js('contact.js')}
 	{theme_js('alertify/dist/js/alertify.js')}
 
 	<script>

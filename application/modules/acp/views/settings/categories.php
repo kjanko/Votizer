@@ -33,6 +33,7 @@
 	
 	<script>
         $(document).ready(function() {
+            $("#items").jPaginate();
             $('.editable').editable(function(value, settings) {
                 editCategory(value,$(this).attr('id'));
                 return(value);
@@ -72,6 +73,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
+                <li><a href="/acp/dashboard/settings">Settings</a></li>
 				<li><a href="/acp/dashboard/categories" class="active-tab dashboard-tab">Categories</a></li>
 			</ul> <!-- end tabs -->
 						
@@ -122,13 +124,13 @@
 
 						</thead>
 						
-						<tbody id="users">
+						<tbody id="items">
 							{foreach $categories val}
 							<tr id="{$val.id}">
 								<td>{$val.id}</td>
 								<td id="{$val.id}" class="editable">{$val.category}</td>
 								<td>
-                                    <a href="#" class="table-actions-button ic-table-delete" onclick="removeCategory({$val.id})"></a>
+                                    <a class="table-actions-button ic-table-delete" onclick="removeCategory({$val.id})"></a>
 								</td>
 							</tr>
 							{/foreach}
