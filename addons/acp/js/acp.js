@@ -422,6 +422,111 @@ function editSite()
 	return false;
 }
 
+function settingsAjaxCall(form_data, method){
+    $.ajax(
+        {
+            url: '/ajax/' + method,
+            type: 'POST',
+            data: form_data,
+            success:
+                function(message)
+                {
+                    var json = jQuery.parseJSON(message);
+
+                    if(json.success === '1')
+                    {
+                        alertify.success(json.msg);
+                    }
+                    else if(json.success === '2')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                    else if(json.success === '3')
+                    {
+                        alertify.alert(json.msg);
+                    }
+                }
+        });
+}
+
+function editSiteSetting()
+{
+    var form_data =
+    {
+        siteTitle : $("input[name='site_title']").val(),
+        siteKeywords : $("input[name='site_keywords']").val(),
+        siteDescription : $("input[name='site_description']").val()
+    };
+
+    settingsAjaxCall(form_data, "editSiteSettings");
+    return false;
+}
+
+function editShopSetting()
+{
+    var form_data =
+    {
+        shopStarter : $("input[name='shop_starter']").val(),
+        shopValue : $("input[name='shop_value']").val(),
+        shopPro : $("input[name='shop_pro']").val(),
+        shopPremium : $("input[name='shop_premium']").val()
+    };
+
+    settingsAjaxCall(form_data, "editShopSettings");
+    return false;
+}
+
+function editCaptchaSetting()
+{
+    var form_data =
+    {
+        recaptchaSecretKey : $("input[name='recaptcha_secret_key']").val(),
+        recaptchaApiKey : $("input[name='recaptcha_api_key']").val()
+    };
+
+    settingsAjaxCall(form_data, "editCaptchaSettings");
+    return false;
+}
+
+function editPaymentwallSettings()
+{
+    var form_data =
+    {
+        paymentwallSecretKey : $("input[name='paymentwall_secret_key']").val(),
+        paymentwallAppKey : $("input[name='paymentwall_app_key']").val(),
+        paymentwallWidgetCode : $("input[name='paymentwall_widget_code']").val()
+    };
+
+    settingsAjaxCall(form_data, "editPaymentwallSettings");
+    return false;
+}
+
+function editThemeSettings()
+{
+    var form_data =
+    {
+        logoBlue : $("input[name='logo_blue']").val(),
+        logoGray : $("input[name='logo_gray']").val(),
+        middleSectionTitle : $("input[name='middle_section_title']").val(),
+        middleSectionDescription : $("input[name='middle_section_description']").val()
+    };
+
+    settingsAjaxCall(form_data, "editAuctionSettings");
+    return false;
+}
+
+function editAuctionSettings()
+{
+    var form_data =
+    {
+        auctionMinimumBi : $("input[name='auction_minimum_bid']").val(),
+        auctionMinimumRank : $("input[name='auction_minimum_rank']").val()
+    };
+
+    settingsAjaxCall(form_data, "editAuctionSettings");
+    return false;
+}
+
 function addUser()
 {
 	var form_data = 

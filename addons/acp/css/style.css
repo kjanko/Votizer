@@ -150,6 +150,7 @@ p, .button, form input, ul#nav li ul, ul#tabs, div.side-menu ul li a, table,
 .error-box p { font-size: 0.75em; }
 
 div.content-module-heading span { font-size: 0.625em; /* 10/16 */ }
+div.content-module-section-heading span.expand-collapse-text{ color:white /* 10/16 */ }
 
 form p input[type="text"], form p input[type="password"], form p input[type="checkbox"], form p input[type="radio"] { font-size: 1em; /* 12/12. I did 12 because they're contained within a P tag, that has font size of 12px*/ }
 
@@ -628,6 +629,11 @@ div.content-module {
 div.content-module-heading {
 	background: #3f4551;
 	cursor: pointer;
+}
+div.content-module-heading.content-module-section-heading {
+	background: #969dac;
+	margin-bottom: 5px
+	
 }
 
 	div.content-module-heading h3 {
