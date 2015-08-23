@@ -129,9 +129,9 @@
 								</div>
 							</div>
 
-						</div>
+                            <button class="btn btn-primary pull-right submit" style="margin-bottom:10px;" onclick="changePassword()">Change</button>
 
-						<button class="btn btn-primary pull-right" id="submit" style="margin-bottom:10px;" onclick="changePassword()">Change</button>
+						</div>
 						
 						<div id="error-placeholder"></div>
 						
@@ -178,10 +178,8 @@
 								</select>
 							</div>
 						</div>
-						
-						<div>
-                            <button class="btn btn-primary pull-right" style="margin-bottom:10px;" onclick="editSiteDetails()">Change</button>
-						</div>
+
+                        <button class="btn btn-primary pull-right submit" style="margin-bottom:10px;" onclick="editSiteDetails()">Change</button>
 						
 					</div>
 					
@@ -220,9 +218,7 @@
                             </div>
                         </div>
 
-                        <div>
-                            <button class="btn btn-primary pull-right" style="margin-bottom:10px;" onclick="editUserDetails()">Change</button>
-                        </div>
+                        <button class="btn btn-primary pull-right submit" style="margin-bottom:10px;" onclick="editUserDetails()">Change</button>
 
                     </div>
 						

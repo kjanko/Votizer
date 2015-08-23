@@ -28,11 +28,6 @@
     <script src="/addons/acp/js/Sortable.min.js"></script>
 
 	<style>
-        /*
-		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
-		ul.pagination li { display:inline; }
-		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)*/
         .move {
             cursor: move;
             cursor: -webkit-grabbing;
@@ -88,6 +83,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
+                <li><a href="/acp/dashboard/settings">Settings</a></li>
 				<li><a href="/acp/dashboard/navigation" class="active-tab dashboard-tab">Navigation</a></li>
 			</ul> <!-- end tabs -->
 						

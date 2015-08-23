@@ -24,20 +24,12 @@
 	<script src="/addons/acp/js/acp.js"></script> 
 	<script src="/addons/acp/js/tinymce/tinymce.min.js"></script> 
 	<script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
-
-	
-	<style>
-		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
-		ul.pagination li { display:inline; }
-		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)
-	</style>
 	
 	<script type="application/javascript">
-		/*$(function() 
+		$(function()
 		{
-			$('#pages').jPaginate({ items: 5, next: '>', previous: '<' });
-		});*/
+			$('#items').jPaginate();
+		});
 		
 		function setup()
 		{
@@ -127,15 +119,15 @@
 						
 						</thead>
 						
-						<tbody id="pages">
+						<tbody id="items">
 							{foreach $pages val}
 							<tr id="{$val.id}">
 								<td>{$val.id}</td>
 								<td>{$val.title}</td>
 								<td><a href="/pages/{$val.controller}">{$val.controller}</a></td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-edit" onclick="showEditPage('{$val.id}', 'pages')"></a>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removePage('{$val.id}')"></a>
+									<a class="table-actions-button ic-table-edit" onclick="showEditPage('{$val.id}', 'pages')"></a>
+									<a class="table-actions-button ic-table-delete" onclick="removePage('{$val.id}')"></a>
 								</td>
 							</tr>
 							{/foreach}

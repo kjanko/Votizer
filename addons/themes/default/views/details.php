@@ -101,12 +101,12 @@
 				<img style="margin: 0 auto; padding-bottom: 10px;" class="img-responsive" src="{$site.banner_url}" alt="banner" />
 
 			</div>
-		  
+
         <div class="panel panel-default col-md-12" >
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 /* * * CONFIGURATION VARIABLES * * */
-                var disqus_shortname = 'fasdfs';
+                var disqus_shortname = '{$disqusShortname}';
 
                 /* * * DON'T EDIT BELOW THIS LINE * * */
                 (function() {

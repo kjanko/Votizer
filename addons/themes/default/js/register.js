@@ -35,8 +35,8 @@ function registerSite()
 
                     if(json.success === '1')
                     {
-                        alertify.alert(json.msg);
-                        setTimeout( function() { location="/home" }, 1000);
+                        alertify.success(json.msg);
+                        setTimeout( function() { location="/login" }, 1000);
                     }
                     else if(json.success === '2')
                     {
@@ -50,3 +50,13 @@ function registerSite()
         }
     );
 }
+
+$(function(){
+    $('input').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $(this).parent().parent().siblings('.submit').focus().click();
+            return false;
+        }
+    });
+})

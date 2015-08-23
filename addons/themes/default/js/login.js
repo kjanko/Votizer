@@ -1,6 +1,3 @@
-/*$(function(){
-    userLogin();
-})*/
 function userLogin()
 {
     var form_data =
@@ -21,7 +18,7 @@ function userLogin()
 
                     if(json.success === '3')
                     {
-                        alertify.alert(json.msg);
+                        alertify.success(json.msg);
                         setTimeout( function() {  location="/home" }, 1000 );
                     }
                     else if(json.success === '2')
@@ -32,3 +29,12 @@ function userLogin()
         }
     );
 }
+$(function(){
+    $('input').keypress(function(e) {
+        if(e.which == 13) {
+            $(this).blur();
+            $('.submit').focus().click();
+            return false;
+        }
+    });
+})

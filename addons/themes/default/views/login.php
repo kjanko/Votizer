@@ -21,9 +21,7 @@
 			</div>
 			
 			<div>
-			
-				<button class="btn btn-primary pull-right" id="submit" style="margin-bottom:10px; " type="submit" onclick="userLogin()">Log in</button>
-				
+				<button class="btn btn-primary pull-right submit" style="margin-bottom:10px; " type="submit" onclick="userLogin()">Log in</button>
 			</div>
 			
 		</div>

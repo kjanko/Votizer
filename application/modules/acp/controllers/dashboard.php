@@ -282,6 +282,19 @@ class Dashboard extends MX_Controller {
 
         $this->parser->parse('settings/advertisements', $data);
     }
+    public function themes()
+    {
+        $themes = array_filter(scandir($_SERVER['DOCUMENT_ROOT']. 'addons/themes'), function($item) {
+            return !is_dir($_SERVER['DOCUMENT_ROOT']. 'addons/themes' . $item) && $item==explode('.', $item)[0];
+        });
+        $data = array(
+            'username' => $this->session->userdata('username'),
+            'themes' => $themes,
+            'active' => $this->config->item("theme_name")
+        );
+        $this->parser->parse('settings/themeChanger', $data);
+    }
+
     public function navigation()
     {
         $data = array(
@@ -296,6 +309,26 @@ class Dashboard extends MX_Controller {
     {
         $data = array(
             'username' => $this->session->userdata('username'),
+            'recaptcha_secret_key' => $this->config->item("recaptcha_secret_key"),
+            'recaptcha_api_key' => $this->config->item("recaptcha_api_key"),
+            'paymentwall_secret_key' => $this->config->item("paymentwall_secret_key"),
+            'paymentwall_app_key' => $this->config->item("paymentwall_app_key"),
+            'paymentwall_widget_code' => $this->config->item("paymentwall_widget_code"),
+            'shop_starter' => $this->config->item("shop_starter"),
+            'shop_value' => $this->config->item("shop_value"),
+            'shop_pro' => $this->config->item("shop_pro"),
+            'shop_premium' => $this->config->item("shop_premium"),
+            'site_title' => $this->config->item("site_title"),
+            'site_keywords' => $this->config->item("site_keywords"),
+            'site_description' => $this->config->item("site_description"),
+            'admin_mail' => $this->config->item("admin_mail"),
+            'logo_blue' => $this->config->item("logo_blue"),
+            'logo_gray' => $this->config->item("logo_gray"),
+            'middle_section_title' => $this->config->item("middle_section_title"),
+            'middle_section_description' => $this->config->item("middle_section_description"),
+            'auction_minimum_bid' => $this->config->item("auction_minimum_bid"),
+            'auction_minimum_rank' => $this->config->item("auction_minimum_rank"),
+            'disqus_shortname' => $this->config->item("disqus_shortname")
         );
 
         $this->parser->parse('settings/settings', $data);

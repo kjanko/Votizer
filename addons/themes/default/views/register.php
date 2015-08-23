@@ -80,7 +80,6 @@
 					{foreach $categories key, val, name='default'}
 						{if $dwoo.foreach.default.first}
 							<option selected value="{$val.id}">{$val.category}</option>
-						
 						{else}
 							<option value="{$val.id}">{$val.category}</option>
 						{/if}
@@ -88,10 +87,8 @@
 					</select>
 				</div>
 			</div>
-			
-			<div>
-			    <button class="btn btn-primary pull-right" id="submit" onclick="registerSite()">Add Site</button>
-			</div>
+
+            <button class="btn btn-primary pull-right submit" onclick="registerSite()">Add Site</button>
 
             <div id="error-placeholder"></div>
 			

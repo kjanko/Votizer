@@ -12,18 +12,6 @@ class Home extends MX_Controller
 	
 	public function index()
 	{			
-		$this->load->model('points/points_model', 'points');
-		$this->load->model('auction/auction_model', 'auction');
-		
-		$date = date('Y-m-d');
-		$this->points->removeExpiredSubscriptions($date);
-		$this->auction->removeExpiredSponsorship($date);
-		
-		$startMonth = date('Y-m-01');
-		
-		if($date == $startMonth)
-			$this->sites->reset($date);
-		
 		$servers = $this->sites->getData();
 	
 		$data = array(

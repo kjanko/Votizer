@@ -29,12 +29,11 @@
 		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
 		ul.pagination li a:hover { background-color:rgb(95, 108, 121)
 	</style>
-	<script type="application/javascript">
-		$(function() 
-		{
-			$('#users').jPaginate({ items: 5, next: '>', previous: '<' });
-		});
-	</script>
+    <script>
+        $(function(){
+            $("#items").jPaginate();
+        });
+    </script>
 </head>
 
 <body>
@@ -116,13 +115,13 @@
 						
 						</thead>
 						
-						<tbody id="users">
+						<tbody id="items">
 							{foreach $blacklistIps val}
 							<tr id="{$val.id}">
 								<td>{$val.id}</td>
 								<td>{$val.ip}</td>
 								<td>
-									<a href="#" class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id}, '{$val.ip}')"></a>
+									<a class="table-actions-button ic-table-delete" onclick="removeBlacklistIps({$val.id}, '{$val.ip}')"></a>
 								</td>
 							</tr>
 							{/foreach}

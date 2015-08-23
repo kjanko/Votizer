@@ -4,7 +4,7 @@
 include APPPATH . 'libraries/banbuilder/CensorWords.php';
 
 
-class Ajax extends MX_Controller 
+class Ajax extends MX_Controller
 {
 	protected $censor;
 	protected $badlinks;
@@ -12,18 +12,18 @@ class Ajax extends MX_Controller
     public function __construct()
     {
         parent::__construct();
-		
+
 		$this->load->library('form_validation');
 		$this->load->model('acp/Page_model', 'pages');
         $this->load->model('acp/Settings_model', 'settings');
-		
+
 		$this->censor = new CensorWords;
-		
+
 		$censoredWords = $this->general->getBlacklistProfanityData();
 		$censoredLinks = $this->general->getBlacklistUrlData();
-		
+
 		$this->badlinks = array();
-		
+
 		foreach($censoredLinks as $v)
 		{
 			array_push($this->badlinks, $v['url']);
@@ -33,7 +33,7 @@ class Ajax extends MX_Controller
 		{
 			array_push($this->censor->badwords, $v['word']);
 		}
-				
+
 		/*if(!$this->input->is_ajax_request())
 		{
 			show_404();
@@ -508,14 +508,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('uname', 'Username', 'required|min_length[5]|alpha_dash');
 			$this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
 			$this->form_validation->set_rules('rank', 'Rank', 'required|is_natural');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -526,14 +526,14 @@ class Ajax extends MX_Controller
 				$lname = $this->input->post('lname');
 				$email = $this->input->post('email');
 				$rank = $this->input->post('rank');
-				
+
 				if($this->users->update($id, $uname, $fname, $lname, $email, $rank))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -542,7 +542,7 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this user!'
 					);
-					
+
 					echo json_encode($data);
 				}
 			}
@@ -564,14 +564,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
 			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
 			$this->form_validation->set_rules('url', 'URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -584,14 +584,14 @@ class Ajax extends MX_Controller
 				$out = $this->input->post('outVotes');
 				$bannerUrl = $this->input->post('bannerUrl');
 				$url = $this->input->post('url');
-				
+
 				if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -600,14 +600,25 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this user!'
 					);
-					
+
 					echo json_encode($data);
 				}
 			}
 		}
 	}
 
-    function editSiteSettings()
+    private function writeToConfig($oldValue, $newValue, $varName)
+    {
+        $file = file_get_contents(APPPATH . 'config/settings.php');
+        $oldRow = "config['$varName'] = '$oldValue'";
+        $newRow = "config['$varName'] = '$newValue'";
+
+        $newFile = str_replace($oldRow, $newRow, $file, $count);
+
+        file_put_contents(APPPATH . 'config/settings.php', $newFile);
+    }
+
+    function editSettings()
     {
         if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
         {
@@ -615,45 +626,18 @@ class Ajax extends MX_Controller
         }
         else
         {
-            $this->form_validation->set_error_delimiters(' ', ' ');
-            $this->form_validation->set_rules('siteTitle', 'Title', 'required');
-            $this->form_validation->set_rules('siteKeywords', 'Keywords', 'required');
-            $this->form_validation->set_rules('siteDescription', 'Description', 'required');
-            if ($this->form_validation->run() == FALSE)
+            foreach($this->input->post() as $k => $v)
             {
-                $data = array(
-                    'success' => '3',
-                    'msg' => validation_errors()
-                );
-
-                echo json_encode($data);
+                $oldValue = $this->config->item($k);
+                self::writeToConfig($oldValue, $v, $k);
             }
-            else
-            {
-                $userId = $this->session->userdata('id');
-                $siteTitle = $this->input->post('siteTitle');
-                $siteKeywords = $this->input->post('siteKeywords');
-                $siteDescription = $this->input->post('siteDescription');
-                // continue
-                if($this->sites->update($id, $title, $description, $category_id, $in, $out, $bannerUrl, $url))
-                {
-                    $data = array(
-                        'success' => '1',
-                        'msg' => 'Success! Please wait while you are being redirected.'
-                    );
 
-                    echo json_encode($data);
-                }
-                else
-                {
-                    $data = array(
-                        'success' => '2',
-                        'msg' => 'Error! Something went wrong while editing this user!'
-                    );
+            $data = array(
+                'success' => '1',
+                'msg' => 'Success! The settings data has been successfully changed.'
+            );
 
-                    echo json_encode($data);
-                }
-            }
+            echo json_encode($data);
         }
     }
 
@@ -674,7 +658,7 @@ class Ajax extends MX_Controller
 						'success' => '1',
 						'msg' => 'Success! The user '.$user.' has been banned!'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -683,10 +667,10 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! This user does not exist!'
 					);
-					
+
 					echo json_encode($data);
 				}
-			
+
 		}
 	}
 
@@ -721,7 +705,7 @@ class Ajax extends MX_Controller
                     );
 
                     echo json_encode($data);
-                } 
+                }
 				else
 				{
                     $data = array(
@@ -734,7 +718,7 @@ class Ajax extends MX_Controller
             }
         }
     }
-	
+
 	function addUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -742,7 +726,7 @@ class Ajax extends MX_Controller
 			show_404();
 		}
 		else
-		{			
+		{
 			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
 			$this->form_validation->set_rules('lname', 'Last Name', 'required|alpha');
@@ -750,14 +734,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('password', 'Password', 'required|min_length[7]|alpha_dash');
 			$this->form_validation->set_rules('email', 'E-mail', 'required|valid_email');
 			$this->form_validation->set_rules('rank', 'Rank', 'required|is_natural');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -768,14 +752,14 @@ class Ajax extends MX_Controller
 				$email = $this->input->post('email');
 				$password = $this->input->post('password');
 				$rank = $this->input->post('rank');
-				
+
 				if($this->users->create($fname, $lname, $uname, $password, $email, $rank))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -784,10 +768,10 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while creating this user! Please make sure that another user does not exist with the same username or email.'
 					);
-					
+
 					echo json_encode($data);
 				}
-			
+
 			}
 		}
 	}
@@ -888,7 +872,7 @@ class Ajax extends MX_Controller
             }
         }
     }
-	
+
 	function removeUser()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -906,7 +890,7 @@ class Ajax extends MX_Controller
 					'success' => '1',
 					'msg' => 'Success! The user has been deleted.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -915,12 +899,12 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this user!'
 				);
-				
+
 				echo json_encode($data);
 			}
 		}
 	}
-	
+
 	function removeSite()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -930,14 +914,14 @@ class Ajax extends MX_Controller
 		else
 		{
 			$id = $this->input->post('id');
-			
+
 			if($this->sites->remove($id))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! The user has been deleted.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -946,12 +930,12 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this user!'
 				);
-				
+
 				echo json_encode($data);
 			}
 		}
 	}
-	
+
 	function banIp()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -961,27 +945,27 @@ class Ajax extends MX_Controller
 		else
 		{
 			$this->form_validation->set_rules('ip', 'Ip', 'required|valid_ip');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
 			{
 				$ip = $this->input->post('ip');
-				
+
 				if($this->general->insertBlacklistIP($ip))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -990,7 +974,7 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! This IP already exists!'
 					);
-					
+
 					echo json_encode($data);
 				}
 			}
@@ -1040,7 +1024,7 @@ class Ajax extends MX_Controller
             }
         }
     }
-	
+
 	function removeBlacklistIp()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -1050,14 +1034,14 @@ class Ajax extends MX_Controller
 		else
 		{
 			$ip = $this->input->post('postIP');
-			
+
 			if($this->general->removeBlacklistIP($ip))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! The IP has been deleted from the blacklist.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -1066,7 +1050,7 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
 				);
-				
+
 				echo json_encode($data);
 			}
 		}
@@ -1118,7 +1102,7 @@ class Ajax extends MX_Controller
 					'success' => '1',
 					'msg' => 'Success! The IP has been deleted from the blacklist.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -1127,7 +1111,7 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while deleting this IP from the blacklist!'
 				);
-				
+
 				echo json_encode($data);
 			}
 		}
@@ -1162,7 +1146,7 @@ class Ajax extends MX_Controller
             }
         }
     }
-	
+
 	function editPage()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -1175,14 +1159,14 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('url', 'URL', 'required');
 			$this->form_validation->set_rules('content', 'Content', 'required');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -1191,14 +1175,14 @@ class Ajax extends MX_Controller
 				$title = $this->input->post('title');
 				$url = $this->input->post('url');
 				$content = $this->input->post('content');
-				
+
 				if($this->pages->update($id, $url, $title, $content))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -1207,13 +1191,13 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while editing this page!'
 					);
-					
+
 					echo json_encode($data);
 				}
 			}
 		}
 	}
-	
+
 	function removePage()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -1223,14 +1207,14 @@ class Ajax extends MX_Controller
 		else
 		{
 			$id = $this->input->post('postID');
-			
+
 			if($this->pages->remove($id))
 			{
 				$data = array(
 					'success' => '1',
 					'msg' => 'Success! Please wait while you are being redirected.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -1239,12 +1223,12 @@ class Ajax extends MX_Controller
 					'success' => '2',
 					'msg' => 'Error! Something went wrong while removing this page!'
 				);
-				
+
 				echo json_encode($data);
 			}
 		}
 	}
-	
+
 	function addPage()
 	{
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
@@ -1252,18 +1236,18 @@ class Ajax extends MX_Controller
 			show_404();
 		}
 		else
-		{			
+		{
 			$this->form_validation->set_error_delimiters('<div class="error-box">', '</div>');
 			$this->form_validation->set_rules('title', 'Title', 'required');
 			$this->form_validation->set_rules('url', 'URL', 'required');
-			
+
 			if ($this->form_validation->run() == FALSE)
 			{
 				$data = array(
-					'success' => '3', 
+					'success' => '3',
 					'msg' => validation_errors()
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
@@ -1271,14 +1255,14 @@ class Ajax extends MX_Controller
 				$title = $this->input->post('title');
 				$url = $this->input->post('url');
 				$content = $this->input->post('content');
-				
+
 				if($this->pages->create($url, $title, $content))
 				{
 					$data = array(
 						'success' => '1',
 						'msg' => 'Success! Please wait while you are being redirected.'
 					);
-					
+
 					echo json_encode($data);
 				}
 				else
@@ -1287,35 +1271,35 @@ class Ajax extends MX_Controller
 						'success' => '2',
 						'msg' => 'Error! Something went wrong while creating this page!'
 					);
-					
+
 					echo json_encode($data);
 				}
-			
+
 			}
 		}
 	}
-	
+
 	function getSearchData($table)
 	{
 		$username = $this->input->post('query');
-		
+
 		$array = array(
 			'username' => $username
 		);
-		
+
 		$data = $this->general->searchData($table, $array);
-		
+
 		$output = array(
 			'users' => $data
 		);
-		
+
 		if($data)
 		{
 			$result = array(
 				'success' => '1',
 				'html' => $this->parser->parse('users-search', $output, true)
 			);
-			
+
 			echo json_encode($result);
 		}
 		else
@@ -1323,7 +1307,7 @@ class Ajax extends MX_Controller
 			$result = array(
 				'success' => '2'
 			);
-			
+
 			echo json_encode($result);
 		}
 	}
@@ -1361,24 +1345,24 @@ class Ajax extends MX_Controller
             $description = $this->input->post('description');
             $title = $this->input->post('title');
             $categoryId = $this->input->post('category');
-						
+
 			$censorTitle = $this->censor->censorString($title);
 			$censorDesc = $this->censor->censorString($description);
-			
+
 			if(in_array($url, $this->badlinks))
 			{
 				$data = array(
 					'success' => '2',
 					'msg' => 'Your URL is blacklisted. Please try again.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
 			{
 				if(!$this->users->doesExist($uname, $email))
 				{
-					if($this->users->create($fname, $lname, $uname, $password, $email, $rank)) 
+					if($this->users->create($fname, $lname, $uname, $password, $email, $rank))
 					{
 						$userId = $this->users->getUserId($uname);
 						$this->sites->create($censorTitle['clean'], $censorDesc['clean'], $userId, $categoryId, $url);
@@ -1471,23 +1455,23 @@ class Ajax extends MX_Controller
             $categoryId = $this->input->post('category');
 
             $userId = $this->session->userdata('id');
-			
+
 			$censorTitle = $this->censor->censorString($title);
 			$censorDesc = $this->censor->censorString($description);
-			
+
 			if(in_array($url, $this->badlinks))
 			{
 				$data = array(
 					'success' => '2',
 					'msg' => 'Your URL is blacklisted. Please try again.'
 				);
-				
+
 				echo json_encode($data);
 			}
 			else
 			{
 				//if url is valid
-				if($this->sites->updateUCP($userId, $url, $censorDesc['clean'], $censorTitle['clean'], $categoryId)) 
+				if($this->sites->updateUCP($userId, $url, $censorDesc['clean'], $censorTitle['clean'], $categoryId))
 				{
 					$data = array(
 						'success' => '1',

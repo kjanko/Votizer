@@ -33,6 +33,7 @@
 	
 	<script>
         $(document).ready(function() {
+            $("#items").jPaginate();
             $('.editable').editable(function(value, settings) {
                 editCategory(value,$(this).attr('id'));
                 return(value);
@@ -72,7 +73,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/categories" class="active-tab dashboard-tab">Categories</a></li>
+				<li><a href="/acp/dashboard/subscriptions" class="active-tab dashboard-tab">Subscription</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -119,7 +120,7 @@
 
 						</thead>
 						
-						<tbody id="users">
+						<tbody id="items">
 							{foreach $subscriptions val}
 							<tr id="{$val.id}">
 								<td>{$val.id}</td>

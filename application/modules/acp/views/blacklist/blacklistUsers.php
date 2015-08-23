@@ -18,7 +18,7 @@
 
     </thead>
 
-    <tbody id="users">
+    <tbody id="items">
         {foreach $blacklistUsers val}
         <tr id="{$val.id}">
             <td>{$val.id}</td>
@@ -33,3 +33,8 @@
 </table>
 
 <div class="stripe-separator"><!--  --></div>
+<script>
+    $(function(){
+        $("#items").jPaginate();
+    });
+</script>

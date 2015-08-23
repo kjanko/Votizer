@@ -33,6 +33,7 @@
 	
 	<script>
         $(document).ready(function() {
+            $("#items").jPaginate();
             $('.editable').editable(function(value, settings) {
                 editAdvert(value,$(this).attr('id'),$(this).attr('data-field'));
                 return(value);
@@ -72,6 +73,7 @@
 	
 			<ul id="tabs" class="fl">
 				<li><a href="/acp/dashboard">Dashboard</a></li>
+                <li><a href="/acp/dashboard/settings">Settings</a></li>
 				<li><a href="/acp/dashboard/advertisements" class="active-tab dashboard-tab">Advertisements</a></li>
 			</ul> <!-- end tabs -->
 						
@@ -126,7 +128,7 @@
 
 						</thead>
 						
-						<tbody id="users">
+						<tbody id="items">
 							{foreach $adverts val}
 							<tr id="{$val.id}">
 								<td>{$val.id}</td>
@@ -134,7 +136,7 @@
                                 <td id="{$val.id}" data-field="target" class="editable">{$val.href}</td>
                                 <td id="{$val.id}" data-field="location" class="editable">{$val.location}</td>
 								<td>
-                                    <a href="#" class="table-actions-button ic-table-delete" onclick="removeAdvert({$val.id})"></a>
+                                    <a class="table-actions-button ic-table-delete" onclick="removeAdvert({$val.id})"></a>
 								</td>
 							</tr>
 							{/foreach}

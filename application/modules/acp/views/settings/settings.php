@@ -27,7 +27,20 @@
 		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
 		ul.pagination li { display:inline; }
 		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)
+		ul.pagination li a:hover { background-color:rgb(95, 108, 121)}
+        .other {
+            width:100%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .otherContainer {
+            box-sizing: border-box;
+            display: inline-block;
+            padding: 0 2em 0 0;
+            width: 25%;
+            margin: 0;
+        }
+
 	</style>
 	<script type="application/javascript">
 		$(function() 
@@ -106,17 +119,17 @@
                         <form id="users-mod1" method="POST" onsubmit="return editSiteSetting();">
                             <p>
                                 <label for="full-width-input">Title</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="site_title" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$site_title}" name="site_title" />
                                 <em>Site title.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Keywords</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="site_keywords" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$site_keywords}" name="site_keywords" />
                                 <em>Site keywords.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Description</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="site_description" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$site_description}" name="site_description" />
                                 <em>Site description.</em>
                             </p>
 
@@ -135,22 +148,22 @@
                         <form id="users-mod1" method="POST" onsubmit="return editShopSetting();">
                             <p>
                                 <label for="full-width-input">Starter price</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="shop_starter" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$shop_starter}" name="shop_starter" />
                                 <em>The starter package price.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Value package price</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="shop_value" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$shop_value}" name="shop_value" />
                                 <em>The value package price.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Pro package price</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="shop_pro" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$shop_pro}" name="shop_pro" />
                                 <em>The pro package price.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Premium package price</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="shop_premium" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$shop_premium}" name="shop_premium" />
                                 <em>The premium package price.</em>
                             </p>
 
@@ -168,12 +181,12 @@
                         <form id="users-mod1" method="POST" onsubmit="return editCaptchaSetting();">
                             <p>
                                 <label for="full-width-input">Secret key</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="recaptcha_secret_key" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$recaptcha_secret_key}" name="recaptcha_secret_key" />
                                 <em>Google captcha secret key.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">API key</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="recaptcha_api_key" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$recaptcha_api_key}" name="recaptcha_api_key" />
                                 <em>Google captcha API key.</em>
                             </p>
 
@@ -191,17 +204,17 @@
                         <form method="POST" onsubmit="return editPaymentwallSettings();">
                             <p>
                                 <label for="full-width-input">Secret key</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="paymentwall_secret_key" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$paymentwall_secret_key}" name="paymentwall_secret_key" />
                                 <em>Paymentwall captcha secret key.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">API key</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="paymentwall_app_key" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$paymentwall_app_key}" name="paymentwall_app_key" />
                                 <em>Paymentwall captcha API key.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Widget code</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="paymentwall_widget_code" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$paymentwall_widget_code}" name="paymentwall_widget_code" />
                                 <em>Paymentwall widget code.</em>
                             </p>
 
@@ -219,12 +232,12 @@
                         <form method="POST" onsubmit="return editAuctionSettings();">
                             <p>
                                 <label for="full-width-input">Minimal bid</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="auction_minimum_bid" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$auction_minimum_bid}" name="auction_minimum_bid" />
                                 <em>The minimal bid allowed at an auction.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Minimal rank</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="auction_minimum_rank" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$auction_minimum_rank}" name="auction_minimum_rank" />
                                 <em>The minimal rank of a user that can bid at an auction.</em>
                             </p>
 
@@ -242,28 +255,50 @@
                         <form method="POST" onsubmit="return editThemeSettings();">
                             <p>
                                 <label for="full-width-input">Blue logo</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="logo_blue" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$logo_blue}" name="logo_blue" />
                                 <em>The blue part of the logo.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Gray logo</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="logo_gray" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$logo_gray}" name="logo_gray" />
                                 <em>The gray part of the logo.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Middle section title</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="middle_section_title" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$middle_section_title}" name="middle_section_title" />
                                 <em>The middle section title displayed on the home page.</em>
                             </p>
                             <p>
                                 <label for="full-width-input">Middle section description</label>
-                                <input id="full-width-input" class="round full-width-input" type="text" name="middle_section_description" />
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$middle_section_description}" name="middle_section_description" />
                                 <em>The middle section description displayed on the home page.</em>
+                            </p>
+                            <p>
+                                <label for="full-width-input">Disqus shortname</label>
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$disqus_shortname}" name="disqus_shortname" />
+                                <em>The disqus shortname picked upon disqus registration.</em>
                             </p>
 
                             <br /><input type="submit" value="submit" class="round blue ic-right-arrow" />
                         </form>
                     </div> <!-- end content-module-section -->
+
+                    <!-- content-module-section start -->
+                    <div class="content-module-heading content-module-section-heading cf">
+                        <h3 class="fl">Other</h3>
+                        <span class="fr expand-collapse-text initial-expand">Click to collapse</span>
+                        <span class="fr expand-collapse-text">Click to expand</span>
+                    </div>
+                    <div class="content-module-main" style="display:none"><!--
+                        --><div class="otherContainer"><a href="/acp/dashboard/navigation" target="_blank" class="round other button blue">Navigation links</a></div><!--
+                        --><div class="otherContainer">
+                            <a href="/acp/dashboard/advertisements" target="_blank" class="round other button blue">Advertisements</a></div><!--
+                        --><div class="otherContainer">
+                            <a href="/acp/dashboard/categories" target="_blank" class="round other button blue">Categories</a></div><!--
+                        --><div class="otherContainer">
+                            <a href="/acp/dashboard/themes" target="_blank" class="round other button blue">Theme Changer</a></div><!--
+                        --></div>
+                    <!-- end content-module-section -->
 
                 </div> <!-- end content-module -->
 		

@@ -79,7 +79,7 @@ class Sites
 		
 		return true;
 	}
-	
+
 	public function reset($date)
 	{
 		$query = $this->_ci->db->get_where('top_finished_resets', array('date' => $date));
