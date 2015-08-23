@@ -1089,17 +1089,19 @@ function search(type, errorMessage)
 		
 		$.ajax(
 		{
-               type: "POST",
-               url: "/ajax/getSearchData/top_"+type,
-               data: form_data,
-               cache: false,
-               success: 
+			type: "POST",
+			url: "/ajax/getSearchData/top_"+type,
+			data: form_data,
+			cache: false,
+			success: 
 				function(message)
 				{
 					var json = jQuery.parseJSON(message);
+					
 					if(json.success === '1')
 					{
-						$("tbody#"+type).html(json.html);
+						$("tbody#items").html(json.html);
+						$("#items").jPaginate();
 					}
 						else
 					{

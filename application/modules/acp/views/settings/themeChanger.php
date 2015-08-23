@@ -116,7 +116,7 @@
                     };
                     $.ajax(
                         {
-                            url: '/ajax/editSettings',
+                            url: '/ajax/setTheme',
                             type: 'POST',
                             data: form_data,
                             success:
@@ -198,7 +198,7 @@
                                     {if $val != $active}
                                         <a id="{$val}" class="round activate other button blue">Activate</a>
                                     {else}
-                                        <a id="trajce" class="round active other button" >Active</a>
+                                        <a class="round active other button" >Active</a>
                                     {/if}
                                 </div>
                             </div>

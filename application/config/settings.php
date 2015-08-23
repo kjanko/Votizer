@@ -14,8 +14,8 @@
 | -------------------------------------------------------------------------
 */
 
-$config['recaptcha_secret_key'] = 'keyce';
-$config['recaptcha_api_key'] = 'api keycew';
+$config['recaptcha_secret_key'] = '6LcePAATAAAAABjXaTsy7gwcbnbaF5XgJKwjSNwT';
+$config['recaptcha_api_key'] = '6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW';
 
 /*
 | -------------------------------------------------------------------------
@@ -23,9 +23,9 @@ $config['recaptcha_api_key'] = 'api keycew';
 | -------------------------------------------------------------------------
 */
 
-$config['paymentwall_secret_key'] = 'govnence';
-$config['paymentwall_app_key'] = 'keyce';
-$config['paymentwall_widget_code'] = 'yolo';
+$config['paymentwall_secret_key'] = '';
+$config['paymentwall_app_key'] = '';
+$config['paymentwall_widget_code'] = 'p1_1';
 
 /*
 | -------------------------------------------------------------------------
@@ -34,9 +34,9 @@ $config['paymentwall_widget_code'] = 'yolo';
 */
 
 $config['shop_starter'] = '15';
-$config['shop_value'] = '20';
-$config['shop_pro'] = '12';
-$config['shop_premium'] = '152';
+$config['shop_value'] = '39';
+$config['shop_pro'] = '99';
+$config['shop_premium'] = '65';
 
 /*
 | -------------------------------------------------------------------------
@@ -44,7 +44,7 @@ $config['shop_premium'] = '152';
 | -------------------------------------------------------------------------
 */
 
-$config['site_title'] = 'Not';
+$config['site_title'] = 'IgnitionCMS';
 $config['site_keywords'] = 'Ignition, Topsite, WoW, Minecraft';
 $config['site_description'] = "This is my site's description.";
 $config['admin_mail'] = 'mail@kjanko.com';
@@ -55,11 +55,10 @@ $config['admin_mail'] = 'mail@kjanko.com';
 | -------------------------------------------------------------------------
 */
 
-$config['logo_blue'] = 'blue';
-$config['logo_gray'] = 'grayfasf';
-$config['middle_section_title'] = 'f';
-$config['middle_section_description'] = 'middle esc';
-$config['disqus_shortname'] = 'fasdfs';
+$config['logo_blue'] = 'evisium';
+$config['logo_gray'] = 'cms';
+$config['middle_section_title'] = 'Community Servers';
+$config['middle_section_description'] = "LOREM IPSUM DOLOR SIT AMET. CONSTEQUENCES ELICETIRA IMET";
 
 /*
 | -------------------------------------------------------------------------
@@ -67,15 +66,9 @@ $config['disqus_shortname'] = 'fasdfs';
 | -------------------------------------------------------------------------
 */
 
-$config['auction_minimum_bid'] = '300';
-$config['auction_minimum_rank'] = '500';
+$config['auction_minimum_bid'] = '20';
+$config['auction_minimum_rank'] = '200';
 
-/*
-| -------------------------------------------------------------------------
-| Theme
-| -------------------------------------------------------------------------
-*/
-$config['theme_name'] = 'default';
 
 /* End of file settings.php */
 /* Location: ./application/config/settings.php */

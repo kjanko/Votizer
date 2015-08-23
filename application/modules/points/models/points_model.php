@@ -23,6 +23,16 @@ class Points_model extends CI_Model
 		$this->db->insert('top_paymentwall_logs', $data);
 	}
 	
+	public function updateDailyIncome($date, $amount)
+	{
+		$query = $this->db->get_where("top_daily_income", array('date' => $date));
+		
+		if($query->num_rows() > 0)
+			$this->db->query("UPDATE top_daily_income SET income=income=$amount WHERE date=$date");
+		else
+			$this->db->insert('top_daily_income', array('date' => $date, 'income' => $amount));
+	}
+	
 	public function isValid($ref)
 	{
 		$data = array(
@@ -55,6 +65,23 @@ class Points_model extends CI_Model
 		$this->db->where('id', $site_id);
 		$this->db->update('top_sites', $updateData);
 	}
+	
+	public function removeExpiredSubscriptions($date)
+	{
+		$query = $this->db->get_where('top_subscriptions', array('exp_date' => $date));
+		if($query->num_rows() > 0)
+		{
+			$data = $query->result();
+			
+			foreach($data as $row)
+				$this->db->where('id', $row->site_id)->update('top_sites', array('premium' => 0));
+				
+			$this->db->delete('top_subscriptions', array('exp_date' => $date));
+		}
+		else
+			return false;
+	}
+
 	
 	public function getExpirationDate($site_id)
 	{

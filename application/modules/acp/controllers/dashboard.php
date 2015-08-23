@@ -273,6 +273,7 @@ class Dashboard extends MX_Controller {
 
         $this->parser->parse('settings/categories', $data);
     }
+	
     public function advertisements()
     {
         $data = array(
@@ -282,15 +283,17 @@ class Dashboard extends MX_Controller {
 
         $this->parser->parse('settings/advertisements', $data);
     }
+	
     public function themes()
-    {
+    {	
         $themes = array_filter(scandir($_SERVER['DOCUMENT_ROOT']. 'addons/themes'), function($item) {
-            return !is_dir($_SERVER['DOCUMENT_ROOT']. 'addons/themes' . $item) && $item==explode('.', $item)[0];
+          return !is_dir($_SERVER['DOCUMENT_ROOT'] . 'addons/themes' . $item) && $item==explode('.', $item);
         });
+		
         $data = array(
             'username' => $this->session->userdata('username'),
             'themes' => $themes,
-            'active' => $this->config->item("theme_name")
+            'active' => $this->config->item("theme")
         );
         $this->parser->parse('settings/themeChanger', $data);
     }
@@ -338,7 +341,8 @@ class Dashboard extends MX_Controller {
     {
         $subscriptions = $this->db->get('top_subscriptions')->result_array();
         $counter = 0;
-        foreach($subscriptions as $item){
+        foreach($subscriptions as $item)
+		{
             $site = $this->db->get_where('top_sites', array('id' => $item['site_id']))->result_array();
             $user = $this->db->get_where('top_users', array('id' => $site['0']['user_id']))->result_array();
             $subscriptions[$counter]['username'] = $user['0']['username'];

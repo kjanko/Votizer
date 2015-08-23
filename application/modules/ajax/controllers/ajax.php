@@ -617,6 +617,26 @@ class Ajax extends MX_Controller
 
         file_put_contents(APPPATH . 'config/settings.php', $newFile);
     }
+	
+	function setTheme()
+	{
+		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
+		{
+			show_404();
+		}
+		else
+		{
+			$value = $this->input->post('theme_name');
+			$this->template->set_theme($value);
+		}
+
+		$data = array(
+			'success' => '1',
+			'msg' => 'Success! The settings data has been successfully changed.'
+		);
+
+		echo json_encode($data);
+	}
 
     function editSettings()
     {
