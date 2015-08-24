@@ -1076,7 +1076,7 @@ function removeBlacklistUsers(IpId)
 	return false;
 }
 
-function search(type, errorMessage)
+function search(table, row, view, errorMessage)
 {
 	var active = 0;	
 
@@ -1090,7 +1090,7 @@ function search(type, errorMessage)
 		$.ajax(
 		{
 			type: "POST",
-			url: "/ajax/getSearchData/top_"+type,
+			url: "/ajax/getSearchData/top_"+table+"/"+row+"/"+view,
 			data: form_data,
 			cache: false,
 			success: 
@@ -1102,6 +1102,25 @@ function search(type, errorMessage)
 					{
 						$("tbody#items").html(json.html);
 						$("#items").jPaginate();
+						
+						if(table === 'sites')
+						{
+							$(".premium").dblclick(function(){
+								showAddPremium($(this).attr('id'),'sites');
+							});
+						}
+						if(table === 'categories')
+						{
+							$('.editable').editable(function(value, settings) 
+							{
+								editCategory(value,$(this).attr('id'));
+								return(value);
+							}, 
+							{
+								onblur    : 'submit',
+								event : 'dblclick'
+							});
+						}
 					}
 						else
 					{

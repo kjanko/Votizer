@@ -49,8 +49,10 @@ class Ajax extends MX_Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $user = $this->input->post('user');
+		
+		$login = $this->users->login($username, $password);
 
-        if($this->users->login($username, $password))
+        if($login == "Good")
         {
             if($this->users->getUserRank($username) >= 2 && $user == "false")
             {
@@ -60,7 +62,9 @@ class Ajax extends MX_Controller
                 );
 
                 echo json_encode($data);
-            }else if($user == "true"){
+            }
+			else if($user == "true")
+			{
                 $data = array(
                     'success' => '3',
                     'msg' => 'Success! Please wait while we redirect you...'
@@ -77,15 +81,24 @@ class Ajax extends MX_Controller
                 echo json_encode($data);
             }
         }
-        else
+        else if($login == "Banned")
         {
             $data = array(
+                'success' => '2',
+                'msg' => 'Your account has been banned.'
+            );
+
+            echo json_encode($data);
+        }
+		else if($login == "Bad")
+		{
+			$data = array(
                 'success' => '2',
                 'msg' => 'Incorrect credentials.'
             );
 
             echo json_encode($data);
-        }
+		}
     }
     function addCategory()
     {
@@ -1299,25 +1312,25 @@ class Ajax extends MX_Controller
 		}
 	}
 
-	function getSearchData($table)
+	function getSearchData($table, $tableRow, $view)
 	{
-		$username = $this->input->post('query');
+		$value = $this->input->post('query');
 
 		$array = array(
-			'username' => $username
+			$tableRow => $value
 		);
 
 		$data = $this->general->searchData($table, $array);
 
 		$output = array(
-			'users' => $data
+			$table => $data
 		);
 
 		if($data)
 		{
 			$result = array(
 				'success' => '1',
-				'html' => $this->parser->parse('users-search', $output, true)
+				'html' => $this->parser->parse($view, $output, true)
 			);
 
 			echo json_encode($result);
@@ -1331,6 +1344,7 @@ class Ajax extends MX_Controller
 			echo json_encode($result);
 		}
 	}
+	
 	function registerSite()
     {
         $this->form_validation->set_error_delimiters('<div style="width: 80%" class="alert alert-danger">', '</div>');

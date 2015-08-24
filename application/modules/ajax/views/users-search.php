@@ -1,4 +1,4 @@
-							{foreach $users val}
+							{foreach $top_users val}
 							<tr id="{$val.username}">
 								<td>{$val.id}</td>
 								<td>{$val.name} {$val.l_name}</td>

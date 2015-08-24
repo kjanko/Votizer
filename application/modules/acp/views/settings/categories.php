@@ -42,6 +42,8 @@
                 event : 'dblclick'
             });
         });
+		
+		search('categories', 'category', 'category-search', 'Such category does not exist!');
 	</script>
 </head>
 
@@ -53,7 +55,7 @@
 
 			<ul id="nav" class="fl">
 	
-				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
+				<li class="v-sep"><a href="<?php echo base_url(); ?>" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
@@ -104,7 +106,7 @@
                     </form>
 					<p>Here you manage your categories. Double click on category name to edit existing categories.</p>
 					
-					<form action="#" method="POST" id="search-form" class="fr"
+					<form onsubmit="return false;" action="#" method="POST" id="search-form" class="fr"
 					style="position: absolute; right: 50px; top: 220px;">
 						<fieldset>
 							<input type="text" name="search" id="search-keyword" class="round button dark ic-search image-right" placeholder="Search...">

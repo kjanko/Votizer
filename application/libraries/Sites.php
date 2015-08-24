@@ -11,7 +11,6 @@
  
 class Sites
 {
-
 	private $_ci;
 
 	function __construct()

@@ -39,40 +39,47 @@ class Users
 	
 	public function login($username, $password)
 	{
-		$hash = sha1(strtoupper($password));
-		
-		$query = $this->_ci->db
-			->select('username', 'password')
-			->from('top_users')
-			->where('username', $username)
-			->where('password', $hash)
-		->get();
-		
-		// If such account exists
-		if($query->num_rows() > 0)
+		if(self::isBanned($username))
 		{
-			// Get the user ID
-			$id = self::getUserId($username);
-			// Get the user rank
-			$rank = self::getUserRank($username);
-			
-			// Set the data
-			$data = array(
-				'id' => $id,
-				'username' => $username,
-				'password' => $hash,
-				'activity' => TRUE,
-				'ip_address' => $_SERVER['REMOTE_ADDR'],
-				'rank' => $rank
-			);
-			
-			// Pass the data
-			$this->_ci->session->set_userdata($data);
-			
-			return true;
+			return "Banned";
 		}
 		else
-			return false;
+		{	
+			$hash = sha1(strtoupper($password));
+			
+			$query = $this->_ci->db
+				->select('username', 'password')
+				->from('top_users')
+				->where('username', $username)
+				->where('password', $hash)
+			->get();
+			
+			// If such account exists
+			if($query->num_rows() > 0)
+			{
+				// Get the user ID
+				$id = self::getUserId($username);
+				// Get the user rank
+				$rank = self::getUserRank($username);
+				
+				// Set the data
+				$data = array(
+					'id' => $id,
+					'username' => $username,
+					'password' => $hash,
+					'activity' => TRUE,
+					'ip_address' => $_SERVER['REMOTE_ADDR'],
+					'rank' => $rank
+				);
+				
+				// Pass the data
+				$this->_ci->session->set_userdata($data);
+				
+				return "Good";
+			}
+			else
+				return "Bad";
+		}
 	}
 	
 	/**
@@ -192,7 +199,27 @@ class Users
 	
 	public function getUserRank($username)
 	{
-		return $rank = $this->_ci->db->select('rank')->from('top_users')->where('username', $username)->get()->row()->rank;
+		return $this->_ci->db->select('rank')->from('top_users')->where('username', $username)->get()->row()->rank;
+	}
+	
+	/**
+	 *
+	 * Checks if user is banned or not
+	 *
+	 * @access public
+	 * @param string
+	 * @return row
+	 *
+	 */
+	
+	public function isBanned($username)
+	{
+		$query = $this->_ci->db->select('blacklist')->from('top_users')->where('username', $username)->get();
+		
+		if($query->num_rows() > 0)
+			return $query->row()->blacklist;
+		else
+			return false;
 	}
 	
 	/**

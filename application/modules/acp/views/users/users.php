@@ -35,7 +35,7 @@
             $("#items").jPaginate();
         });
 		
-		search('users', 'Such user does not exist!');
+		search('users', 'username', 'users-search', 'Such user does not exist!');
 		
 	</script>
 </head>
@@ -48,7 +48,7 @@
 
 			<ul id="nav" class="fl">
 	
-				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
+				<li class="v-sep"><a href="<?php echo base_url(); ?>" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
 				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
@@ -96,7 +96,7 @@
 					<p>User management is a critical part of maintaining a secure system. Ineffective user and privilege management often lead many systems into being compromised.</p>
 					<a href="#" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;" onclick="showAddUser()">Add User</a>
 					
-					<form action="#" method="POST" id="search-form" class="fr"
+					<form onsubmit="return false;" action="#" method="POST" id="search-form" class="fr"
 					style="position: absolute; right: 50px; top: 235px;">
 						<fieldset>
 							<input type="text" name="search" id="search-keyword" class="round button dark ic-search image-right" placeholder="Search...">

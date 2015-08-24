@@ -22,4 +22,9 @@ function getSiteRank($site_id)
 	return getInstance()->sites->getRank($site_id);
 }
 
+function getUsername($user_id)
+{
+	return getInstance()->users->getUsername($user_id);
+}
+
 ?>
