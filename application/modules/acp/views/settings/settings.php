@@ -24,10 +24,6 @@
     <script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
 	
 	<style>
-		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
-		ul.pagination li { display:inline; }
-		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)}
         .other {
             width:100%;
             text-align: center;
@@ -131,6 +127,11 @@
                                 <label for="full-width-input">Description</label>
                                 <input id="full-width-input" class="round full-width-input" type="text" value="{$site_description}" name="site_description" />
                                 <em>Site description.</em>
+                            </p>
+                            <p>
+                                <label for="full-width-input">Mail</label>
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$admin_mail}" name="admin_mail" />
+                                <em>Admin's mail.</em>
                             </p>
 
                             <br /><input type="submit" value="submit" class="round blue ic-right-arrow" />

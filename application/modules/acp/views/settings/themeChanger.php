@@ -26,10 +26,6 @@
     <script src="/addons/acp/js/jquery.jeditable.mini.js"></script>
 
 	<style>
-		ul.pagination { position: absolute; margin-top: 37px; list-style: none; }
-		ul.pagination li { display:inline; }
-		ul.pagination li a { margin-left: 5px; padding:3px 5px; color:#fff; background-color:rgb(93, 102, 119); text-decoration:none; }
-		ul.pagination li a:hover { background-color:rgb(95, 108, 121)}
         .other {
             width:50%;
             text-align: center;

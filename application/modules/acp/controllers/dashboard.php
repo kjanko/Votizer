@@ -2,8 +2,8 @@
 
 // Dashboard Controller
 
-class Dashboard extends MX_Controller {
-
+class Dashboard extends MX_Controller 
+{
     public function __construct()
     {
         parent::__construct();
@@ -21,7 +21,6 @@ class Dashboard extends MX_Controller {
 			'username' => $this->session->userdata('username'),
 			'navigation' => $this->general->getNavigationData(),
 			'graph' => $this->getGraph(),
-			//ToDo: load this segment via AJAX to speedup the site
 			'feeds' => $this->general->getXMLData('http://kjanko.com/XML.xml') 
 		);
 		
@@ -305,7 +304,7 @@ class Dashboard extends MX_Controller {
 		
         $this->parser->parse('settings/themeChanger', $data);
     }
-
+	
     public function navigation()
     {
         $data = array(
