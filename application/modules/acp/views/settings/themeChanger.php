@@ -206,16 +206,8 @@
                         {/foreach}
                     </div>
 
-                    <div class="col-xs-4">
-                        <div class="theme">
-                            <a class="thumbnail">
-                                <img src="<?php echo base_url(); ?>addons/themes/default/preview/1.jpg" class="img-responsive">
-                            </a>
-                            <div class="otherContainer">
-                            </div>
-                        </div>
-                    </div>
-                        <div class="stripe-separator"></div>
+					<div class="stripe-separator"></div>
+					
 				</div> <!-- end content-module-main -->
 			
 			</div> <!-- end content-module -->

@@ -286,15 +286,23 @@ class Dashboard extends MX_Controller {
 	
     public function themes()
     {	
-        $themes = array_filter(scandir($_SERVER['DOCUMENT_ROOT']. 'addons/themes'), function($item) {
-          return !is_dir($_SERVER['DOCUMENT_ROOT'] . 'addons/themes' . $item) && $item==explode('.', $item);
-        });
+		$this->config->load('template.php');
 		
+        $themes = glob('addons/themes/*', GLOB_ONLYDIR);
+		$themesArr = array();
+
+		foreach($themes as $key => $value)
+		{
+			$value = preg_replace("/addons\/themes\/([A-Za-z_-]*)/", "$1", $value);
+			array_push($themesArr, $value);
+		}
+
         $data = array(
             'username' => $this->session->userdata('username'),
-            'themes' => $themes,
+            'themes' => $themesArr,
             'active' => $this->config->item("theme")
         );
+		
         $this->parser->parse('settings/themeChanger', $data);
     }
 
