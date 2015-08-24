@@ -59,6 +59,7 @@ $config['logo_blue'] = 'evisium';
 $config['logo_gray'] = 'cms';
 $config['middle_section_title'] = 'Community Servers';
 $config['middle_section_description'] = "LOREM IPSUM DOLOR SIT AMET. CONSTEQUENCES ELICETIRA IMET";
+$config['disqus_shortname'] = "";
 
 /*
 | -------------------------------------------------------------------------

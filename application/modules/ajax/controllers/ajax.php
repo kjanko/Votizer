@@ -633,6 +633,7 @@ class Ajax extends MX_Controller
 	
 	function setTheme()
 	{
+        $this->config->load('template.php');
 		if(!$this->session->userdata('activity') && $this->session->userdata('rank') < 2)
 		{
 			show_404();
@@ -640,16 +641,28 @@ class Ajax extends MX_Controller
 		else
 		{
 			$value = $this->input->post('theme_name');
-			$this->template->set_theme($value);
+			$old = $this->config->item('theme');
+			self::writeToTemplate($old, $value, 'theme');
 		}
 
 		$data = array(
 			'success' => '1',
-			'msg' => 'Success! The settings data has been successfully changed.'
+			'msg' => 'Success! The theme has been successfully changed.'
 		);
 
 		echo json_encode($data);
 	}
+	
+	private function writeToTemplate($oldValue, $newValue, $varName)
+    {
+        $file = file_get_contents(APPPATH . 'config/template.php');
+        $oldRow = "config['$varName'] = '$oldValue'";
+        $newRow = "config['$varName'] = '$newValue'";
+
+        $newFile = str_replace($oldRow, $newRow, $file, $count);
+
+        file_put_contents(APPPATH . 'config/template.php', $newFile);
+    }
 
     function editSettings()
     {
