@@ -181,6 +181,19 @@ class Sites
         }
         return $pos;
     }
+	
+	public function resetVoters($date)
+	{
+		$query = $this->_ci->db->get_where("top_finished_votes", array("date" => $date));
+		
+		if($query->num_rows() > 0)
+			return false;
+		else
+		{
+			$this->_ci->db->insert("top_finished_votes", array("date" => $date));
+			$this->_ci->db->truncate('top_daily_voters');
+		}
+	}
 }
 
 // END Sites Class

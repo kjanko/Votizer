@@ -36,7 +36,13 @@ class Database {
 
 		// Execute a multi query
 		$mysqli->multi_query($query);
-
+		
+		$date = date('Y-m-d');
+		$endDate = date('Y-m-d', strtotime('+2 Weeks'));
+		$endSponsored = date('Y-m-d', strtotime('+4 Weeks'));
+		
+		$mysqli->query("INSERT INTO top_auctions (status, date_open, date_close, sponsored_start, sponsored_close) VALUES (1, '$date', '$endDate', '$endDate', '$endSponsored')");
+		
 		// Close the connection
 		$mysqli->close();
 

@@ -18,6 +18,7 @@ class Home extends MX_Controller
 		$date = date('Y-m-d');
 		$this->points->removeExpiredSubscriptions($date);
 		$this->auction->removeExpiredSponsorship($date);
+		$this->sites->resetVoters($date);
 		
 		$startMonth = date('Y-m-01');
 		
