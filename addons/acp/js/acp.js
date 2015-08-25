@@ -2,6 +2,7 @@ function adminLogin()
 {
 	$('#login-submit').click(function() 
 	{
+        $('.information-box').removeClass('error-box');
 		var form_data = 
 		{
 			username : $('#login-username').val(),
@@ -22,7 +23,7 @@ function adminLogin()
 					if(json.success === '1')
 					{
 						$('.information-box').addClass('confirmation-box').html(json.msg).show('scale');
-						setTimeout( function() {  location="/acp/dashboard" }, 3000 );
+						setTimeout( function() {  location="/acp/dashboard" }, 1500 );
 					}
 					else if(json.success === '2')
 					{
@@ -455,7 +456,8 @@ function editSiteSetting()
     {
         site_title : $("input[name='site_title']").val(),
         site_keywords : $("input[name='site_keywords']").val(),
-        site_description : $("input[name='site_description']").val()
+        site_description : $("input[name='site_description']").val(),
+        admin_mail : $("input[name='admin_mail']").val()
     };
 
     settingsAjaxCall(form_data);
@@ -511,7 +513,6 @@ function editThemeSettings()
         middle_section_description : $("input[name='middle_section_description']").val(),
         disqus_shortname : $("input[name='disqus_shortname']").val()
     };
-
     settingsAjaxCall(form_data);
     return false;
 }
@@ -1003,7 +1004,12 @@ function removeAdvert(id)
 
                     if(json.success === '1')
                     {
-                        $('#' + id).hide('slow', function(){ $(this).remove(); });
+                        $('#' + id).hide('slow', function(){ $.when($(this).remove()).then(
+                            function(){
+                                $('.pagination').hide('fold', function(){ $(this).remove(); });
+                                $("#items").jPaginate();
+                            }
+                        ); });
                         alertify.success(json.msg);
                     }
                     else if(json.success === '2')
@@ -1033,7 +1039,12 @@ function removeBlacklistUrls(id)
 
 				if(json.success === '1')
 				{
-					$('#' + id).hide('slow', function(){ $(this).remove(); });
+                    $('#' + id).hide('slow', function(){ $.when($(this).remove()).then(
+                        function(){
+                            $('.pagination').hide('fold', function(){ $(this).remove(); });
+                            $("#items").jPaginate();
+                        }
+                    ); });
 					alertify.success("The Url has been successfully deleted.");
 				}
 				else if(json.success === '2')
@@ -1064,7 +1075,12 @@ function removeBlacklistUsers(IpId)
 				
 				if(json.success === '1')
 				{
-					$('#' + IpId).hide('slow', function(){ $(this).remove(); });
+                    $('#' + IpId).hide('slow', function(){ $.when($(this).remove()).then(
+                        function(){
+                            $('.pagination').hide('fold', function(){ $(this).remove(); });
+                            $("#items").jPaginate();
+                        }
+                    ); });
 					alertify.success("The user has been successfully whitelisted.");
 				}
 				else if(json.success === '2')
@@ -1101,6 +1117,7 @@ function search(table, row, view, errorMessage)
 					if(json.success === '1')
 					{
 						$("tbody#items").html(json.html);
+                        $('.pagination').hide('fold', function(){ $(this).remove(); });
 						$("#items").jPaginate();
 						
 						if(table === 'sites')

@@ -54,11 +54,22 @@ class Sites
 	
 	public function remove($id)
 	{
+        // Remove the page from subscriptions if page is premium
+        if(self::isPremium($id))
+            self::removeSiteFromSubscriptions($id);
 		// Remove the site
 		$this->_ci->db->delete('top_sites', array('id' => $id));
+        // Remove the user related to the page
+        $this->_ci->db->delete('top_users', array('s_id' => $id));
 		
 		return true;
 	}
+
+    public function removeSiteFromSubscriptions($id){
+        $this->_ci->db->delete('top_subscriptions', array('site_id' => $id));
+
+        return true;
+    }
 	
 	public function update($id, $title, $description, $categoryId, $in, $out, $bannerUrl, $url)
 	{

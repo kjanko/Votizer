@@ -98,7 +98,10 @@
         }
         .active {
             background-color:#27ae60;
-            color: white
+            color: white;
+        }
+        .activate {
+            cursor: pointer;
         }
 	</style>
 	
@@ -182,7 +185,7 @@
 				
 				
 				<div class="content-module-main">
-                    <p>Here you manage your theme. Click on the active button to activate the theme shown on the image.</p>
+                    <p>Here you manage your theme. Click on the activate button to activate the theme shown on the image.</p>
                     <div class="row">
                         {foreach $themes val}
                         <div class="col-xs-4">
@@ -212,15 +215,15 @@
 			
 	</div> <!-- end content -->
 
-	
-	
-	
-	<!-- FOOTER -->
-	<div id="footer">
 
-		<p>&copy; Copyright 2012 <a href="#">IgnitionCMS</a>. All rights reserved.</p>
-	
-	</div> <!-- end footer -->
+
+
+    <!-- FOOTER -->
+    <div id="footer">
+
+        <p>&copy; Copyright 2015 <a href="http://votizer.com/">Votizer</a>. All rights reserved.</p>
+
+    </div> <!-- end footer -->
 
 </body>
 </html>

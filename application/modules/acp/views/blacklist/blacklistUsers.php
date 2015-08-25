@@ -12,7 +12,7 @@
 
         <tr>
             <th style="position: relative;">Id</th>
-            <th>Users</th>
+            <th>User</th>
             <th>Actions</th>
         </tr>
 

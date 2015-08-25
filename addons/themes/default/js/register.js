@@ -22,7 +22,7 @@ function registerSite()
         $("#confirmPassword").addClass('error-input');
         return;
     }
-    //Check profanity
+
     $.ajax(
         {
             url: '/ajax/registerSite',
@@ -52,7 +52,7 @@ function registerSite()
 }
 
 $(function(){
-    $('input').keypress(function(e) {
+    $('input.register').keypress(function(e) {
         if(e.which == 13) {
             $(this).blur();
             $(this).parent().parent().siblings('.submit').focus().click();

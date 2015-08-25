@@ -17,11 +17,7 @@ class Ucp extends MX_Controller
 		if($this->session->userdata('activity'))
         {
 			$this->load->model('auction/auction_model', 'auction');
-			
-			$winnerBid = $this->auction->isWinner();
-			
-			$servers = $this->sites->getDataById($this->users->getSiteId($this->session->userdata('id')));
-			
+
             $userId = $this->session->userdata('id');
             $site = $this->sites->getSiteByUserId($userId);
             $user = $this->users->getUserById($userId);
@@ -32,6 +28,10 @@ class Ucp extends MX_Controller
             }
 			else
 			{
+                $winnerBid = $this->auction->isWinner();
+
+                $servers = $this->sites->getDataById($this->users->getSiteId($this->session->userdata('id')));
+
                 if($site->premium == 1)
                 {
                     $this->load->model('points/points_model', 'points');

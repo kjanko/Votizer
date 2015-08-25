@@ -29,22 +29,22 @@
     <p>
         <label for="full-width-input">Out votes</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="outVotes" value="{$val.out_votes}" />
-        <em>This field is not required. Default: 0</em>
+        <em>This field is required.</em>
     </p>
     <p>
         <label for="full-width-input">Description</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="description" value="{$val.description}" />
-        <em>This field is not required. Default: 0</em>
+        <em>This field is required.</em>
     </p>
     <p>
         <label for="full-width-input">Banner</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="bannerUrl" value="{$val.banner_url}" />
-        <em>This field is not required. Default: 0</em>
+        <em>This field is required.</em>
     </p>
     <p>
         <label for="full-width-input">Url</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="url" value="{$val.url}" />
-        <em>This field is not required. Default: 0</em>
+        <em>This field is required.</em>
     </p>
     {/foreach}
 

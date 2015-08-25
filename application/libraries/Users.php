@@ -276,7 +276,7 @@ class Users
     }
 
     public function emailTaken($email, $id){
-        // Check if email already exists
+
         if(!$this->_ci->db->select('email')->from('top_users')->where('email', $email)->where('id !=', $id)->get()->num_rows() <= 0)
         {
             return true;
@@ -394,7 +394,8 @@ class Users
 			// Delete the user
 			$this->_ci->db->delete('top_users', array('username' => $username));
 			// Delete the sites related to the user
-			$this->_ci->db->delete('top_sites', array('user_id' => $id));
+			if($site = $this->_ci->sites->getSiteByUserId($id))
+                $this->_ci->sites->remove($site->id);
 			
 			return true;
 		}

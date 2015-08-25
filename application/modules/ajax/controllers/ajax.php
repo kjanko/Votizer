@@ -575,8 +575,8 @@ class Ajax extends MX_Controller
 			$this->form_validation->set_rules('description', 'Description', 'required');
 			$this->form_validation->set_rules('inVotes', 'In Votes', 'required|is_natural');
 			$this->form_validation->set_rules('outVotes', 'Out Votes', 'required|is_natural');
-			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
-			$this->form_validation->set_rules('url', 'URL', 'required|trim|max_length[256]|xss_clean|prep_url|valid_url_format|url_exists|callback_duplicate_URL_check');
+			$this->form_validation->set_rules('bannerUrl', 'Banner URL', 'required|trim|max_length[256]');
+			$this->form_validation->set_rules('url', 'URL', 'required|trim|max_length[256]');
 
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -1457,7 +1457,6 @@ class Ajax extends MX_Controller
 
             if(!$this->users->emailTaken($email,$userId))
             {
-                //if url is valid
                 if($this->users->updateUCP($userId, $fname, $lname, $email)) {
                     $data = array(
                         'success' => '1',
@@ -1481,7 +1480,7 @@ class Ajax extends MX_Controller
     {
         $this->form_validation->set_error_delimiters(' ', ' ');
         $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('url', 'URL', 'required');
+        $this->form_validation->set_rules('url', 'URL', 'required|trim');
         $this->form_validation->set_rules('description', 'Description', 'required');
         $this->form_validation->set_rules('category', 'Category', 'required|is_natural');
 

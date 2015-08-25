@@ -11,42 +11,42 @@
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">Name:</label>
 				<div class="col-sm-10">
-					<input id="name" class="form-control" required type="text" placeholder="Name"/>
+					<input id="name" class="form-control register" required type="text" placeholder="Name"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="surname" class="col-sm-2 control-label">Surname:</label>
 				<div class="col-sm-10">
-					<input id="surname" class="form-control" required type="text" placeholder="Surname"/>
+					<input id="surname" class="form-control register" required type="text" placeholder="Surname"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="username" class="col-sm-2 control-label">Username:</label>
 				<div class="col-sm-10">
-					<input id="username" class="form-control" required type="text" placeholder="Username"/>
+					<input id="username" class="form-control register" required type="text" placeholder="Username"/>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">Password:</label>
 				<div class="col-sm-10">
-					<input id="password" class="form-control" required type="password" placeholder="Password"/>
+					<input id="password" class="form-control register" required type="password" placeholder="Password"/>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="confirmPassword" class="col-sm-2 control-label">Confirm password:</label>
 				<div class="col-sm-10">
-					<input id="confirmPassword" class="form-control" required type="password" placeholder="Confirm password"/>
+					<input id="confirmPassword" class="form-control register" required type="password" placeholder="Confirm password"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="email" class="col-sm-2 control-label">Email:</label>
 				<div class="col-sm-10">
-					<input id="email" class="form-control" required type="text" placeholder="Email"/>
+					<input id="email" class="form-control register" required type="text" placeholder="Email"/>
 				</div>
 			</div>
 			
@@ -55,14 +55,14 @@
 			<div class="form-group">
 				<label for="url" class="col-sm-2 control-label">URL:</label>
 				<div class="col-sm-10">
-					<input id="url" class="form-control" required type="text" placeholder="http://"/>
+					<input id="url" class="form-control register" required type="text" placeholder="http://"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
 				<label for="title" class="col-sm-2 control-label">Title:</label>
 				<div class="col-sm-10">
-					<input id="title" class="form-control" required type="text" placeholder="Title"/>
+					<input id="title" class="form-control register" required type="text" placeholder="Title"/>
 				</div>
 			</div>
 			

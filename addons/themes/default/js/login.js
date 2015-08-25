@@ -30,7 +30,7 @@ function userLogin()
     );
 }
 $(function(){
-    $('input').keypress(function(e) {
+    $('input.login').keypress(function(e) {
         if(e.which == 13) {
             $(this).blur();
             $('.submit').focus().click();

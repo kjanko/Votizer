@@ -147,15 +147,15 @@
 			
 	</div> <!-- end content -->
 
-	
-	
-	
-	<!-- FOOTER -->
-	<div id="footer">
 
-		<p>&copy; Copyright 2012 <a href="#">IgnitionCMS</a>. All rights reserved.</p>
-	
-	</div> <!-- end footer -->
+
+
+    <!-- FOOTER -->
+    <div id="footer">
+
+        <p>&copy; Copyright 2015 <a href="http://votizer.com/">Votizer</a>. All rights reserved.</p>
+
+    </div> <!-- end footer -->
 
 </body>
 </html>

@@ -138,7 +138,7 @@
                             <td id="{$val.id}" data-field="href" class="editable">{$val.href}</td>
                             <td id="{$val.id}" data-field="permission" class="editable">{$val.permission}</td>
                             <td>
-                                <a href="#" class="table-actions-button ic-table-delete" onclick="removeNavigation({$val.id})"></a>
+                                <a class="table-actions-button ic-table-delete" onclick="removeNavigation({$val.id})"></a>
                             </td>
                         </tr>
                         {/foreach}
@@ -158,15 +158,15 @@
 			
 	</div> <!-- end content -->
 
-	
-	
-	
-	<!-- FOOTER -->
-	<div id="footer">
 
-		<p>&copy; Copyright 2012 <a href="#">IgnitionCMS</a>. All rights reserved.</p>
-	
-	</div> <!-- end footer -->
+
+
+    <!-- FOOTER -->
+    <div id="footer">
+
+        <p>&copy; Copyright 2015 <a href="http://votizer.com/">Votizer</a>. All rights reserved.</p>
+
+    </div> <!-- end footer -->
 
 </body>
 </html>
