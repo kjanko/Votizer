@@ -10,12 +10,13 @@
 
 /*
 | -------------------------------------------------------------------------
-| Google API Captcha
+| Google API Captcha And Analytics
 | -------------------------------------------------------------------------
 */
 
 $config['recaptcha_secret_key'] = '6LcePAATAAAAABjXaTsy7gwcbnbaF5XgJKwjSNwT';
 $config['recaptcha_api_key'] = '6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW';
+$config['analytics_property_id'] = 'test';
 
 /*
 | -------------------------------------------------------------------------

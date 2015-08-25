@@ -66,7 +66,8 @@ class Ucp extends MX_Controller
 					'site' => $siteData,
                     'user' => $userData,
 					'expiration_date' => $expiry_date,
-					'servers' => $servers
+					'servers' => $servers,
+                    'analyticsPropertyID' => $this->config->item('analytics_property_id')
 				);
 				
 				if($winnerBid)

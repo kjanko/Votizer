@@ -17,7 +17,8 @@ class Premium extends MX_Controller
 	public function index()
 	{				
 		$data = array(
-			'points' => $this->users->getBalance($this->session->userdata('username'))
+			'points' => $this->users->getBalance($this->session->userdata('username')),
+            'analyticsPropertyID' => $this->config->item('analytics_property_id')
 		);
 		
 		$this->template

@@ -28,7 +28,8 @@ class Home extends MX_Controller
 		$servers = $this->sites->getData();
 	
 		$data = array(
-			'servers' => $servers
+			'servers' => $servers,
+            'analyticsPropertyID' => $this->config->item('analytics_property_id')
 		);
 		
 		$this->template

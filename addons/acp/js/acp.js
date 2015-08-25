@@ -483,7 +483,8 @@ function editCaptchaSetting()
     var form_data =
     {
         recaptcha_secret_key : $("input[name='recaptcha_secret_key']").val(),
-        recaptcha_api_key : $("input[name='recaptcha_api_key']").val()
+        recaptcha_api_key : $("input[name='recaptcha_api_key']").val(),
+        analytics_property_id : $("input[name='analytics_property_id']").val()
     };
 
     settingsAjaxCall(form_data);

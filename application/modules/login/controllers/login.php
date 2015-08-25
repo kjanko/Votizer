@@ -18,7 +18,9 @@ class Login extends MX_Controller {
 		}
 		else
 		{			
-			$data = array();
+			$data = array(
+                'analyticsPropertyID' => $this->config->item('analytics_property_id')
+            );
 			
 			$this->template
 				->set_layout('default')

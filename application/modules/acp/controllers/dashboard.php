@@ -338,7 +338,8 @@ class Dashboard extends MX_Controller
             'middle_section_description' => $this->config->item("middle_section_description"),
             'auction_minimum_bid' => $this->config->item("auction_minimum_bid"),
             'auction_minimum_rank' => $this->config->item("auction_minimum_rank"),
-            'disqus_shortname' => $this->config->item("disqus_shortname")
+            'disqus_shortname' => $this->config->item("disqus_shortname"),
+            'analytics_property_id' => $this->config->item("analytics_property_id")
         );
 
         $this->parser->parse('settings/settings', $data);

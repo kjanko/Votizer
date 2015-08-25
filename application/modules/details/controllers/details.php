@@ -31,7 +31,8 @@ class Details extends MX_Controller
         $data = array(
             'site' => $site[0],
             'graphData' => $graphData,
-            'disqusShortname' => $this->config->item("disqus_shortname")
+            'disqusShortname' => $this->config->item("disqus_shortname"),
+            'analyticsPropertyID' => $this->config->item('analytics_property_id')
         );
 
 

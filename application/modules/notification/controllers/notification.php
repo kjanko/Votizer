@@ -29,7 +29,8 @@ class Notification extends MX_Controller
 	public function success()
 	{	
 		$data = array(
-			'message' => $this->session->userdata('notification-message')
+			'message' => $this->session->userdata('notification-message'),
+            'analyticsPropertyID' => $this->config->item('analytics_property_id')
 		);
 		
 		$this->template

@@ -174,7 +174,7 @@
 
                     <!-- content-module-section start -->
                     <div class="content-module-heading content-module-section-heading cf">
-                        <h3 class="fl">Google API Captcha</h3>
+                        <h3 class="fl">Google Captcha and Analytics</h3>
                         <span class="fr expand-collapse-text initial-expand">Click to collapse</span>
                         <span class="fr expand-collapse-text">Click to expand</span>
                     </div>
@@ -189,6 +189,11 @@
                                 <label for="full-width-input">API key</label>
                                 <input id="full-width-input" class="round full-width-input" type="text" value="{$recaptcha_api_key}" name="recaptcha_api_key" />
                                 <em>Google captcha API key.</em>
+                            </p>
+                            <p>
+                                <label for="full-width-input">Property ID</label>
+                                <input id="full-width-input" class="round full-width-input" type="text" value="{$analytics_property_id}" name="analytics_property_id" />
+                                <em>Google analytics property ID given on registration. Not required.</em>
                             </p>
 
                             <br /><input type="submit" value="submit" class="round blue ic-right-arrow" />

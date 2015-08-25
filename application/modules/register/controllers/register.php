@@ -14,7 +14,8 @@ class Register extends MX_Controller
 		$categories = $this->categories->getData();
 		
 		$data = array(
-			'categories' => $categories
+			'categories' => $categories,
+            'analyticsPropertyID' => $this->config->item('analytics_property_id')
 		);
 		
 		$this->template
