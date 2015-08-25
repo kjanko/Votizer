@@ -20,11 +20,11 @@ class General
 	}
 	
 	//FRONTEND START//
-	
-	public function getHeaderNavigation()
-	{
-		return $this->_ci->db->get('top_navigation_header')->result_array();
-	}
+
+    public function getHeaderNavigation()
+    {
+        return $this->_ci->db->order_by("position", "asc")->get('top_navigation_header')->result_array();
+    }
 	
 	// location 0: top
 	// location 1: sidebar
