@@ -14,9 +14,9 @@
 | -------------------------------------------------------------------------
 */
 
-$config['recaptcha_secret_key'] = '6LcePAATAAAAABjXaTsy7gwcbnbaF5XgJKwjSNwT';
-$config['recaptcha_api_key'] = '6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW';
-$config['analytics_property_id'] = 'test';
+$config['recaptcha_secret_key'] = '';
+$config['recaptcha_api_key'] = '';
+$config['analytics_property_id'] = '';
 
 /*
 | -------------------------------------------------------------------------
@@ -45,9 +45,9 @@ $config['shop_premium'] = '90';
 | -------------------------------------------------------------------------
 */
 
-$config['site_title'] = 'Votizer';
-$config['site_keywords'] = 'Votizer, Topsite, php, Minecraft, wow';
-$config['site_description'] = "This is my site's description.";
+$config['site_title'] = '';
+$config['site_keywords'] = '';
+$config['site_description'] = "";
 $config['admin_mail'] = '';
 
 /*
@@ -56,10 +56,10 @@ $config['admin_mail'] = '';
 | -------------------------------------------------------------------------
 */
 
-$config['logo_blue'] = 'votizer';
-$config['logo_gray'] = 'cms';
-$config['middle_section_title'] = 'Community Servers';
-$config['middle_section_description'] = 'Servers ranked according to in votes.';
+$config['logo_blue'] = '';
+$config['logo_gray'] = '';
+$config['middle_section_title'] = '';
+$config['middle_section_description'] = '';
 $config['disqus_shortname'] = '';
 
 /*
@@ -68,8 +68,8 @@ $config['disqus_shortname'] = '';
 | -------------------------------------------------------------------------
 */
 
-$config['auction_minimum_bid'] = '0';
-$config['auction_minimum_rank'] = '0';
+$config['auction_minimum_bid'] = '';
+$config['auction_minimum_rank'] = '';
 
 
 /* End of file settings.php */

@@ -215,6 +215,9 @@ class Template
 		//Parse partial default data
 		
 		$this->_ci->load->model('category/category_model', 'categories');
+		$this->_ci->config->load('settings.php');
+
+		$this->_data['analyticsPropertyID'] = $this->_ci->config->item('analytics_property_id');
 		$this->_data['top_categories'] = $this->_ci->categories->getData();
 		$this->_data['navigation'] = $this->_ci->general->getHeaderNavigation();
 		$this->_data['sidebar'] = $this->_ci->general->getAdvertisements(0);

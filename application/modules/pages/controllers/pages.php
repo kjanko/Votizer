@@ -19,8 +19,7 @@ class Pages extends MX_Controller
 		$page = $this->pages->getPageByController($controller);
 		
 		$data = array(
-			'page' => $page[0],
-            'analyticsPropertyID' => $this->config->item('analytics_property_id')
+			'page' => $page[0]
 		);
 		
 		$this->template

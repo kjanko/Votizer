@@ -9,9 +9,7 @@ class Forgot extends MX_Controller
 	
 	public function index()
 	{
-		$data = array(
-            'analyticsPropertyID' => $this->config->item('analytics_property_id')
-        );
+		$data = array();
 	
         $this->template
             ->set_layout('default')

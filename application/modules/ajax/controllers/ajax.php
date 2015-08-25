@@ -3,7 +3,6 @@
 // AJAX Controller
 include APPPATH . 'libraries/banbuilder/CensorWords.php';
 
-
 class Ajax extends MX_Controller
 {
 	protected $censor;
@@ -12,32 +11,50 @@ class Ajax extends MX_Controller
     public function __construct()
     {
         parent::__construct();
+		
+		$domain = $_SERVER['SERVER_NAME'];
+		$c = curl_init();
 
-		$this->load->library('form_validation');
-		$this->load->model('acp/Page_model', 'pages');
-        $this->load->model('acp/Settings_model', 'settings');
+		curl_setopt($c, CURLOPT_URL, 'http://votizer.com/remote/');
+		curl_setopt($c, CURLOPT_POST, true);
+		curl_setopt($c, CURLOPT_POSTFIELDS, 'domain='.$domain);
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($c, CURLOPT_HEADER, 0);
 
-		$this->censor = new CensorWords;
+		$response = curl_exec($c);
 
-		$censoredWords = $this->general->getBlacklistProfanityData();
-		$censoredLinks = $this->general->getBlacklistUrlData();
-
-		$this->badlinks = array();
-
-		foreach($censoredLinks as $v)
+		curl_close($c);
+		
+		if($response == 2)
+			die("Invalid license");
+		else
 		{
-			array_push($this->badlinks, $v['url']);
+			$this->load->library('form_validation');
+			$this->load->model('acp/Page_model', 'pages');
+			$this->load->model('acp/Settings_model', 'settings');
+
+			$this->censor = new CensorWords;
+
+			$censoredWords = $this->general->getBlacklistProfanityData();
+			$censoredLinks = $this->general->getBlacklistUrlData();
+
+			$this->badlinks = array();
+
+			foreach($censoredLinks as $v)
+			{
+				array_push($this->badlinks, $v['url']);
+			}
+
+			foreach($censoredWords as $v)
+			{
+				array_push($this->censor->badwords, $v['word']);
+			}
+
+			if(!$this->input->is_ajax_request())
+			{
+				show_404();
+			}
 		}
-
-		foreach($censoredWords as $v)
-		{
-			array_push($this->censor->badwords, $v['word']);
-		}
-
-		/*if(!$this->input->is_ajax_request())
-		{
-			show_404();
-		}*/
     }
 	function index()
 	{

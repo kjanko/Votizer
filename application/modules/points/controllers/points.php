@@ -36,8 +36,7 @@ class Points extends MX_Controller
 		);
 
 		$data = array(
-			'widget' => $widget->getHtmlCode(),
-            'analyticsPropertyID' => $this->config->item('analytics_property_id')
+			'widget' => $widget->getHtmlCode()
 		);
 		
 		$this->template

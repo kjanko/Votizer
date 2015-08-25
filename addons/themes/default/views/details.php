@@ -95,7 +95,7 @@
 			<div class="panel panel-default col-md-8" style="margin-left: 10px; width: 65%; padding:0">
 				<div class="panel-heading"><i class="fa fa-bookmark"></i> About us</div>
 				<div style= "padding:10px; font-size: 1.3em">
-					{$site.details_description}
+					{$site.description}
 				</div>
 				
 				<img style="margin: 0 auto; padding-bottom: 10px;" class="img-responsive" src="{$site.banner_url}" alt="banner" />
