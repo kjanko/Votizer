@@ -25,7 +25,7 @@ function registerSite()
 
     $.ajax(
         {
-            url: '/ajax/registerSite',
+            url: 'ajax/registerSite',
             type: 'POST',
             data: form_data,
             success:
@@ -36,7 +36,7 @@ function registerSite()
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/login" }, 1000);
+                        setTimeout( function() { location="login" }, 1000);
                     }
                     else if(json.success === '2')
                     {

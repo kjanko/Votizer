@@ -31,7 +31,7 @@ function editUserDetails(){
     };
     $.ajax(
         {
-            url: '/ajax/editUserDetails',
+            url: 'ajax/editUserDetails',
             type: 'POST',
             data: form_data,
             success:
@@ -63,7 +63,7 @@ function editSiteDetails()
     };
     $.ajax(
         {
-            url: '/ajax/editSiteDetails',
+            url: 'ajax/editSiteDetails',
             type: 'POST',
             data: form_data,
             success:
@@ -102,7 +102,7 @@ function changePassword(){
 
     $.ajax(
         {
-            url: '/ajax/changePassword',
+            url: 'ajax/changePassword',
             type: 'POST',
             data: form_data,
             success:
@@ -113,7 +113,7 @@ function changePassword(){
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/ucp" }, 750);
+                        setTimeout( function() { location="ucp" }, 750);
                     }
                     else if(json.success === '2')
                     {

@@ -7,9 +7,9 @@
 	
 	<!-- Stylesheets -->
 	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet'>
-	<link rel="stylesheet" href="/addons/acp/css/style.css">
-	<link rel="stylesheet" href="/addons/acp/css/jquery.jqplot.css">
-	<link rel="stylesheet" href="/addons/acp/js/alertify/dist/css/alertify-bootstrap-3.css" />
+	<link rel="stylesheet" href="<?php echo base_url(); ?>addons/acp/css/style.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>addons/acp/css/jquery.jqplot.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>addons/acp/js/alertify/dist/css/alertify-bootstrap-3.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 	
@@ -19,11 +19,11 @@
 	<!-- jQuery & JS files -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-	<script src="/addons/acp/js/script.js"></script>  
-	<script src="/addons/acp/js/jquery.jqplot.min.js"></script>  
-	<script src="/addons/acp/js/pagination.js"></script> 
-	<script src="/addons/acp/js/acp.js"></script>
-	<script src="/addons/acp/js/alertify/dist/js/alertify.js"></script>
+	<script src="<?php echo base_url(); ?>addons/acp/js/script.js"></script>  
+	<script src="<?php echo base_url(); ?>addons/acp/js/jquery.jqplot.min.js"></script>  
+	<script src="<?php echo base_url(); ?>addons/acp/js/pagination.js"></script> 
+	<script src="<?php echo base_url(); ?>addons/acp/js/acp.js"></script>
+	<script src="<?php echo base_url(); ?>addons/acp/js/alertify/dist/js/alertify.js"></script>
 
 	
 	<script type="application/javascript">

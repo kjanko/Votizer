@@ -12,7 +12,7 @@ function adminLogin()
 		
 		$.ajax(
 		{
-			url: '/ajax/userLogin',
+			url: 'ajax/userLogin',
 			type: 'POST',
 			data: form_data,
 			success: 
@@ -23,7 +23,7 @@ function adminLogin()
 					if(json.success === '1')
 					{
 						$('.information-box').addClass('confirmation-box').html(json.msg).show('scale');
-						setTimeout( function() {  location="/acp/dashboard" }, 1500 );
+						setTimeout( function() {  location="acp/dashboard" }, 1500 );
 					}
 					else if(json.success === '2')
 					{
@@ -41,7 +41,7 @@ function adminLogin()
 
 function showEditUser(username, backUrl)
 {
-	$.get('/acp/dashboard/users_edit/' + username + '/' + backUrl , function(data) 
+	$.get('acp/dashboard/users_edit/' + username + '/' + backUrl , function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -49,7 +49,7 @@ function showEditUser(username, backUrl)
 
 function showEditPage(id, backUrl)
 {
-	$.get('/acp/dashboard/pages_edit/' + id + '/' + backUrl , function(data) 
+	$.get('acp/dashboard/pages_edit/' + id + '/' + backUrl , function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -57,7 +57,7 @@ function showEditPage(id, backUrl)
 
 function showAddPage(backUrl)
 {
-	$.get('/acp/dashboard/pages_add/' + backUrl , function(data) 
+	$.get('acp/dashboard/pages_add/' + backUrl , function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -65,7 +65,7 @@ function showAddPage(backUrl)
 
 function showAddNavigation()
 {
-    $.get('/acp/dashboard/addNavigation' , function(data)
+    $.get('acp/dashboard/addNavigation' , function(data)
     {
         $('.content-module-main').html(data).show('scale');
     });
@@ -73,7 +73,7 @@ function showAddNavigation()
 
 function showBlacklistIps()
 {
-	$.get('/acp/dashboard/blacklistIps/', function(data) 
+	$.get('acp/dashboard/blacklistIps/', function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -81,7 +81,7 @@ function showBlacklistIps()
 
 function showBlacklistUrls()
 {
-    $.get('/acp/dashboard/blacklistUrls/', function(data)
+    $.get('acp/dashboard/blacklistUrls/', function(data)
     {
         $('.content-module-main').html(data).show('scale');
     });
@@ -89,7 +89,7 @@ function showBlacklistUrls()
 
 function showBlacklistUsers()
 {
-	$.get('/acp/dashboard/blacklistUsers/', function(data) 
+	$.get('acp/dashboard/blacklistUsers/', function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -97,7 +97,7 @@ function showBlacklistUsers()
 
 function showBlacklistProfanity()
 {
-    $.get('/acp/dashboard/blacklistProfanity/', function(data)
+    $.get('acp/dashboard/blacklistProfanity/', function(data)
     {
         $('.content-module-main').html(data).show('scale');
     });
@@ -105,7 +105,7 @@ function showBlacklistProfanity()
 
 function showEditSite(id)
 {
-	$.get('/acp/dashboard/sites_edit/' + id, function(data) 
+	$.get('acp/dashboard/sites_edit/' + id, function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -113,7 +113,7 @@ function showEditSite(id)
 
 function showAddPremium(id,backUrl)
 {
-    $.get('/acp/dashboard/addPremium/' + id + '/' + backUrl , function(data)
+    $.get('acp/dashboard/addPremium/' + id + '/' + backUrl , function(data)
     {
         $('.content-module-main').html(data).show('scale');
     });
@@ -134,7 +134,7 @@ function addPremium(){
 
     $.ajax(
         {
-            url: '/ajax/addPremium',
+            url: 'ajax/addPremium',
             type: 'POST',
             data: form_data,
             success:
@@ -145,7 +145,7 @@ function addPremium(){
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/acp/dashboard/sites" }, 500);
+                        setTimeout( function() { location="acp/dashboard/sites" }, 500);
                     }
                     else if(json.success === '2')
                     {
@@ -163,7 +163,7 @@ function addPremium(){
 
 function showAddUser()
 {
-	$.get('/acp/dashboard/users_add/', function(data) 
+	$.get('acp/dashboard/users_add/', function(data) 
 	{
 		$('.content-module-main').html(data).show('scale');
 	});
@@ -183,7 +183,7 @@ function editUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/editUser',
+		url: 'ajax/editUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -194,12 +194,12 @@ function editUser()
 				if(json.success === '1')
 				{
                     alertify.success(json.msg);
-					setTimeout( function() { location="/acp/dashboard/users" }, 500);
+					setTimeout( function() { location="acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
 					alertify.alert(json.msg);
-					setTimeout( function() { location="/acp/dashboard/users" }, 500);
+					setTimeout( function() { location="acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '3')
 				{
@@ -217,7 +217,7 @@ function updateNavigationPosition(array){
     };
     $.ajax(
         {
-            url: '/ajax/editNavigationPosition',
+            url: 'ajax/editNavigationPosition',
             type: 'POST',
             data: form_data,
             success:
@@ -244,7 +244,7 @@ function editPage()
 	
 	$.ajax(
 	{
-		url: '/ajax/editPage',
+		url: 'ajax/editPage',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -255,12 +255,12 @@ function editPage()
 				if(json.success === '1')
 				{
                     alertify.success(json.msg);
-					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
+					setTimeout( function() { location="acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
 					alertify.alert(json.msg);
-					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
+					setTimeout( function() { location="acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '3')
 				{
@@ -281,7 +281,7 @@ function removePage(id)
 	
 	$.ajax(
 	{
-		url: '/ajax/removePage',
+		url: 'ajax/removePage',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -314,7 +314,7 @@ function addPage()
 	
 	$.ajax(
 	{
-		url: '/ajax/addPage',
+		url: 'ajax/addPage',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -325,7 +325,7 @@ function addPage()
 				if(json.success === '1')
 				{
                     alertify.success(json.msg);
-					setTimeout( function() { location="/acp/dashboard/pages" }, 500);
+					setTimeout( function() { location="acp/dashboard/pages" }, 500);
 				}
 				else if(json.success === '2')
 				{
@@ -352,7 +352,7 @@ function addNavigation()
 
     $.ajax(
         {
-            url: '/ajax/addNavigation',
+            url: 'ajax/addNavigation',
             type: 'POST',
             data: form_data,
             success:
@@ -363,7 +363,7 @@ function addNavigation()
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/acp/dashboard/navigation" }, 500);
+                        setTimeout( function() { location="acp/dashboard/navigation" }, 500);
                     }
                     else if(json.success === '2')
                     {
@@ -395,7 +395,7 @@ function editSite()
 	
 	$.ajax(
 	{
-		url: '/ajax/editSite',
+		url: 'ajax/editSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -406,12 +406,12 @@ function editSite()
 				if(json.success === '1')
 				{
                     alertify.success(json.msg);
-					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
+					setTimeout( function() { location="acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '2')
 				{
 					alertify.alert(json.msg);
-					setTimeout( function() { location="/acp/dashboard/sites" }, 500);
+					setTimeout( function() { location="acp/dashboard/sites" }, 500);
 				}
 				else if(json.success === '3')
 				{
@@ -426,7 +426,7 @@ function editSite()
 function settingsAjaxCall(form_data){
     $.ajax(
         {
-            url: '/ajax/editSettings',
+            url: 'ajax/editSettings',
             type: 'POST',
             data: form_data,
             success:
@@ -544,7 +544,7 @@ function addUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/addUser',
+		url: 'ajax/addUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -555,7 +555,7 @@ function addUser()
 				if(json.success === '1')
 				{
                     alertify.success(json.msg);
-					setTimeout( function() { location="/acp/dashboard/users" }, 500);
+					setTimeout( function() { location="acp/dashboard/users" }, 500);
 				}
 				else if(json.success === '2')
 				{
@@ -580,7 +580,7 @@ function removeUser(username)
 	
 	$.ajax(
 	{
-		url: '/ajax/removeUser',
+		url: 'ajax/removeUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -610,7 +610,7 @@ function removeNavigation(id)
 
     $.ajax(
         {
-            url: '/ajax/removeNavigation',
+            url: 'ajax/removeNavigation',
             type: 'POST',
             data: form_data,
             success:
@@ -640,7 +640,7 @@ function removeSite(siteId)
 	
 	$.ajax(
 	{
-		url: '/ajax/removeSite',
+		url: 'ajax/removeSite',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -669,7 +669,7 @@ function banUrl()
     };
     $.ajax(
         {
-            url: '/ajax/banUrl',
+            url: 'ajax/banUrl',
             type: 'POST',
             data: form_data,
             success:
@@ -704,7 +704,7 @@ function banUser()
 	
 	$.ajax(
 	{
-		url: '/ajax/banUser',
+		url: 'ajax/banUser',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -735,7 +735,7 @@ function banIp()
 	
 	$.ajax(
 	{
-		url: '/ajax/banIp',
+		url: 'ajax/banIp',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -771,7 +771,7 @@ function removeBlacklistIps(id, ip)
 	
 	$.ajax(
 	{
-		url: '/ajax/removeBlacklistIp',
+		url: 'ajax/removeBlacklistIp',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -801,7 +801,7 @@ function addCategory()
 
     $.ajax(
         {
-            url: '/ajax/addCategory',
+            url: 'ajax/addCategory',
             type: 'POST',
             data: form_data,
             success:
@@ -812,7 +812,7 @@ function addCategory()
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/acp/dashboard/categories" }, 500);
+                        setTimeout( function() { location="acp/dashboard/categories" }, 500);
                     }
                     else if(json.success === '2')
                     {
@@ -838,7 +838,7 @@ function addAdvert()
 
     $.ajax(
         {
-            url: '/ajax/addAdvert',
+            url: 'ajax/addAdvert',
             type: 'POST',
             data: form_data,
             success:
@@ -849,7 +849,7 @@ function addAdvert()
                     if(json.success === '1')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() { location="/acp/dashboard/advertisements" }, 500);
+                        setTimeout( function() { location="acp/dashboard/advertisements" }, 500);
                     }
                     else if(json.success === '2')
                     {
@@ -874,7 +874,7 @@ function editCategory(categoryName, id)
 
     $.ajax(
         {
-            url: '/ajax/editCategory',
+            url: 'ajax/editCategory',
             type: 'POST',
             data: form_data,
             success:
@@ -905,7 +905,7 @@ function editAdvert(value, id, field)
 
     $.ajax(
         {
-            url: '/ajax/editAdvert',
+            url: 'ajax/editAdvert',
             type: 'POST',
             data: form_data,
             success:
@@ -936,7 +936,7 @@ function editNavigation(value, id, field)
 
     $.ajax(
         {
-            url: '/ajax/editNavigation',
+            url: 'ajax/editNavigation',
             type: 'POST',
             data: form_data,
             success:
@@ -965,7 +965,7 @@ function removeCategory(id)
 
     $.ajax(
         {
-            url: '/ajax/removeCategory',
+            url: 'ajax/removeCategory',
             type: 'POST',
             data: form_data,
             success:
@@ -995,7 +995,7 @@ function removeAdvert(id)
 
     $.ajax(
         {
-            url: '/ajax/removeAdvert',
+            url: 'ajax/removeAdvert',
             type: 'POST',
             data: form_data,
             success:
@@ -1030,7 +1030,7 @@ function removeBlacklistUrls(id)
 
     $.ajax(
 	{
-		url: '/ajax/removeBlacklistUrl',
+		url: 'ajax/removeBlacklistUrl',
 		type: 'POST',
 		data: form_data,
 		success:
@@ -1066,7 +1066,7 @@ function removeBlacklistUsers(IpId)
 	
 	$.ajax(
 	{
-		url: '/ajax/removeBlacklistUsers',
+		url: 'ajax/removeBlacklistUsers',
 		type: 'POST',
 		data: form_data,
 		success: 
@@ -1164,7 +1164,7 @@ function banProfanity()
 
     $.ajax(
         {
-            url: '/ajax/banProfanity',
+            url: 'ajax/banProfanity',
             type: 'POST',
             data: form_data,
             success:
@@ -1200,7 +1200,7 @@ function removeBlacklistProfanity(id)
 
     $.ajax(
         {
-            url: '/ajax/removeBlacklistProfanity',
+            url: 'ajax/removeBlacklistProfanity',
             type: 'POST',
             data: form_data,
             success:

@@ -73,7 +73,7 @@ $(document).ready(function()
 		
 		// Use Ajax to submit form data
 		$.ajax({
-                url: '/contact/mail',
+                url: 'contact/mail',
                 type: 'POST',
                 data: $form.serialize(),
                 success: function(result) 
