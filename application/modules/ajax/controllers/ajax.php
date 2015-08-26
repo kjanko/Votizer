@@ -12,6 +12,39 @@ class Ajax extends MX_Controller
     {
         parent::__construct();
 		
+		$this->load->library('form_validation');
+		$this->load->model('acp/Page_model', 'pages');
+		$this->load->model('acp/Settings_model', 'settings');
+
+		$this->censor = new CensorWords;
+
+		$censoredWords = $this->general->getBlacklistProfanityData();
+		$censoredLinks = $this->general->getBlacklistUrlData();
+
+		$this->badlinks = array();
+
+		foreach($censoredLinks as $v)
+		{
+			array_push($this->badlinks, $v['url']);
+		}
+
+		foreach($censoredWords as $v)
+		{
+			array_push($this->censor->badwords, $v['word']);
+		}
+
+		if(!$this->input->is_ajax_request())
+		{
+			show_404();
+		}
+    }
+	function index()
+	{
+		show_error('Access denied!');
+	}
+
+    function userLogin()
+    {
 		$domain = $_SERVER['SERVER_NAME'];
 		$c = curl_init();
 
@@ -29,92 +62,59 @@ class Ajax extends MX_Controller
 			die("Invalid license");
 		else
 		{
-			$this->load->library('form_validation');
-			$this->load->model('acp/Page_model', 'pages');
-			$this->load->model('acp/Settings_model', 'settings');
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			$user = $this->input->post('user');
+			
+			$login = $this->users->login($username, $password);
 
-			$this->censor = new CensorWords;
-
-			$censoredWords = $this->general->getBlacklistProfanityData();
-			$censoredLinks = $this->general->getBlacklistUrlData();
-
-			$this->badlinks = array();
-
-			foreach($censoredLinks as $v)
+			if($login == "Good")
 			{
-				array_push($this->badlinks, $v['url']);
+				if($this->users->getUserRank($username) >= 2 && $user == "false")
+				{
+					$data = array(
+						'success' => '1',
+						'msg' => 'Success! Please wait while we redirect you...'
+					);
+
+					echo json_encode($data);
+				}
+				else if($user == "true")
+				{
+					$data = array(
+						'success' => '3',
+						'msg' => 'Success! Please wait while we redirect you...'
+					);
+					echo json_encode($data);
+				}
+				else
+				{
+					$data = array(
+						'success' => '2',
+						'msg' => 'Access denied.'
+					);
+
+					echo json_encode($data);
+				}
 			}
-
-			foreach($censoredWords as $v)
+			else if($login == "Banned")
 			{
-				array_push($this->censor->badwords, $v['word']);
+				$data = array(
+					'success' => '2',
+					'msg' => 'Your account has been banned.'
+				);
+
+				echo json_encode($data);
 			}
-
-			if(!$this->input->is_ajax_request())
+			else if($login == "Bad")
 			{
-				show_404();
+				$data = array(
+					'success' => '2',
+					'msg' => 'Incorrect credentials.'
+				);
+
+				echo json_encode($data);
 			}
-		}
-    }
-	function index()
-	{
-		show_error('Access denied!');
-	}
-
-    function userLogin()
-    {
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $user = $this->input->post('user');
-		
-		$login = $this->users->login($username, $password);
-
-        if($login == "Good")
-        {
-            if($this->users->getUserRank($username) >= 2 && $user == "false")
-            {
-                $data = array(
-                    'success' => '1',
-                    'msg' => 'Success! Please wait while we redirect you...'
-                );
-
-                echo json_encode($data);
-            }
-			else if($user == "true")
-			{
-                $data = array(
-                    'success' => '3',
-                    'msg' => 'Success! Please wait while we redirect you...'
-                );
-                echo json_encode($data);
-            }
-            else
-            {
-                $data = array(
-                    'success' => '2',
-                    'msg' => 'Access denied.'
-                );
-
-                echo json_encode($data);
-            }
-        }
-        else if($login == "Banned")
-        {
-            $data = array(
-                'success' => '2',
-                'msg' => 'Your account has been banned.'
-            );
-
-            echo json_encode($data);
-        }
-		else if($login == "Bad")
-		{
-			$data = array(
-                'success' => '2',
-                'msg' => 'Incorrect credentials.'
-            );
-
-            echo json_encode($data);
 		}
     }
     function addCategory()
