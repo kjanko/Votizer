@@ -1,4 +1,5 @@
-$(document).ready(function() 
+var base_url = '<?php echo base_url();?>'
+$(document).ready(function()
 {
 	$("#success_message").hide();
 	
@@ -73,7 +74,7 @@ $(document).ready(function()
 		
 		// Use Ajax to submit form data
 		$.ajax({
-                url: '/contact/mail',
+                url: base_url + '/contact/mail',
                 type: 'POST',
                 data: $form.serialize(),
                 success: function(result) 

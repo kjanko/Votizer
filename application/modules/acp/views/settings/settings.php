@@ -57,7 +57,7 @@
 				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
-				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
 			</ul> <!-- end nav -->
 
@@ -81,8 +81,8 @@
 		<div class="page-full-width cf">
 	
 			<ul id="tabs" class="fl">
-				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/blacklist" class="active-tab dashboard-tab">Settings</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard">Dashboard</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/blacklist" class="active-tab dashboard-tab">Settings</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -296,13 +296,13 @@
                         <span class="fr expand-collapse-text">Click to expand</span>
                     </div>
                     <div class="content-module-main" style="display:none"><!--
-                        --><div class="otherContainer"><a href="/acp/dashboard/navigation" target="_blank" class="round other button blue">Navigation links</a></div><!--
+                        --><div class="otherContainer"><a href="<?php echo base_url(); ?>acp/dashboard/navigation" target="_blank" class="round other button blue">Navigation links</a></div><!--
                         --><div class="otherContainer">
-                            <a href="/acp/dashboard/advertisements" target="_blank" class="round other button blue">Advertisements</a></div><!--
+                            <a href="<?php echo base_url(); ?>acp/dashboard/advertisements" target="_blank" class="round other button blue">Advertisements</a></div><!--
                         --><div class="otherContainer">
-                            <a href="/acp/dashboard/categories" target="_blank" class="round other button blue">Categories</a></div><!--
+                            <a href="<?php echo base_url(); ?>acp/dashboard/categories" target="_blank" class="round other button blue">Categories</a></div><!--
                         --><div class="otherContainer">
-                            <a href="/acp/dashboard/themes" target="_blank" class="round other button blue">Theme Changer</a></div><!--
+                            <a href="<?php echo base_url(); ?>acp/dashboard/themes" target="_blank" class="round other button blue">Theme Changer</a></div><!--
                         --></div>
                     <!-- end content-module-section -->
 

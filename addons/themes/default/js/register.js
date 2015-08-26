@@ -1,3 +1,4 @@
+var base_url = '<?php echo base_url();?>'
 function registerSite()
 {
     $("#password").removeClass('error-input');
@@ -25,7 +26,7 @@ function registerSite()
 
     $.ajax(
         {
-            url: '/ajax/registerSite',
+            url: base_url + '/ajax/registerSite',
             type: 'POST',
             data: form_data,
             success:

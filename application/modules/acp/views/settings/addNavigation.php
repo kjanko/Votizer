@@ -1,5 +1,5 @@
 <form id="users-mod" method="POST" onsubmit="return addNavigation();">
-    <p><a href="/acp/dashboard/navigation" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+    <p><a href="<?php echo base_url(); ?>acp/dashboard/navigation" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
     <p class="first-name">
         <label for="full-width-input">Link Name</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="name" value="" />

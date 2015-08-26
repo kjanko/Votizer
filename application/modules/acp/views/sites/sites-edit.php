@@ -1,5 +1,5 @@
 <form id="users-mod" method="POST" onsubmit="return editSite();">
-    <p><a href="/acp/dashboard/sites" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+    <p><a href="<?php echo base_url(); ?>acp/dashboard/sites" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
     {foreach $id val}
     <p>
         <label for="full-width-input">ID</label>

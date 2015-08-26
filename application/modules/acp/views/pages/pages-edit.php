@@ -1,6 +1,6 @@
 			<div class="content-module-main">
 				<form id="pages-mod" method="POST" onsubmit="return editPage();">
-					<p><a href="/acp/dashboard/{$backUrl}" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+					<p><a href="<?php echo base_url(); ?>acp/dashboard/{$backUrl}" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
 					{foreach $page val}
 					<p>
 						<label for="full-width-input">ID</label>

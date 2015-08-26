@@ -1,6 +1,6 @@
 <div class="content-module-main">
     <form id="users-mod" method="POST" onsubmit="return addSite();">
-        <p><a href="/acp/dashboard/sites" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+        <p><a href="<?php echo base_url(); ?>acp/dashboard/sites" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
         <p>
             <label for="full-width-input">USER ID</label>
             <input id="full-width-input" class="round full-width-input" type="text" name="uid" />

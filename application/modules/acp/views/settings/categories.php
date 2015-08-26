@@ -74,9 +74,9 @@
 		<div class="page-full-width cf">
 	
 			<ul id="tabs" class="fl">
-				<li><a href="/acp/dashboard">Dashboard</a></li>
-                <li><a href="/acp/dashboard/settings">Settings</a></li>
-				<li><a href="/acp/dashboard/categories" class="active-tab dashboard-tab">Categories</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard">Dashboard</a></li>
+                <li><a href="<?php echo base_url(); ?>acp/dashboard/settings">Settings</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/categories" class="active-tab dashboard-tab">Categories</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	

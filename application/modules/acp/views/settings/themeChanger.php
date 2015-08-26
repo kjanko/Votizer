@@ -115,7 +115,7 @@
                     };
                     $.ajax(
                         {
-                            url: '/ajax/setTheme',
+                            url: '<?php echo base_url(); ?>ajax/setTheme',
                             type: 'POST',
                             data: form_data,
                             success:
@@ -123,7 +123,7 @@
                                 {
                                     var json = jQuery.parseJSON(message);
                                     alertify.success(json.msg);
-                                    setTimeout( function() { location="/acp/dashboard/themes" }, 500);
+                                    setTimeout( function() { location="<?php echo base_url(); ?>acp/dashboard/themes" }, 500);
                                 }
                         });
                 })
@@ -143,7 +143,7 @@
 				<li class="v-sep"><a href="#" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
-				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
 			</ul> <!-- end nav -->
 
@@ -159,9 +159,9 @@
 		<div class="page-full-width cf">
 	
 			<ul id="tabs" class="fl">
-				<li><a href="/acp/dashboard">Dashboard</a></li>
-                <li><a href="/acp/dashboard/settings">Settings</a></li>
-				<li><a href="/acp/dashboard/advertisements" class="active-tab dashboard-tab">Themes</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard">Dashboard</a></li>
+                <li><a href="<?php echo base_url(); ?>acp/dashboard/settings">Settings</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/advertisements" class="active-tab dashboard-tab">Themes</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	

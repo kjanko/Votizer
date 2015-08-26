@@ -1,3 +1,4 @@
+var base_url = '<?php echo base_url();?>'
 function userLogin()
 {
     var form_data =
@@ -8,7 +9,7 @@ function userLogin()
     };
     $.ajax(
         {
-            url: '/ajax/userLogin',
+            url: base_url + '/ajax/userLogin',
             type: 'POST',
             data: form_data,
             success:
@@ -19,7 +20,7 @@ function userLogin()
                     if(json.success === '3')
                     {
                         alertify.success(json.msg);
-                        setTimeout( function() {  location="/home" }, 1000 );
+                        setTimeout( function() {  location= base_url + "/home" }, 1000 );
                     }
                     else if(json.success === '2')
                     {

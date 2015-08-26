@@ -1,5 +1,5 @@
 <form id="users-mod" method="POST" onsubmit="return addUser();">
-    <p><a href="/acp/dashboard/users" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+    <p><a href="<?php echo base_url(); ?>acp/dashboard/users" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
     <p class="first-name">
         <label for="full-width-input">First Name</label>
         <input id="full-width-input" class="round full-width-input" type="text" name="fname" value="" />

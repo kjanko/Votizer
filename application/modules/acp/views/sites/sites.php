@@ -51,7 +51,7 @@
 				<li class="v-sep"><a href="<?php echo base_url(); ?>" class="round button dark ic-left-arrow image-left">Go to website</a></li>
 				<li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong>{$username}</strong></a></li>
 			
-				<li><a href="/acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/logout" class="round button dark menu-logoff image-left">Log out</a></li>
 				
 			</ul> <!-- end nav -->
 
@@ -67,8 +67,8 @@
 		<div class="page-full-width cf">
 	
 			<ul id="tabs" class="fl">
-				<li><a href="/acp/dashboard">Dashboard</a></li>
-				<li><a href="/acp/dashboard/sites" class="active-tab dashboard-tab">Sites</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard">Dashboard</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard/sites" class="active-tab dashboard-tab">Sites</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	

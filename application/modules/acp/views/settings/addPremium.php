@@ -1,6 +1,6 @@
 <div class="content-module-main">
     <form id="pages-mod" method="POST" onsubmit="return addPremium();">
-        <p><a href="/acp/dashboard/{$backUrl}" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
+        <p><a href="<?php echo base_url(); ?>acp/dashboard/{$backUrl}" style="position: relative; border-bottom: 1px dotted; font-size: 11px; bottom: 3px;">Back</a></p>
         <p>
             <label for="full-width-input">ID</label>
             <input class="round full-width-input" type="text" readonly="readonly" name="id" value="{$id}" />
