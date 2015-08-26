@@ -1,4 +1,3 @@
-var base_url = '<?php echo base_url();?>';
 $(function(){
     $("#changePass").click(function(){
         $("#changePasswordContainer").show();
@@ -32,7 +31,7 @@ function editUserDetails(){
     };
     $.ajax(
         {
-            url: base_url + '/ajax/editUserDetails',
+            url: '/ajax/editUserDetails',
             type: 'POST',
             data: form_data,
             success:
@@ -64,7 +63,7 @@ function editSiteDetails()
     };
     $.ajax(
         {
-            url: base_url + '/ajax/editSiteDetails',
+            url: '/ajax/editSiteDetails',
             type: 'POST',
             data: form_data,
             success:
@@ -103,7 +102,7 @@ function changePassword(){
 
     $.ajax(
         {
-            url: base_url + '/ajax/changePassword',
+            url: '/ajax/changePassword',
             type: 'POST',
             data: form_data,
             success:

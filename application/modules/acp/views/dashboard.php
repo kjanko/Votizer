@@ -55,7 +55,7 @@
 		<div class="page-full-width cf">
 	
 			<ul id="tabs" class="fl">
-				<li><a href="/acp/dashboard" class="active-tab dashboard-tab">Dashboard</a></li>
+				<li><a href="<?php echo base_url(); ?>acp/dashboard" class="active-tab dashboard-tab">Dashboard</a></li>
 			</ul> <!-- end tabs -->
 						
 		</div> <!-- end full-width -->	
@@ -74,7 +74,7 @@
 				<h3>Navigation</h3>
 				<ul>
 				{foreach $navigation val}
-					<li><a href="{$val.link_url}">{$val.link_name}</a></li>
+					<li><a href="<?php echo base_url(); ?>{$val.link_url}">{$val.link_name}</a></li>
 				{/foreach}
 				</ul>
 				
@@ -174,15 +174,15 @@
 		</div> <!-- end full-width -->
 			
 	</div> <!-- end content -->
-	
-	
-	
-	<!-- FOOTER -->
-	<div id="footer">
 
-		<p>&copy; Copyright 2012 <a href="#">IgnitionCMS</a>. All rights reserved.</p>
-	
-	</div> <!-- end footer -->
+
+
+    <!-- FOOTER -->
+    <div id="footer">
+
+        <p>&copy; Copyright 2015 <a href="http://votizer.com/">Votizer</a>. All rights reserved.</p>
+
+    </div> <!-- end footer -->
 
 </body>
 </html>
